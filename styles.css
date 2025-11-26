@@ -405,12 +405,12 @@ body {
 
 .bg-soft {
   background: rgba(59, 75, 48, 0.03);
-}
 
 .section-title {
   font-size: 2.5rem;
   color: var(--verde);
   margin-bottom: 20px;
+}
   text-align: center;
   font-weight: 700;
 }
@@ -1046,18 +1046,28 @@ body {
 }
   /* NOSOTROS FULLPAGE SECTION */
 .nosotros-fullpage {
-  position: relative;
-}
-
-.nosotros-page {
   height: 100vh;
   position: relative;
-  display: none;
   overflow: hidden;
 }
 
+.nosotros-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.8s ease;
+}
+
 .nosotros-page.active {
-  display: block;
+  opacity: 1;
+  visibility: visible;
 }
 
 .page-background {
@@ -1084,42 +1094,38 @@ body {
 .page-content {
   position: relative;
   z-index: 2;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   text-align: center;
+  max-width: 800px;
+  padding: 0 20px;
 }
 
 .page-title {
-  font-size: 4rem;
+  font-size: 3.5rem;
   color: var(--verde);
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   font-weight: 700;
   opacity: 0;
   transform: translateY(30px);
-  animation: fadeInUp 0.8s ease forwards;
+  transition: all 0.8s ease;
 }
 
 .page-text {
   opacity: 0;
   transform: translateY(30px);
-  animation: fadeInUp 0.8s ease 0.3s forwards;
-  max-width: 800px;
-  margin: 0 auto;
+  transition: all 0.8s ease 0.2s;
+  margin-bottom: 40px;
 }
 
 .page-text p {
-  font-size: 1.4rem;
-  line-height: 1.8;
+  font-size: 1.3rem;
+  line-height: 1.7;
   color: rgba(59, 75, 48, 0.9);
-  margin-bottom: 50px;
 }
 
 .page-indicator {
   opacity: 0;
   transform: translateY(20px);
-  animation: fadeInUp 0.8s ease 0.6s forwards;
+  transition: all 0.8s ease 0.4s;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1129,12 +1135,12 @@ body {
   opacity: 0.7;
 }
 
-/* Animaciones */
-@keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Cuando la página está activa */
+.nosotros-page.active .page-title,
+.nosotros-page.active .page-text,
+.nosotros-page.active .page-indicator {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Puntos de navegación */
@@ -1189,11 +1195,11 @@ body {
 /* Ajustes responsive */
 @media (max-width: 768px) {
   .page-title {
-    font-size: 2.8rem;
+    font-size: 2.5rem;
   }
   
   .page-text p {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
   
   .page-navigation {
@@ -1207,15 +1213,15 @@ body {
 
 @media (max-width: 480px) {
   .page-title {
-    font-size: 2.2rem;
+    font-size: 2rem;
   }
   
   .page-text p {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
   
   .page-content {
-    padding: 0 20px;
+    padding: 0 15px;
   }
 }
 }
