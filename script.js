@@ -277,6 +277,28 @@ if (btnCheckout) {
   });
 }
 
+// Cerrar carrito SOLO cuando se hace click fuera del carrito y NO es una acción del carrito
+document.addEventListener('click', (e) => {
+  if (!cartPanel || !btnCarrito || cartPanel.hasAttribute('hidden')) return;
+  
+  // Verificar si el click es en elementos relacionados con el carrito
+  const isCartElement = 
+    cartPanel.contains(e.target) || 
+    btnCarrito.contains(e.target) ||
+    e.target.closest('.quantity-btn') ||
+    e.target.closest('.remove-btn') ||
+    e.target.closest('.btn-add') ||
+    e.target.closest('.cart-item') ||
+    e.target.closest('.cart-header') ||
+    e.target.closest('.cart-footer');
+  
+  // Solo cerrar si NO es un elemento del carrito
+  if (!isCartElement) {
+    cartPanel.setAttribute('hidden','');
+  }
+});
+}
+
 // Cerrar carrito al hacer clic fuera (pero no cuando se modifica cantidad)
 document.addEventListener('click', (e) => {
   if (!cartPanel || !btnCarrito) return;
