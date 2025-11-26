@@ -294,15 +294,15 @@ document.addEventListener('DOMContentLoaded', () => {
   actualizarCarrito();
 });
 
-// --- FULLPAGE SCROLL PARA SECCIÓN NOSOTROS ---
+// --- FULLPAGE SCROLL SIMPLE PARA SECCIÓN NOSOTROS ---
 function initNosotrosFullpage() {
   const pages = document.querySelectorAll('.nosotros-page');
   const navigation = document.querySelector('.page-navigation');
   let currentPage = 0;
-  let isScrolling = false;
+  let isAnimating = false;
 
-  // Crear navegación
-  if (navigation) {
+  // Crear navegación si no existe
+  if (navigation && navigation.children.length === 0) {
     const pageTitles = ['Misión', 'Visión', 'Objetivo'];
     pageTitles.forEach((title, index) => {
       const dot = document.createElement('div');
@@ -319,9 +319,9 @@ function initNosotrosFullpage() {
   const dots = document.querySelectorAll('.page-dot');
 
   function goToPage(index) {
-    if (index < 0 || index >= pages.length || isScrolling) return;
+    if (index < 0 || index >= pages.length || isAnimating) return;
     
-    isScrolling = true;
+    isAnimating = true;
     currentPage = index;
     
     // Ocultar todas las páginas
@@ -339,14 +339,22 @@ function initNosotrosFullpage() {
       }
     });
     
-    // Permitir scroll nuevamente después de un tiempo
+    // Permitir animación nuevamente después de un tiempo
     setTimeout(() => {
-      isScrolling = false;
+      isAnimating = false;
     }, 800);
   }
 
-  function handleScroll(event) {
-    if (isScrolling) return;
+  // Control con rueda del mouse
+  document.addEventListener('wheel', (event) => {
+    if (isAnimating) return;
+    
+    // Verificar si estamos en la sección de nosotros
+    const nosotrosSection = document.querySelector('.nosotros-fullpage');
+    const rect = nosotrosSection.getBoundingClientRect();
+    const isInSection = rect.top <= 0 && rect.bottom >= 0;
+    
+    if (!isInSection) return;
     
     event.preventDefault();
     
@@ -355,37 +363,36 @@ function initNosotrosFullpage() {
       if (currentPage < pages.length - 1) {
         goToPage(currentPage + 1);
       } else {
-        // Última página - scroll normal hacia la tienda
-        isScrolling = false;
-        return true;
+        // Última página - permitir scroll normal
+        window.scrollBy(0, 100);
       }
     } else if (event.deltaY < 0) {
       // Scroll hacia arriba - página anterior
       if (currentPage > 0) {
         goToPage(currentPage - 1);
+      } else {
+        // Primera página - permitir scroll normal
+        window.scrollBy(0, -100);
       }
-    }
-    
-    return false;
-  }
-
-  // Event listeners
-  document.addEventListener('wheel', (event) => {
-    if (!handleScroll(event)) {
-      event.preventDefault();
     }
   }, { passive: false });
 
-  // También permitir navegación con teclas
+  // Control con teclado
   document.addEventListener('keydown', (event) => {
-    if (isScrolling) return;
+    if (isAnimating) return;
     
-    if (event.key === 'ArrowDown') {
+    const nosotrosSection = document.querySelector('.nosotros-fullpage');
+    const rect = nosotrosSection.getBoundingClientRect();
+    const isInSection = rect.top <= 100 && rect.bottom >= 100;
+    
+    if (!isInSection) return;
+    
+    if (event.key === 'ArrowDown' || event.key === 'PageDown') {
       event.preventDefault();
       if (currentPage < pages.length - 1) {
         goToPage(currentPage + 1);
       }
-    } else if (event.key === 'ArrowUp') {
+    } else if (event.key === 'ArrowUp' || event.key === 'PageUp') {
       event.preventDefault();
       if (currentPage > 0) {
         goToPage(currentPage - 1);
@@ -393,22 +400,27 @@ function initNosotrosFullpage() {
     }
   });
 
-  // Inicializar primera página
-  goToPage(0);
+  // Hacer la función global para los enlaces del menú
+  window.goToPage = goToPage;
 }
 
-// --- CORRECCIÓN DEL CARRITO - NO CERRAR AL MODIFICAR CANTIDAD ---
+// --- CORRECCIÓN DEL CARRITO ---
 function initCarritoMejorado() {
-  // ... (mantén todo el código del carrito igual pero modifica esto)
+  const cartPanel = document.getElementById('cart-panel');
+  const btnCarrito = document.getElementById('btn-carrito');
   
-  // Modificar la función de cerrar carrito para que no se cierre al modificar cantidad
+  if (!cartPanel || !btnCarrito) return;
+  
   document.addEventListener('click', (e) => {
-    // Solo cerrar si se hace click fuera del carrito Y no es un botón de cantidad
+    // Solo cerrar si se hace click fuera del carrito Y no es un botón de cantidad/eliminar
+    const isQuantityBtn = e.target.closest('.quantity-btn');
+    const isRemoveBtn = e.target.closest('.remove-btn');
+    const isCartAction = isQuantityBtn || isRemoveBtn;
+    
     if (!cartPanel.contains(e.target) && 
         !btnCarrito.contains(e.target) && 
         !cartPanel.hasAttribute('hidden') &&
-        !e.target.closest('.quantity-btn') && // No cerrar si es botón de cantidad
-        !e.target.closest('.remove-btn')) {   // No cerrar si es botón de eliminar
+        !isCartAction) {
       cartPanel.setAttribute('hidden','');
     }
   });
@@ -416,7 +428,7 @@ function initCarritoMejorado() {
 
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
-  // ... código existente ...
   initNosotrosFullpage();
   initCarritoMejorado();
+  actualizarCarrito(); // Tu función existente del carrito
 });
