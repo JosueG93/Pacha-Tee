@@ -294,76 +294,129 @@ document.addEventListener('DOMContentLoaded', () => {
   actualizarCarrito();
 });
 
-// --- SCROLL ANIMATION PARA SECCIÓN NOSOTROS ---
-function initNosotrosScroll() {
-  const nosotrosSection = document.querySelector('.nosotros-scroll-section');
-  const slides = document.querySelectorAll('.nosotros-slide');
-  const progressDots = document.querySelector('.scroll-progress');
-  
-  // Crear puntos de progreso
-  if (progressDots) {
-    const slideTitles = ['Misión', 'Visión', 'Objetivo'];
-    slideTitles.forEach((title, index) => {
+// --- FULLPAGE SCROLL PARA SECCIÓN NOSOTROS ---
+function initNosotrosFullpage() {
+  const pages = document.querySelectorAll('.nosotros-page');
+  const navigation = document.querySelector('.page-navigation');
+  let currentPage = 0;
+  let isScrolling = false;
+
+  // Crear navegación
+  if (navigation) {
+    const pageTitles = ['Misión', 'Visión', 'Objetivo'];
+    pageTitles.forEach((title, index) => {
       const dot = document.createElement('div');
-      dot.className = 'progress-dot';
+      dot.className = 'page-dot';
       dot.setAttribute('data-title', title);
+      if (index === 0) dot.classList.add('active');
       dot.addEventListener('click', () => {
-        scrollToSlide(index);
+        goToPage(index);
       });
-      progressDots.appendChild(dot);
+      navigation.appendChild(dot);
     });
   }
-  
-  const dots = document.querySelectorAll('.progress-dot');
-  
-  function updateActiveSlide() {
-    const scrollTop = window.pageYOffset;
-    const sectionTop = nosotrosSection.offsetTop;
-    const sectionHeight = nosotrosSection.offsetHeight;
-    const windowHeight = window.innerHeight;
+
+  const dots = document.querySelectorAll('.page-dot');
+
+  function goToPage(index) {
+    if (index < 0 || index >= pages.length || isScrolling) return;
     
-    // Calcular slide activo basado en scroll
-    const scrollProgress = (scrollTop - sectionTop + windowHeight * 0.5) / sectionHeight;
-    const activeIndex = Math.max(0, Math.min(slides.length - 1, Math.floor(scrollProgress * slides.length)));
+    isScrolling = true;
+    currentPage = index;
     
-    // Actualizar slides
-    slides.forEach((slide, index) => {
-      if (index === activeIndex) {
-        slide.classList.add('active');
-      } else {
-        slide.classList.remove('active');
-      }
-    });
+    // Ocultar todas las páginas
+    pages.forEach(page => page.classList.remove('active'));
     
-    // Actualizar puntos de progreso
-    dots.forEach((dot, index) => {
-      if (index === activeIndex) {
+    // Mostrar página actual
+    pages[currentPage].classList.add('active');
+    
+    // Actualizar dots de navegación
+    dots.forEach((dot, i) => {
+      if (i === currentPage) {
         dot.classList.add('active');
       } else {
         dot.classList.remove('active');
       }
     });
-  }
-  
-  function scrollToSlide(index) {
-    const sectionTop = nosotrosSection.offsetTop;
-    const slideHeight = window.innerHeight;
-    const targetScroll = sectionTop + (index * slideHeight);
     
-    window.scrollTo({
-      top: targetScroll,
-      behavior: 'smooth'
-    });
+    // Permitir scroll nuevamente después de un tiempo
+    setTimeout(() => {
+      isScrolling = false;
+    }, 800);
   }
+
+  function handleScroll(event) {
+    if (isScrolling) return;
+    
+    event.preventDefault();
+    
+    if (event.deltaY > 0) {
+      // Scroll hacia abajo - siguiente página
+      if (currentPage < pages.length - 1) {
+        goToPage(currentPage + 1);
+      } else {
+        // Última página - scroll normal hacia la tienda
+        isScrolling = false;
+        return true;
+      }
+    } else if (event.deltaY < 0) {
+      // Scroll hacia arriba - página anterior
+      if (currentPage > 0) {
+        goToPage(currentPage - 1);
+      }
+    }
+    
+    return false;
+  }
+
+  // Event listeners
+  document.addEventListener('wheel', (event) => {
+    if (!handleScroll(event)) {
+      event.preventDefault();
+    }
+  }, { passive: false });
+
+  // También permitir navegación con teclas
+  document.addEventListener('keydown', (event) => {
+    if (isScrolling) return;
+    
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      if (currentPage < pages.length - 1) {
+        goToPage(currentPage + 1);
+      }
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      if (currentPage > 0) {
+        goToPage(currentPage - 1);
+      }
+    }
+  });
+
+  // Inicializar primera página
+  goToPage(0);
+}
+
+// --- CORRECCIÓN DEL CARRITO - NO CERRAR AL MODIFICAR CANTIDAD ---
+function initCarritoMejorado() {
+  // ... (mantén todo el código del carrito igual pero modifica esto)
   
-  // Inicializar
-  updateActiveSlide();
-  window.addEventListener('scroll', updateActiveSlide);
-  window.addEventListener('resize', updateActiveSlide);
+  // Modificar la función de cerrar carrito para que no se cierre al modificar cantidad
+  document.addEventListener('click', (e) => {
+    // Solo cerrar si se hace click fuera del carrito Y no es un botón de cantidad
+    if (!cartPanel.contains(e.target) && 
+        !btnCarrito.contains(e.target) && 
+        !cartPanel.hasAttribute('hidden') &&
+        !e.target.closest('.quantity-btn') && // No cerrar si es botón de cantidad
+        !e.target.closest('.remove-btn')) {   // No cerrar si es botón de eliminar
+      cartPanel.setAttribute('hidden','');
+    }
+  });
 }
 
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
   // ... código existente ...
-  initNosotrosScroll();
+  initNosotrosFullpage();
+  initCarritoMejorado();
 });
