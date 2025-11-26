@@ -1,196 +1,97 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Pacha-Tee — Moda + Realidad Aumentada</title>
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="styles.css">
-
-  <!-- Icons (optional): lucide CDN for small icons fallback -->
-  <script defer src="https://unpkg.com/lucide@0.248.0/dist/lucide.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pacha-Tee</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-
-  <!-- NAV -->
-  <header class="nav" role="banner">
-    <div class="container nav-inner">
-      <div class="brand" onclick="scrollToSection('inicio')">
-        <img src="assets/LogoLargo.png" alt="Pacha-Tee" class="brand-logo" />
-      </div>
-
-      <nav class="nav-links" aria-label="Main navigation">
-        <a href="#inicio" data-target="inicio">Inicio</a>
-
-        <div class="dropdown" id="drop-nosotros">
-          <button aria-haspopup="true" aria-expanded="false">Nosotros ▾</button>
-          <div class="dropdown-menu" role="menu">
-            <a href="#mision" data-target="mision">Misión</a>
-            <a href="#vision" data-target="vision">Visión</a>
-            <a href="#objetivos" data-target="objetivos">Objetivos</a>
-          </div>
-        </div>
-
-        <a href="#tienda" data-target="tienda">Tienda</a>
-      </nav>
-
-      <div class="nav-actions">
-        <button id="btn-cart" aria-label="Abrir carrito" class="icon-btn">
-          <svg data-lucide="shopping-cart"></svg>
-          <span id="cart-count" class="cart-count" hidden>0</span>
-        </button>
-
-        <button id="btn-menu" class="hamburger" aria-label="Abrir menú">
-          <svg data-lucide="menu"></svg>
-        </button>
-      </div>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="logo">
+      <img src="assets/LogoLargo.png" alt="Pacha-Tee Logo" />
     </div>
+    <nav>
+      <ul>
+        <li><a href="#inicio">Inicio</a></li>
+        <li class="submenu">
+          <a href="#nosotros">Nosotros</a>
+          <ul class="dropdown">
+            <li><a href="#mision">Misión</a></li>
+            <li><a href="#vision">Visión</a></li>
+            <li><a href="#objetivos">Objetivos</a></li>
+          </ul>
+        </li>
+        <li><a href="#tienda">Tienda</a></li>
+      </ul>
+    </nav>
   </header>
 
-  <!-- MOBILE MENU -->
-  <div id="mobile-menu" class="mobile-menu" hidden>
-    <a href="#inicio" data-target="inicio">Inicio</a>
-    <details>
-      <summary>Nosotros</summary>
-      <a href="#mision" data-target="mision">Misión</a>
-      <a href="#vision" data-target="vision">Visión</a>
-      <a href="#objetivos" data-target="objetivos">Objetivos</a>
-    </details>
-    <a href="#tienda" data-target="tienda">Tienda</a>
-    <div class="mobile-social">
-      <a href="https://www.instagram.com/pacha.tee/" target="_blank" rel="noopener noreferrer">
-        <img src="assets/instagram.png" alt="Instagram" />
-      </a>
+  <!-- HERO -->
+  <section id="inicio" class="hero">
+    <div class="hero-content">
+      <h1>Moda + Arte + Realidad Aumentada</h1>
+      <p>Prendas que cobran vida cuando las ves.</p>
     </div>
-  </div>
+    <img class="hero-logo" src="assets/LogoSoloDibujo.png" />
+  </section>
 
-  <main id="main">
+  <!-- NOSOTROS -->
+  <section id="nosotros" class="section">
+    <h2 class="title">Nosotros</h2>
 
-    <!-- HERO -->
-    <section id="inicio" class="hero section-full">
-      <div class="container hero-inner">
-        <img src="assets/LogoFondoVerde.png" alt="Pacha-Tee" class="hero-logo" />
-        <h1 class="hero-title">Pacha-Tee — Ilustración + Realidad Aumentada</h1>
-        <p class="hero-sub">Prendas interactivas con valor educativo y comercial. Explora la colección y vive la experiencia AR.</p>
-
-        <div class="hero-cta">
-          <a class="btn btn-primary" href="#tienda" data-target="tienda">Ver catálogo</a>
-          <button class="btn btn-outline" id="btn-demo">Ver demo AR</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- FEATURED -->
-    <section class="section padded bg-soft">
-      <div class="container">
-        <h2 class="section-title">Productos destacados</h2>
-        <div class="grid grid-2 featured-list" id="featured-list">
-          <!-- JS renders a few featured cards for demo -->
-        </div>
-      </div>
-    </section>
-
-    <!-- HOW AR WORKS -->
-    <section class="section padded">
-      <div class="container">
-        <h2 class="section-title">Cómo funciona la Realidad Aumentada</h2>
-        <p class="center muted mb-6">Escanea el diseño con nuestra app y descubre contenido interactivo y educativo.</p>
-        <div class="grid grid-3 steps">
-          <article class="step card"> <div class="round">1</div><h4>Escanea</h4><p>Apunta la cámara al diseño.</p></article>
-          <article class="step card"> <div class="round">2</div><h4>Descubre</h4><p>La ilustración cobra vida.</p></article>
-          <article class="step card"> <div class="round">3</div><h4>Interactúa</h4><p>Contenido educativo y juegos.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <!-- MISION -->
-    <section id="mision" class="section-full reveal">
-      <div class="container narrow card-lg">
-        <h2>Misión</h2>
-        <p>Desarrollar camisetas con ilustraciones interactivas, mediante un dispositivo electrónico utilizando la realidad aumentada para ofrecer experiencias visuales con un valor comercial y educativo, fomentando una nueva forma de interacción entre la moda, la tecnología y el aprendizaje.</p>
-      </div>
-    </section>
-
-    <!-- VISION -->
-    <section id="vision" class="section-full reveal bg-soft">
-      <div class="container narrow card-lg">
-        <h2>Visión</h2>
-        <p>El proyecto busca posicionarse como una propuesta innovadora en el mercado textil, integrando ilustración y realidad aumentada para ofrecer prendas interactivas con enfoque educativo y comercial.</p>
-      </div>
-    </section>
-
-    <!-- OBJETIVOS -->
-    <section id="objetivos" class="section-full reveal">
-      <div class="container narrow card-lg">
-        <h2>Objetivos</h2>
-        <ul>
-          <li>Diseñar y transformar ilustraciones originales para textiles con AR.</li>
-          <li>Elaborar archivos digitales para integración eficaz en material textil.</li>
-          <li>Analizar la aceptación del producto con pruebas y estudios de mercado.</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- TIENDA -->
-    <section id="tienda" class="section padded">
-      <div class="container">
-        <h2 class="section-title">Catálogo</h2>
-        <p class="center muted">Camisetas $13 • Tote Bags $5</p>
-
-        <div class="grid grid-3 product-grid" id="product-grid">
-          <!-- products injected by JS -->
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- CART PANEL -->
-  <aside id="cart-panel" class="cart-panel" hidden>
-    <div class="cart-header">
-      <h3>Tu carrito</h3>
-      <button id="cart-close" aria-label="Cerrar carrito">✕</button>
+    <div id="mision" class="card fade-in">
+      <h3>Misión</h3>
+      <p>Diseñar y comercializar camisetas con realidad aumentada que brinden experiencias visuales dinámicas con fines formativos y de entretenimiento.</p>
     </div>
-    <div class="cart-body" id="cart-body"></div>
-    <div class="cart-footer">
-      <div class="cart-total">Total: <strong id="cart-total">$0.00</strong></div>
-      <button id="checkout" class="btn btn-primary">Proceder al pago</button>
+
+    <div id="vision" class="card fade-in">
+      <h3>Visión</h3>
+      <p>Posicionarnos como una propuesta innovadora en el mercado textil, integrando ilustración y tecnología para crear experiencias interactivas.</p>
     </div>
-  </aside>
 
-  <!-- FOOTER (clean, instagram only) -->
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div class="footer-left">
-        <img src="assets/LogoSoloDibujo.png" alt="Pacha-Tee" class="footer-logo" />
-        <p class="muted">Ropa urbana con realidad aumentada para una experiencia única.</p>
+    <div id="objetivos" class="card fade-in">
+      <h3>Objetivos</h3>
+      <ul>
+        <li>Diseñar ilustraciones originales para camisetas y tote bags conectadas a RA.</li>
+        <li>Elaborar archivos digitales para uso con prendas de forma eficiente.</li>
+        <li>Analizar la aceptación del producto en el mercado mediante pruebas.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- TIENDA -->
+  <section id="tienda" class="section tienda-section">
+    <h2 class="title">Catálogo</h2>
+
+    <div class="productos">
+      <div class="item fade-in">
+        <img src="assets/sample-shirt.png" alt="Camiseta" />
+        <h4>Camiseta Interactiva</h4>
+        <p>$13</p>
+        <button>Agregar al carrito</button>
       </div>
 
-      <div class="footer-center">
-        <h4>Enlaces</h4>
-        <a href="#inicio">Inicio</a>
-        <a href="#mision">Misión</a>
-        <a href="#vision">Visión</a>
-        <a href="#tienda">Tienda</a>
-      </div>
-
-      <div class="footer-right">
-        <h4>Contacto</h4>
-        <p>info@pachatee.com</p>
-        <p>Guayaquil, Ecuador</p>
-        <div class="social-inline">
-          <a href="https://www.instagram.com/pacha.tee/" target="_blank" rel="noopener noreferrer">
-            <img src="assets/instagram.png" alt="Instagram" />
-          </a>
-        </div>
+      <div class="item fade-in">
+        <img src="assets/sample-tote.png" alt="Tote Bag" />
+        <h4>Tote Bag Interactiva</h4>
+        <p>$5</p>
+        <button>Agregar al carrito</button>
       </div>
     </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <img src="assets/LogoFondoVerde.png" class="footer-logo" />
+    <p>Síguenos en redes</p>
+    <a href="https://www.instagram.com/pacha.tee/" target="_blank" class="insta">Instagram</a>
+    <p>Guayaquil, Ecuador</p>
   </footer>
 
-  <!-- Scripts -->
   <script src="script.js"></script>
-  <script>if(window.lucide) lucide.createIcons()</script>
 </body>
 </html>
+
 
