@@ -22,14 +22,14 @@
     <nav class="nav-links" role="navigation">
       <a href="#inicio" data-target="inicio">Inicio</a>
 
-      <div class="submenu" id="submenu-nosotros">
-        <button id="btn-nosotros" aria-expanded="false">Nosotros ▾</button>
-        <div class="dropdown" id="dropdown-nosotros" hidden>
-        <a href="#mision-slide" data-target="mision-slide">Misión</a>
-        <a href="#vision-slide" data-target="vision-slide">Visión</a>
-        <a href="#objetivos-slide" data-target="objetivos-slide">Objetivo</a>
-        </div>
-      </div>
+<div class="submenu" id="submenu-nosotros">
+  <button id="btn-nosotros" aria-expanded="false">Nosotros ▾</button>
+  <div class="dropdown" id="dropdown-nosotros" hidden>
+    <a href="#mision-page" onclick="goToPage(0); return false;">Misión</a>
+    <a href="#vision-page" onclick="goToPage(1); return false;">Visión</a>
+    <a href="#objetivos-page" onclick="goToPage(2); return false;">Objetivo</a>
+  </div>
+</div>
 
       <a href="#tienda" data-target="tienda">Tienda</a>
       <a href="#como-funciona" data-target="como-funciona">Cómo funciona</a>
@@ -49,12 +49,12 @@
   <!-- MOBILE MENU -->
   <div id="mobile-menu" class="mobile-menu" hidden>
     <a href="#inicio" data-target="inicio">Inicio</a>
-    <details>
-      <summary>Nosotros</summary>
-      <a href="#mision-page" onclick="goToPage(0)">Misión</a>
-      <a href="#vision-page" onclick="goToPage(1)">Visión</a>
-      <a href="#objetivos-page" onclick="goToPage(2)">Objetivo</a>
-    </details>
+<details>
+  <summary>Nosotros</summary>
+  <a href="#mision-page" onclick="goToPage(0); return false;">Misión</a>
+  <a href="#vision-page" onclick="goToPage(1); return false;">Visión</a>
+  <a href="#objetivos-page" onclick="goToPage(2); return false;">Objetivo</a>
+</details>
     <a href="#tienda" data-target="tienda">Tienda</a>
     <a href="#como-funciona" data-target="como-funciona">Cómo funciona</a>
     <div class="mobile-social">
@@ -155,14 +155,7 @@
       </div>
     </section>
 
-        <!-- NOSOTROS SCROLL SECTION -->
-    <section class="nosotros-scroll-section">
-      <!-- MISIÓN -->
-      <div class="nosotros-slide" id="mision-slide">
-        <div class="container">
-          <div class="nosotros-content">
-            <h2 class="nosotros-title">Misión</h2>
-            <div class    <!-- NOSOTROS FULLPAGE SECTION -->
+        <!-- NOSOTROS FULLPAGE SECTION -->
     <section class="nosotros-fullpage">
       <!-- MISIÓN -->
       <div class="nosotros-page active" id="mision-page">
@@ -221,6 +214,9 @@
         </div>
       </div>
     </section>
+
+
+    
     <!-- TIENDA -->
     <section id="tienda" class="section padded">
       <div class="container">
