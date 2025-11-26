@@ -1,96 +1,227 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pacha-Tee</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pacha-Tee — Moda + Realidad Aumentada</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- NAVBAR -->
-  <header class="navbar">
-    <div class="logo">
-      <img src="assets/LogoLargo.png" alt="Pacha-Tee Logo" />
+
+  <!-- NAV -->
+  <header class="navbar" role="banner">
+    <div class="logo" onclick="scrollToSection('inicio')">
+      <img src="assets/LogoLargo.png" alt="Pacha-Tee" />
     </div>
-    <nav>
-      <ul>
-        <li><a href="#inicio">Inicio</a></li>
-        <li class="submenu">
-          <a href="#nosotros">Nosotros</a>
-          <ul class="dropdown">
-            <li><a href="#mision">Misión</a></li>
-            <li><a href="#vision">Visión</a></li>
-            <li><a href="#objetivos">Objetivos</a></li>
-          </ul>
-        </li>
-        <li><a href="#tienda">Tienda</a></li>
-      </ul>
+
+    <nav class="nav-links" role="navigation">
+      <a href="#inicio" data-target="inicio">Inicio</a>
+
+      <div class="submenu" id="submenu-nosotros">
+        <button id="btn-nosotros" aria-expanded="false">Nosotros ▾</button>
+        <div class="dropdown" id="dropdown-nosotros" hidden>
+          <a href="#mision" data-target="mision">Misión</a>
+          <a href="#vision" data-target="vision">Visión</a>
+          <a href="#objetivos" data-target="objetivos">Objetivos</a>
+        </div>
+      </div>
+
+      <a href="#tienda" data-target="tienda">Tienda</a>
     </nav>
+
+    <div class="nav-actions">
+      <button id="btn-menu" class="hamburger" aria-label="Abrir menú">☰</button>
+    </div>
   </header>
 
-  <!-- HERO -->
-  <section id="inicio" class="hero">
-    <div class="hero-content">
-      <h1>Moda + Arte + Realidad Aumentada</h1>
-      <p>Prendas que cobran vida cuando las ves.</p>
+  <!-- MOBILE MENU -->
+  <div id="mobile-menu" class="mobile-menu" hidden>
+    <a href="#inicio" data-target="inicio">Inicio</a>
+    <details>
+      <summary>Nosotros</summary>
+      <a href="#mision" data-target="mision">Misión</a>
+      <a href="#vision" data-target="vision">Visión</a>
+      <a href="#objetivos" data-target="objetivos">Objetivos</a>
+    </details>
+    <a href="#tienda" data-target="tienda">Tienda</a>
+    <div class="mobile-social">
+      <a href="https://www.instagram.com/pacha.tee/" target="_blank" rel="noopener noreferrer">
+        <img src="assets/instagram.png" alt="Instagram" />
+      </a>
     </div>
-    <img class="hero-logo" src="assets/LogoSoloDibujo.png" />
-  </section>
+  </div>
 
-  <!-- NOSOTROS -->
-  <section id="nosotros" class="section">
-    <h2 class="title">Nosotros</h2>
+  <main id="main">
 
-    <div id="mision" class="card fade-in">
-      <h3>Misión</h3>
-      <p>Diseñar y comercializar camisetas con realidad aumentada que brinden experiencias visuales dinámicas con fines formativos y de entretenimiento.</p>
-    </div>
-
-    <div id="vision" class="card fade-in">
-      <h3>Visión</h3>
-      <p>Posicionarnos como una propuesta innovadora en el mercado textil, integrando ilustración y tecnología para crear experiencias interactivas.</p>
-    </div>
-
-    <div id="objetivos" class="card fade-in">
-      <h3>Objetivos</h3>
-      <ul>
-        <li>Diseñar ilustraciones originales para camisetas y tote bags conectadas a RA.</li>
-        <li>Elaborar archivos digitales para uso con prendas de forma eficiente.</li>
-        <li>Analizar la aceptación del producto en el mercado mediante pruebas.</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- TIENDA -->
-  <section id="tienda" class="section tienda-section">
-    <h2 class="title">Catálogo</h2>
-
-    <div class="productos">
-      <div class="item fade-in">
-        <img src="assets/sample-shirt.png" alt="Camiseta" />
-        <h4>Camiseta Interactiva</h4>
-        <p>$13</p>
-        <button>Agregar al carrito</button>
+    <!-- HERO -->
+    <section id="inicio" class="hero section-full">
+      <div class="hero-content">
+        <img src="assets/LogoFondoVerde.png" alt="Pacha-Tee" class="hero-logo" />
+        <h1 class="hero-title">Pacha-Tee — Ilustración + Realidad Aumentada</h1>
+        <p class="hero-sub">Prendas interactivas con valor educativo y comercial. Explora la colección y vive la experiencia AR.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#tienda" data-target="tienda">Ver catálogo</a>
+          <button class="btn btn-outline" id="btn-demo">Ver demo AR</button>
+        </div>
       </div>
+    </section>
 
-      <div class="item fade-in">
-        <img src="assets/sample-tote.png" alt="Tote Bag" />
-        <h4>Tote Bag Interactiva</h4>
-        <p>$5</p>
-        <button>Agregar al carrito</button>
+    <!-- FEATURED -->
+    <section class="section padded bg-soft">
+      <div class="container">
+        <h2 class="section-title">Productos destacados</h2>
+        <div class="grid grid-2 featured-list">
+          <article class="card">
+            <div class="left"><div style="padding:30px;background:var(--mint);height:180px;display:flex;align-items:center;justify-content:center">Imagen</div></div>
+            <div class="right">
+              <h3>Camiseta Ecológica AR</h3>
+              <p class="muted">Precio: $13</p>
+              <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center">
+                <span class="tag">Camisetas</span>
+                <button class="btn btn-primary btn-add" data-producto="Camiseta Ecológica AR">Agregar</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="left"><div style="padding:30px;background:var(--mint);height:180px;display:flex;align-items:center;justify-content:center">Imagen</div></div>
+            <div class="right">
+              <h3>Camiseta Océano AR</h3>
+              <p class="muted">Precio: $13</p>
+              <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center">
+                <span class="tag">Camisetas</span>
+                <button class="btn btn-primary btn-add" data-producto="Camiseta Océano AR">Agregar</button>
+              </div>
+            </div>
+          </article>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- HOW AR WORKS -->
+    <section class="section padded">
+      <div class="container">
+        <h2 class="section-title">Cómo funciona la Realidad Aumentada</h2>
+        <p class="center muted mb-6">Escanea el diseño con nuestra app y descubre contenido interactivo y educativo.</p>
+        <div class="grid grid-3 steps">
+          <article class="step card"> <div class="round">1</div><h4>Escanea</h4><p>Apunta la cámara al diseño.</p></article>
+          <article class="step card"> <div class="round">2</div><h4>Descubre</h4><p>La ilustración cobra vida.</p></article>
+          <article class="step card"> <div class="round">3</div><h4>Interactúa</h4><p>Contenido educativo y juegos.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- MISION -->
+    <section id="mision" class="section-full reveal">
+      <div class="card">
+        <h2>Misión</h2>
+        <p>Desarrollar camisetas con ilustraciones interactivas, mediante un dispositivo electrónico utilizando la realidad aumentada para ofrecer experiencias visuales con un valor comercial y educativo.</p>
+      </div>
+    </section>
+
+    <!-- VISION -->
+    <section id="vision" class="section-full reveal bg-soft">
+      <div class="card">
+        <h2>Visión</h2>
+        <p>El proyecto busca posicionarse como una propuesta innovadora en el mercado textil, integrando ilustración y realidad aumentada para ofrecer prendas interactivas con enfoque educativo y comercial.</p>
+      </div>
+    </section>
+
+    <!-- OBJETIVOS -->
+    <section id="objetivos" class="section-full reveal">
+      <div class="card">
+        <h2>Objetivos</h2>
+        <ul>
+          <li>Diseñar y transformar ilustraciones originales para textiles que muestren su contenido en AR.</li>
+          <li>Elaborar archivos digitales para integración eficiente en material textil.</li>
+          <li>Analizar la aceptación del producto con pruebas y estudios de mercado.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TIENDA -->
+    <section id="tienda" class="section padded">
+      <div class="container">
+        <h2 class="section-title">Catálogo</h2>
+        <p class="center muted">Camisetas $13 • Tote Bags $5</p>
+
+        <div class="grid grid-3 product-grid">
+          <article class="item">
+            <div class="media">Camiseta Ecológica AR</div>
+            <div class="body">
+              <div><h4 style="color:var(--verde)">Camiseta Ecológica AR</h4><p class="muted">Camiseta con ilustración AR</p></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+                <div class="muted">$13</div>
+                <button class="btn btn-primary btn-add" data-producto="Camiseta Ecológica AR">Agregar</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="item">
+            <div class="media">Tote Bag Natural</div>
+            <div class="body">
+              <div><h4 style="color:var(--verde)">Tote Bag Natural</h4><p class="muted">Bolso con diseño AR</p></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+                <div class="muted">$5</div>
+                <button class="btn btn-primary btn-add" data-producto="Tote Bag Natural">Agregar</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- añade más artículos si quieres -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- CART (oculto por ahora) -->
+  <aside id="cart-panel" class="cart-panel" hidden></aside>
 
   <!-- FOOTER -->
   <footer class="footer">
-    <img src="assets/LogoFondoVerde.png" class="footer-logo" />
-    <p>Síguenos en redes</p>
-    <a href="https://www.instagram.com/pacha.tee/" target="_blank" class="insta">Instagram</a>
-    <p>Guayaquil, Ecuador</p>
+    <img src="assets/LogoSoloDibujo.png" alt="Pacha-Tee" />
+    <p class="muted">Ropa urbana con realidad aumentada para una experiencia única.</p>
+    <a href="https://www.instagram.com/pacha.tee/" target="_blank" rel="noopener noreferrer">
+      <img src="assets/instagram.png" alt="Instagram" style="width:36px;margin-top:10px" />
+    </a>
+    <p style="margin-top:8px">Guayaquil, Ecuador</p>
   </footer>
 
+  <!-- SCRIPTS: tu script.js ya está en canvas; agrego aquí funcionalidades extra (menu toggle) -->
   <script src="script.js"></script>
+  <script>
+    // Toggle dropdown on click (desktop)
+    const btnNos = document.getElementById('btn-nosotros');
+    const dd = document.getElementById('dropdown-nosotros');
+    btnNos?.addEventListener('click', (e) => {
+      const open = !dd.hasAttribute('hidden');
+      if(open) dd.setAttribute('hidden',''); else dd.removeAttribute('hidden');
+      btnNos.setAttribute('aria-expanded', String(!open));
+    });
+
+    // Close dropdown if clicking outside
+    document.addEventListener('click', (e) => {
+      if(!document.getElementById('submenu-nosotros').contains(e.target)) {
+        dd?.setAttribute('hidden','');
+        btnNos?.setAttribute('aria-expanded','false');
+      }
+    });
+
+    // Mobile menu toggle
+    const btnMenu = document.getElementById('btn-menu');
+    const mobileMenu = document.getElementById('mobile-menu');
+    btnMenu?.addEventListener('click', () => {
+      if(mobileMenu.hasAttribute('hidden')) mobileMenu.removeAttribute('hidden');
+      else mobileMenu.setAttribute('hidden','');
+    });
+
+    // Smooth scroll helper (used by some header clicks)
+    function scrollToSection(id){
+      document.getElementById(id)?.scrollIntoView({behavior:'smooth', block:'start'});
+      if(mobileMenu && !mobileMenu.hasAttribute('hidden')) mobileMenu.setAttribute('hidden','');
+    }
+  </script>
 </body>
 </html>
 
