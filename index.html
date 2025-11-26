@@ -10,7 +10,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
+  <!-- PAGE NAVIGATION -->
+  <div class="page-navigation"></div>
+  
   <!-- NAV -->
   <header class="navbar" role="banner">
     <div class="logo" onclick="scrollToSection('inicio')">
@@ -49,9 +51,9 @@
     <a href="#inicio" data-target="inicio">Inicio</a>
     <details>
       <summary>Nosotros</summary>
-      <a href="#mision" data-target="mision">Misión</a>
-      <a href="#vision" data-target="vision">Visión</a>
-      <a href="#objetivos" data-target="objetivos">Objetivos</a>
+      <a href="#mision-page" onclick="goToPage(0)">Misión</a>
+      <a href="#vision-page" onclick="goToPage(1)">Visión</a>
+      <a href="#objetivos-page" onclick="goToPage(2)">Objetivo</a>
     </details>
     <a href="#tienda" data-target="tienda">Tienda</a>
     <a href="#como-funciona" data-target="como-funciona">Cómo funciona</a>
