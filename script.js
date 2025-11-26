@@ -293,3 +293,77 @@ function scrollToSection(id){
 document.addEventListener('DOMContentLoaded', () => {
   actualizarCarrito();
 });
+
+// --- SCROLL ANIMATION PARA SECCIÓN NOSOTROS ---
+function initNosotrosScroll() {
+  const nosotrosSection = document.querySelector('.nosotros-scroll-section');
+  const slides = document.querySelectorAll('.nosotros-slide');
+  const progressDots = document.querySelector('.scroll-progress');
+  
+  // Crear puntos de progreso
+  if (progressDots) {
+    const slideTitles = ['Misión', 'Visión', 'Objetivo'];
+    slideTitles.forEach((title, index) => {
+      const dot = document.createElement('div');
+      dot.className = 'progress-dot';
+      dot.setAttribute('data-title', title);
+      dot.addEventListener('click', () => {
+        scrollToSlide(index);
+      });
+      progressDots.appendChild(dot);
+    });
+  }
+  
+  const dots = document.querySelectorAll('.progress-dot');
+  
+  function updateActiveSlide() {
+    const scrollTop = window.pageYOffset;
+    const sectionTop = nosotrosSection.offsetTop;
+    const sectionHeight = nosotrosSection.offsetHeight;
+    const windowHeight = window.innerHeight;
+    
+    // Calcular slide activo basado en scroll
+    const scrollProgress = (scrollTop - sectionTop + windowHeight * 0.5) / sectionHeight;
+    const activeIndex = Math.max(0, Math.min(slides.length - 1, Math.floor(scrollProgress * slides.length)));
+    
+    // Actualizar slides
+    slides.forEach((slide, index) => {
+      if (index === activeIndex) {
+        slide.classList.add('active');
+      } else {
+        slide.classList.remove('active');
+      }
+    });
+    
+    // Actualizar puntos de progreso
+    dots.forEach((dot, index) => {
+      if (index === activeIndex) {
+        dot.classList.add('active');
+      } else {
+        dot.classList.remove('active');
+      }
+    });
+  }
+  
+  function scrollToSlide(index) {
+    const sectionTop = nosotrosSection.offsetTop;
+    const slideHeight = window.innerHeight;
+    const targetScroll = sectionTop + (index * slideHeight);
+    
+    window.scrollTo({
+      top: targetScroll,
+      behavior: 'smooth'
+    });
+  }
+  
+  // Inicializar
+  updateActiveSlide();
+  window.addEventListener('scroll', updateActiveSlide);
+  window.addEventListener('resize', updateActiveSlide);
+}
+
+// Inicializar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', () => {
+  // ... código existente ...
+  initNosotrosScroll();
+});
