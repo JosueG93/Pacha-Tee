@@ -14,7 +14,7 @@
   <!-- NAV -->
   <header class="navbar" role="banner">
     <div class="logo" onclick="scrollToSection('inicio')">
-      <img src="assets/LogoLargo.png" alt="Pacha-Tee" />
+      <img src="assets/logos/LogoLargo.png" alt="Pacha-Tee" />
     </div>
 
     <nav class="nav-links" role="navigation">
@@ -67,7 +67,7 @@
     <!-- HERO -->
     <section id="inicio" class="hero section-full">
       <div class="hero-content">
-        <img src="assets/LogoFondoVerde.png" alt="Pacha-Tee" class="hero-logo" />
+        <img src="assets/logos/LogoFondoVerde.png" alt="Pacha-Tee" class="hero-logo" />
         <h1 class="hero-title">Pacha-Tee — Ilustración + Realidad Aumentada</h1>
         <p class="hero-sub">Prendas interactivas con valor educativo y comercial. Explora la colección y vive la experiencia AR.</p>
         <div class="hero-cta">
@@ -90,7 +90,7 @@
         <div class="grid grid-2 featured-list">
           <article class="card product-card">
             <div class="product-image">
-              <div class="placeholder-image">Imagen Camiseta</div>
+              <img src="assets/productos/camisetas/camiseta-ecologica.jpg" alt="Camiseta Ecológica AR" />
               <div class="product-badge">Nuevo</div>
             </div>
             <div class="product-info">
@@ -106,7 +106,7 @@
 
           <article class="card product-card">
             <div class="product-image">
-              <div class="placeholder-image">Imagen Camiseta</div>
+              <img src="assets/productos/camisetas/camiseta-oceano.jpg" alt="Camiseta Océano AR" />
             </div>
             <div class="product-info">
               <h3>Camiseta Océano AR</h3>
@@ -153,36 +153,50 @@
       </div>
     </section>
 
-    <!-- MISION -->
-    <section id="mision" class="section-full reveal">
+    <!-- NOSOTROS SECTION -->
+    <section class="section padded bg-soft">
       <div class="container">
-        <div class="card mission-card">
-          <h2>Misión</h2>
-          <p>Desarrollar camisetas con ilustraciones interactivas, mediante un dispositivo electrónico utilizando la realidad aumentada para ofrecer experiencias visuales con un valor comercial y educativo.</p>
-        </div>
-      </div>
-    </section>
+        <h2 class="section-title">Sobre Pacha-Tee</h2>
+        <div class="grid grid-3">
+          <!-- MISIÓN -->
+          <article class="card info-card" id="mision">
+            <div class="info-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="var(--verde)" stroke-width="2"/>
+                <path d="M19.4 15C19.2669 15.3044 19.1337 15.6088 19.0005 15.9131C18.5752 16.8638 18.1499 17.8145 17.7246 18.7652C17.4118 19.4655 17.099 20.1658 16.7862 20.8661C16.376 21.7766 15.357 22.1876 14.4465 21.9311C13.536 21.6746 13.125 20.6556 13.4368 19.7908C13.6542 19.1876 13.8716 18.5844 14.089 17.9812C14.414 17.0934 14.739 16.2056 15.064 15.3178C14.3902 15.1076 13.6952 15 13 15C10.7909 15 9 16.7909 9 19C9 21.2091 10.7909 23 13 23C15.2091 23 17 21.2091 17 19C17 18.3048 16.8924 17.6098 16.6822 16.936C17.57 16.611 18.4578 16.286 19.3456 15.961C20.2104 15.6492 20.6746 14.6302 20.4181 13.7197C20.1616 12.8092 19.2501 12.345 18.394 12.6114C18.0896 12.7446 17.7852 12.8778 17.4809 13.011C16.5302 13.4363 15.5795 13.8616 14.6288 14.2869C14.3244 14.4201 14.02 14.5533 13.7156 14.6865C13.7156 14.5521 13.7156 14.4177 13.7156 14.2833C13.7156 13.1897 14.1897 12.1402 15.0355 11.3944C15.8813 10.6486 17.0207 10.2744 18.1822 10.3646C19.3437 10.4548 20.4207 11.0019 21.1355 11.8667C21.8503 12.7315 22.1401 13.8325 21.9355 14.9019C21.7309 15.9713 21.0523 16.9057 20.0733 17.4538C19.0943 18.0019 17.9137 18.1106 16.8453 17.7514" stroke="var(--verde)" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>Misión</h3>
+            <p>Desarrollar camisetas con ilustraciones interactivas mediante realidad aumentada para ofrecer experiencias visuales con valor comercial y educativo.</p>
+          </article>
 
-    <!-- VISION -->
-    <section id="vision" class="section-full reveal bg-soft">
-      <div class="container">
-        <div class="card mission-card">
-          <h2>Visión</h2>
-          <p>El proyecto busca posicionarse como una propuesta innovadora en el mercado textil, integrando ilustración y realidad aumentada para ofrecer prendas interactivas con enfoque educativo y comercial.</p>
-        </div>
-      </div>
-    </section>
+          <!-- VISIÓN -->
+          <article class="card info-card" id="vision">
+            <div class="info-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="var(--verde)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="var(--verde)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Visión</h3>
+            <p>Posicionarnos como propuesta innovadora en el mercado textil, integrando ilustración y realidad aumentada para ofrecer prendas interactivas con enfoque educativo y comercial.</p>
+          </article>
 
-    <!-- OBJETIVOS -->
-    <section id="objetivos" class="section-full reveal">
-      <div class="container">
-        <div class="card mission-card">
-          <h2>Objetivos</h2>
-          <ul class="objectives-list">
-            <li>Diseñar y transformar ilustraciones originales para textiles que muestren su contenido en AR.</li>
-            <li>Elaborar archivos digitales para integración eficiente en material textil.</li>
-            <li>Analizar la aceptación del producto con pruebas y estudios de mercado.</li>
-          </ul>
+          <!-- OBJETIVOS -->
+          <article class="card info-card" id="objetivos">
+            <div class="info-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="var(--verde)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M19.4 15C19.2669 15.3044 19.1337 15.6088 19.0005 15.9131C18.5752 16.8638 18.1499 17.8145 17.7246 18.7652C17.4118 19.4655 17.099 20.1658 16.7862 20.8661C16.376 21.7766 15.357 22.1876 14.4465 21.9311C13.536 21.6746 13.125 20.6556 13.4368 19.7908C13.6542 19.1876 13.8716 18.5844 14.089 17.9812C14.414 17.0934 14.739 16.2056 15.064 15.3178C14.3902 15.1076 13.6952 15 13 15C10.7909 15 9 16.7909 9 19C9 21.2091 10.7909 23 13 23C15.2091 23 17 21.2091 17 19C17 18.3048 16.8924 17.6098 16.6822 16.936C17.57 16.611 18.4578 16.286 19.3456 15.961C20.2104 15.6492 20.6746 14.6302 20.4181 13.7197C20.1616 12.8092 19.2501 12.345 18.394 12.6114C18.0896 12.7446 17.7852 12.8778 17.4809 13.011C16.5302 13.4363 15.5795 13.8616 14.6288 14.2869C14.3244 14.4201 14.02 14.5533 13.7156 14.6865C13.7156 14.5521 13.7156 14.4177 13.7156 14.2833C13.7156 13.1897 14.1897 12.1402 15.0355 11.3944C15.8813 10.6486 17.0207 10.2744 18.1822 10.3646C19.3437 10.4548 20.4207 11.0019 21.1355 11.8667C21.8503 12.7315 22.1401 13.8325 21.9355 14.9019C21.7309 15.9713 21.0523 16.9057 20.0733 17.4538C19.0943 18.0019 17.9137 18.1106 16.8453 17.7514" stroke="var(--verde)" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>Objetivos</h3>
+            <ul class="objectives-list-mini">
+              <li>Diseñar ilustraciones originales para textiles con AR</li>
+              <li>Elaborar archivos digitales para integración eficiente</li>
+              <li>Analizar aceptación del producto con estudios de mercado</li>
+            </ul>
+          </article>
         </div>
       </div>
     </section>
@@ -190,73 +204,274 @@
     <!-- TIENDA -->
     <section id="tienda" class="section padded">
       <div class="container">
-        <h2 class="section-title">Catálogo</h2>
+        <h2 class="section-title">Catálogo Completo</h2>
         <p class="center muted mb-6">Camisetas $13 • Tote Bags $5</p>
 
-        <div class="grid grid-3 product-grid">
-          <article class="item product-card">
-            <div class="product-image">
-              <div class="placeholder-image">Camiseta Ecológica AR</div>
-            </div>
-            <div class="product-info">
-              <div>
-                <h4>Camiseta Ecológica AR</h4>
-                <p class="product-description">Camiseta con ilustración interactiva sobre ecología.</p>
+        <!-- CAMISETAS -->
+        <div class="category-section">
+          <h3 class="category-title">Camisetas</h3>
+          <div class="grid grid-3 product-grid">
+            <!-- Camiseta 1 -->
+            <article class="item product-card">
+              <div class="product-image">
+                <img src="assets/productos/camisetas/camiseta-ecologica.jpg" alt="Camiseta Ecológica AR" />
               </div>
-              <div class="product-actions">
-                <div class="product-price">$13</div>
-                <button class="btn btn-primary btn-add" data-producto="Camiseta Ecológica AR" data-precio="13">Agregar</button>
+              <div class="product-info">
+                <div>
+                  <h4>Camiseta Ecológica AR</h4>
+                  <p class="product-description">Ilustración interactiva sobre sostenibilidad</p>
+                </div>
+                <div class="product-actions">
+                  <div class="product-price">$13</div>
+                  <button class="btn btn-primary btn-add" data-producto="Camiseta Ecológica AR" data-precio="13">Agregar</button>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
 
-          <article class="item product-card">
-            <div class="product-image">
-              <div class="placeholder-image">Tote Bag Natural</div>
-            </div>
-            <div class="product-info">
-              <div>
-                <h4>Tote Bag Natural</h4>
-                <p class="product-description">Bolso ecológico con diseño AR.</p>
+            <!-- Camiseta 2 -->
+            <article class="item product-card">
+              <div class="product-image">
+                <img src="assets/productos/camisetas/camiseta-oceano.jpg" alt="Camiseta Océano AR" />
               </div>
-              <div class="product-actions">
-                <div class="product-price">$5</div>
-                <button class="btn btn-primary btn-add" data-producto="Tote Bag Natural" data-precio="5">Agregar</button>
+              <div class="product-info">
+                <div>
+                  <h4>Camiseta Océano AR</h4>
+                  <p class="product-description">Diseño marino interactivo con AR</p>
+                </div>
+                <div class="product-actions">
+                  <div class="product-price">$13</div>
+                  <button class="btn btn-primary btn-add" data-producto="Camiseta Océano AR" data-precio="13">Agregar</button>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
 
-          <article class="item product-card">
-            <div class="product-image">
-              <div class="placeholder-image">Camiseta Océano AR</div>
-            </div>
-            <div class="product-info">
-              <div>
-                <h4>Camiseta Océano AR</h4>
-                <p class="product-description">Diseño marino interactivo con AR.</p>
+            <!-- Camiseta 3 -->
+            <article class="item product-card">
+              <div class="product-image">
+                <img src="assets/productos/camisetas/camiseta-selva.jpg" alt="Camiseta Selva AR" />
               </div>
-              <div class="product-actions">
-                <div class="product-price">$13</div>
-                <button class="btn btn-primary btn-add" data-producto="Camiseta Océano AR" data-precio="13">Agregar</button>
+              <div class="product-info">
+                <div>
+                  <h4>Camiseta Selva AR</h4>
+                  <p class="product-description">Fauna tropical en realidad aumentada</p>
+                </div>
+                <div class="product-actions">
+                  <div class="product-price">$13</div>
+                  <button class="btn btn-primary btn-add" data-producto="Camiseta Selva AR" data-precio="13">Agregar</button>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
 
-          <article class="item product-card">
-            <div class="product-image">
-              <div class="placeholder-image">Tote Bag Ecológico</div>
-            </div>
-            <div class="product-info">
-              <div>
-                <h4>Tote Bag Ecológico</h4>
-                <p class="product-description">Bolso con mensaje ecológico AR.</p>
+            <!-- Camiseta 4 -->
+            <article class="item product-card">
+              <div class="product-image">
+                <img src="assets/productos/camisetas/camiseta-montana.jpg" alt="Camiseta Montaña AR" />
               </div>
-              <div class="product-actions">
-                <div class="product-price">$5</div>
-                <button class="btn btn-primary btn-add" data-producto="Tote Bag Ecológico" data-precio="5">Agregar</button>
+              <div class="product-info">
+                <div>
+                  <h4>Camiseta Montaña AR</h4>
+                  <p class="product-description">Aventura y naturaleza en AR</p>
+                </div>
+                <div class="product-actions">
+                  <div class="product-price">$13</div>
+                  <button class="btn btn-primary btn-add" data-producto="Camiseta Montaña AR" data-precio="13">Agregar</button>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
+
+            <!-- Camiseta 5 -->
+            <article class="item product-card">
+              <div class="product-image">
+                <img src="assets/productos/camisetas/camiseta-ciudad.jpg" alt="Camiseta Ciudad AR" />
+              </div>
+              <div class="product-info">
+                <div>
+                  <h4>Camiseta Ciudad AR</h4>
+                  <p class="product-description">Arquitectura urbana interactiva</p>
+                </div>
+                <div class="product-actions">
+                  <div class="product-price">$13</div>
+                  <button class="btn btn-primary btn-add" data-producto="Camiseta Ciudad AR" data-precio="13">Agregar</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- Camiseta 6 -->
+            <article class="item product-card">
+              <div class="product-image">
+                <img src="assets/productos/camisetas/camiseta-universo.jpg" alt="Camiseta Universo AR" />
+              </div>
+              <div class="product-info">
+                <div>
+                  <h4>Camiseta Universo AR</h4>
+                  <p class="product-description">Exploración espacial en AR</p>
+                </div>
+                <div class="product-actions">
+                  <div class="product-price">$13</div>
+                  <button class="btn btn-primary btn-add" data-producto="Camiseta Universo AR" data-precio="13">Agregar</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- Camiseta 7 -->
+            <article class="item product-card">
+              <div class="product-image">
+                <img src="assets/productos/camisetas/camiseta-animales.jpg" alt="Camiseta Animales AR" />
+              </div>
+              <div class="product-info">
+                <div>
+                  <h4>Camiseta Animales AR</h4>
+                  <p class="product-description">Fauna mundial interactiva</p>
+                </div>
+                <div class="product-actions">
+                  <div class="product-price">$13</div>
+                  <button class="btn btn-primary btn-add" data-producto="Camiseta Animales AR" data-precio="13">Agregar</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- Camiseta 8 -->
+            <article class="item product-card">
+              <div class="product-image">
+                <img src="assets/productos/camisetas/camiseta-abstracta.jpg" alt="Camiseta Abstracta AR" />
+              </div>
+              <div class="product-info">
+                <div>
+                  <h4>Camiseta Abstracta AR</h4>
+                  <p class="product-description">Arte abstracto en movimiento</p>
+                </div>
+                <div class="product-actions">
+                  <div class="product-price">$13</div>
+                  <button class="btn btn-primary btn-add" data-producto="Camiseta Abstracta AR" data-precio="13">Agregar</button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- TOTE BAGS -->
+        <div class="category-section">
+          <h3 class="category-title">Tote Bags</h3>
+          <div class="grid grid-3 product-grid">
+            <!-- Tote 1 -->
+            <article class="item product-card">
+              <div class="product-image">
+                <img src="assets/productos/totes/tote-natural.jpg" alt="Tote Bag Natural" />
+              </div>
+              <div class="product-info">
+                <div>
+                  <h4>Tote Bag Natural</h4>
+                  <p class="product-description">Bolso ecológico con diseño AR</p>
+                </div>
+                <div class="product-actions">
+                  <div class="product-price">$5</div>
+                  <button class="btn btn-primary btn-add" data-producto="Tote Bag Natural" data-precio="5">Agregar</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- Tote 2 -->
+            <article class="item product-card">
+              <div class="product-image">
+                <img src="assets/productos/totes/tote-ecologico.jpg" alt="Tote Bag Ecológico" />
+              </div>
+              <div class="product-info">
+                <div>
+                  <h4>Tote Bag Ecológico</h4>
+                  <p class="product-description">Bolso con mensaje ecológico AR</p>
+                </div>
+                <div class="product-actions">
+                  <div class="product-price">$5</div>
+                  <button class="btn btn-primary btn-add" data-producto="Tote Bag Ecológico" data-precio="5">Agregar</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- Tote 3 -->
+            <article class="item product-card">
+              <div class="product-image">
+                <img src="assets/productos/totes/tote-oceano.jpg" alt="Tote Bag Océano" />
+              </div>
+              <div class="product-info">
+                <div>
+                  <h4>Tote Bag Océano</h4>
+                  <p class="product-description">Diseño marino conservacionista</p>
+                </div>
+                <div class="product-actions">
+                  <div class="product-price">$5</div>
+                  <button class="btn btn-primary btn-add" data-producto="Tote Bag Océano" data-precio="5">Agregar</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- Tote 4 -->
+            <article class="item product-card">
+              <div class="product-image">
+                <img src="assets/productos/totes/tote-selva.jpg" alt="Tote Bag Selva" />
+              </div>
+              <div class="product-info">
+                <div>
+                  <h4>Tote Bag Selva</h4>
+                  <p class="product-description">Flora tropical interactiva</p>
+                </div>
+                <div class="product-actions">
+                  <div class="product-price">$5</div>
+                  <button class="btn btn-primary btn-add" data-producto="Tote Bag Selva" data-precio="5">Agregar</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- Tote 5 -->
+            <article class="item product-card">
+              <div class="product-image">
+                <img src="assets/productos/totes/tote-urbano.jpg" alt="Tote Bag Urbano" />
+              </div>
+              <div class="product-info">
+                <div>
+                  <h4>Tote Bag Urbano</h4>
+                  <p class="product-description">Estilo urbano con AR</p>
+                </div>
+                <div class="product-actions">
+                  <div class="product-price">$5</div>
+                  <button class="btn btn-primary btn-add" data-producto="Tote Bag Urbano" data-precio="5">Agregar</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- Tote 6 -->
+            <article class="item product-card">
+              <div class="product-image">
+                <img src="assets/productos/totes/tote-geometrico.jpg" alt="Tote Bag Geométrico" />
+              </div>
+              <div class="product-info">
+                <div>
+                  <h4>Tote Bag Geométrico</h4>
+                  <p class="product-description">Patrones geométricos en AR</p>
+                </div>
+                <div class="product-actions">
+                  <div class="product-price">$5</div>
+                  <button class="btn btn-primary btn-add" data-producto="Tote Bag Geométrico" data-precio="5">Agregar</button>
+                </div>
+              </div>
+            </article>
+
+            <!-- Tote 7 -->
+            <article class="item product-card">
+              <div class="product-image">
+                <img src="assets/productos/totes/tote-minimal.jpg" alt="Tote Bag Minimal" />
+              </div>
+              <div class="product-info">
+                <div>
+                  <h4>Tote Bag Minimal</h4>
+                  <p class="product-description">Diseño minimalista con AR</p>
+                </div>
+                <div class="product-actions">
+                  <div class="product-price">$5</div>
+                  <button class="btn btn-primary btn-add" data-producto="Tote Bag Minimal" data-precio="5">Agregar</button>
+                </div>
+              </div>
+            </article>
+          </div>
         </div>
       </div>
     </section>
@@ -279,14 +494,14 @@
       </div>
       <button class="btn btn-primary btn-checkout" id="btn-checkout">Finalizar Compra</button>
     </div>
-  </div>
+  </aside>
 
   <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
       <div class="footer-content">
         <div class="footer-logo">
-          <img src="assets/LogoSoloDibujo.png" alt="Pacha-Tee" />
+          <img src="assets/logos/LogoSoloDibujo.png" alt="Pacha-Tee" />
           <p class="muted">Ropa urbana con realidad aumentada para una experiencia única.</p>
         </div>
         <div class="footer-links">
