@@ -297,23 +297,6 @@ document.addEventListener('click', (e) => {
     cartPanel.setAttribute('hidden','');
   }
 });
-}
-
-// Cerrar carrito al hacer clic fuera (pero no cuando se modifica cantidad)
-document.addEventListener('click', (e) => {
-  if (!cartPanel || !btnCarrito) return;
-  
-  const isQuantityBtn = e.target.closest('.quantity-btn');
-  const isRemoveBtn = e.target.closest('.remove-btn');
-  const isCartAction = isQuantityBtn || isRemoveBtn;
-  
-  if (!cartPanel.contains(e.target) && 
-      !btnCarrito.contains(e.target) && 
-      !cartPanel.hasAttribute('hidden') &&
-      !isCartAction) {
-    cartPanel.setAttribute('hidden','');
-  }
-});
 
 // --- BOTÓN DEMO AR ---
 const btnDemo = document.getElementById('btn-demo');
@@ -424,8 +407,8 @@ function initNosotrosFullpage() {
     }
   });
 
-  // Inicializar primera página
-  goToPage(0);
+  // NO inicializar automáticamente - solo cuando el usuario navegue a esa sección
+  // goToPage(0); // ESTA LÍNEA ESTÁ COMENTADA
 }
 
 // Inicializar cuando el DOM esté listo
