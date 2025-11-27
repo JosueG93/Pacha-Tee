@@ -546,12 +546,13 @@ body {
   font-weight: 500;
 }
 
-/* STEPS - VERSIÓN MÍNIMA */
+/* STEPS - VERSIÓN CORREGIDA */
 .checkout-steps {
   display: flex;
   justify-content: space-between;
   padding: 20px;
   border-bottom: 1px solid var(--borde);
+  position: relative;
 }
 
 .step {
@@ -560,21 +561,22 @@ body {
   padding: 10px;
   color: rgba(59, 75, 48, 0.5);
   font-weight: 500;
+  position: relative;
 }
 
 .step.active {
   color: var(--verde);
   font-weight: 600;
-  position: relative;
 }
 
+/* Punto indicador debajo del texto activo */
 .step.active::after {
   content: '';
   position: absolute;
-  bottom: -20px;
+  bottom: -10px;
   left: 50%;
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
   background: var(--verde);
   border-radius: 50%;
   transform: translateX(-50%);
