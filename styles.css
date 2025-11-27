@@ -546,7 +546,45 @@ body {
   font-weight: 500;
 }
 
-/* STEPS - VERSIÓN CORREGIDA */
+/* STEPS PARA "CÓMO FUNCIONA" */
+.steps {
+  margin-top: 50px;
+}
+
+.step.card {
+  text-align: center;
+  padding: 30px 20px;
+}
+
+.step.card .step-icon {
+  margin-bottom: 20px;
+}
+
+.step.card .round {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--verde);
+  color: var(--crema);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 auto;
+}
+
+.step.card h4 {
+  color: var(--verde);
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.step.card p {
+  color: rgba(59, 75, 48, 0.7);
+}
+
+/* STEPS PARA CHECKOUT - VERSIÓN CORREGIDA */
 .checkout-steps {
   display: flex;
   justify-content: space-between;
@@ -555,22 +593,24 @@ body {
   position: relative;
 }
 
-.step {
+.checkout-steps .step {
   flex: 1;
   text-align: center;
   padding: 10px;
   color: rgba(59, 75, 48, 0.5);
   font-weight: 500;
   position: relative;
+  background: var(--crema);
+  z-index: 2;
 }
 
-.step.active {
+.checkout-steps .step.active {
   color: var(--verde);
   font-weight: 600;
 }
 
-/* Punto indicador debajo del texto activo */
-.step.active::after {
+/* Punto indicador debajo del texto activo - SOLO para checkout */
+.checkout-steps .step.active::after {
   content: '';
   position: absolute;
   bottom: -10px;
@@ -1075,7 +1115,6 @@ body {
   margin: 0;
 }
 
-
 /* CHECKOUT CONTENT */
 .checkout-content {
   padding: 20px;
@@ -1397,7 +1436,7 @@ body.modal-open {
     padding: 15px;
   }
   
-  .step {
+  .checkout-steps .step {
     font-size: 0.8rem;
     padding: 5px;
   }
@@ -1459,13 +1498,13 @@ body.modal-open {
   }
 
   /* Asegurar que las animaciones de reveal funcionen */
-  .card, .item, .step, .product-card {
+  .card, .item, .step.card, .product-card {
     opacity: 0;
     transform: translateY(30px);
     transition: all 0.6s ease;
   }
 
-  .card.visible, .item.visible, .step.visible, .product-card.visible {
+  .card.visible, .item.visible, .step.card.visible, .product-card.visible {
     opacity: 1;
     transform: translateY(0);
   }
