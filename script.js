@@ -327,6 +327,7 @@ function scrollToSection(id){
 }
 
 // --- FULLPAGE SCROLL SIMPLE PARA SECCIÓN NOSOTROS ---
+// --- FULLPAGE SCROLL SIMPLE PARA SECCIÓN NOSOTROS ---
 function initNosotrosFullpage() {
   const pages = document.querySelectorAll('.nosotros-page');
   const navigation = document.querySelector('.page-navigation');
@@ -351,6 +352,13 @@ function initNosotrosFullpage() {
   }
 
   const dots = document.querySelectorAll('.page-dot');
+  const nosotrosSection = document.querySelector('.nosotros-fullpage');
+
+  // Ocultar navegación inicialmente
+  if (navigation) {
+    navigation.style.opacity = '0';
+    navigation.style.visibility = 'hidden';
+  }
 
   function goToPage(index) {
     if (index < 0 || index >= pages.length || isAnimating) return;
@@ -372,6 +380,90 @@ function initNosotrosFullpage() {
         dot.classList.remove('active');
       }
     });
+    
+    // Scroll a la sección
+    if (nosotrosSection) {
+      nosotrosSection.scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    // Permitir animación nuevamente después de un tiempo
+    setTimeout(() => {
+      isAnimating = false;
+    }, 800);
+  }
+
+  // Mostrar/ocultar navegación basado en scroll
+  function toggleNavigationVisibility() {
+    if (!navigation || !nosotrosSection) return;
+    
+    const rect = nosotrosSection.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    
+    // Mostrar navegación si la sección está visible en al menos 50% de la pantalla
+    const isSectionVisible = rect.top <= windowHeight * 0.5 && rect.bottom >= windowHeight * 0.5;
+    
+    if (isSectionVisible) {
+      navigation.style.opacity = '1';
+      navigation.style.visibility = 'visible';
+    } else {
+      navigation.style.opacity = '0';
+      navigation.style.visibility = 'hidden';
+    }
+  }
+
+  // Hacer la función global para los enlaces del menú
+  window.goToPage = goToPage;
+
+  // Control con teclado
+  document.addEventListener('keydown', (event) => {
+    if (isAnimating) return;
+    
+    if (!nosotrosSection) return;
+    
+    const rect = nosotrosSection.getBoundingClientRect();
+    const isInSection = rect.top <= 100 && rect.bottom >= 100;
+    
+    if (!isInSection) return;
+    
+    if (event.key === 'ArrowDown' || event.key === 'PageDown') {
+      event.preventDefault();
+      if (currentPage < pages.length - 1) {
+        goToPage(currentPage + 1);
+      }
+    } else if (event.key === 'ArrowUp' || event.key === 'PageUp') {
+      event.preventDefault();
+      if (currentPage > 0) {
+        goToPage(currentPage - 1);
+      }
+    }
+  });
+
+  // Observar cambios de scroll para mostrar/ocultar navegación
+  window.addEventListener('scroll', toggleNavigationVisibility);
+  window.addEventListener('resize', toggleNavigationVisibility);
+
+  // También mostrar navegación cuando se navega directamente a la sección
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && navigation) {
+        navigation.style.opacity = '1';
+        navigation.style.visibility = 'visible';
+      } else if (navigation) {
+        navigation.style.opacity = '0';
+        navigation.style.visibility = 'hidden';
+      }
+    });
+  }, {
+    threshold: 0.3
+  });
+
+  if (nosotrosSection) {
+    observer.observe(nosotrosSection);
+  }
+
+  // NO inicializar automáticamente - solo cuando el usuario navegue a esa sección
+  // goToPage(0); // ESTA LÍNEA ESTÁ COMENTADA
+}
     
     // Scroll a la sección
     const nosotrosSection = document.querySelector('.nosotros-fullpage');
