@@ -1178,11 +1178,6 @@ body {
 }
 
 /* Asegurar que la navegación esté oculta inicialmente */
-.page-navigation:not(.visible) {
-  opacity: 0 !important;
-  visibility: hidden !important;
-}
-  /* Asegurar que la navegación esté oculta inicialmente */
 .page-navigation {
   opacity: 0;
   visibility: hidden;
@@ -1195,5 +1190,18 @@ body {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+}
+
+/* Ocultar sección Nosotros inicialmente excepto la primera página */
+.nosotros-fullpage {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.nosotros-page:not(.active) {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 }
