@@ -279,16 +279,14 @@ function cerrarModalCheckout() {
   if (checkoutModal) {
     checkoutModal.setAttribute('hidden', '');
   }
-  limpiarFormulariosCheckout();
   
-  // Restaurar scroll del body
+  // Restaurar scroll del body - ESTO ES IMPORTANTE
   document.body.classList.remove('modal-open');
+  
+  limpiarFormulariosCheckout();
 }
 
 function limpiarFormulariosCheckout() {
-  // Cerrar modal primero
-  cerrarModalCheckout();
-  
   // Limpiar formulario de envío
   const shippingForm = document.querySelector('.shipping-form');
   if (shippingForm) {
@@ -747,6 +745,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initNosotrosFullpage();
   
   // Observar todas las tarjetas para animaciones
-  const allCards = document.querySelectorAll('.card, .item, .step, .product-card');
+  const allCards = document.querySelectorAll('.card, .item, .step.card, .product-card');
   allCards.forEach((card) => observer.observe(card));
 });
