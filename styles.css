@@ -1172,4 +1172,14 @@ body {
 .mobile-menu details[open] {
   background: rgba(59, 75, 48, 0.05);
 }
+  /* Transición suave para la navegación */
+.page-navigation {
+  transition: all 0.5s ease;
+}
+
+/* Asegurar que la navegación esté oculta inicialmente */
+.page-navigation:not(.visible) {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
 }
