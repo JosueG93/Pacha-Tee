@@ -31,7 +31,16 @@
   </div>
 </div>
 
-      <a href="#tienda" data-target="tienda">Tienda</a>
+<!-- En el NAV (después del submenú Nosotros) -->
+<div class="submenu" id="submenu-tienda">
+  <button id="btn-tienda" aria-expanded="false">Tienda ▾</button>
+  <div class="dropdown" id="dropdown-tienda" hidden>
+    <a href="#camisetas" onclick="filtrarProductos('camisetas'); return false;">Camisetas</a>
+    <a href="#tote-bags" onclick="filtrarProductos('tote-bags'); return false;">Tote Bags</a>
+    <a href="#tienda" onclick="filtrarProductos('todos'); return false;">Ver Todo</a>
+  </div>
+</div>
+      
       <a href="#como-funciona" data-target="como-funciona">Cómo funciona</a>
     </nav>
 
@@ -55,7 +64,13 @@
   <a href="#vision-page" onclick="goToPage(1); return false;">Visión</a>
   <a href="#objetivos-page" onclick="goToPage(2); return false;">Objetivo</a>
 </details>
-    <a href="#tienda" data-target="tienda">Tienda</a>
+    <!-- En el MOBILE MENU -->
+<details>
+  <summary>Tienda</summary>
+  <a href="#camisetas" onclick="filtrarProductos('camisetas'); return false;">Camisetas</a>
+  <a href="#tote-bags" onclick="filtrarProductos('tote-bags'); return false;">Tote Bags</a>
+  <a href="#tienda" onclick="filtrarProductos('todos'); return false;">Ver Todo</a>
+</details>
     <a href="#como-funciona" data-target="como-funciona">Cómo funciona</a>
     <div class="mobile-social">
       <a href="https://www.instagram.com/pacha.tee/" target="_blank" rel="noopener noreferrer">
@@ -222,9 +237,10 @@
         <p class="center muted mb-6">Camisetas $13 • Tote Bags $5</p>
 
         <!-- CAMISETAS -->
-        <div class="category-section">
-          <h3 class="category-title">Camisetas</h3>
-          <div class="grid grid-3 product-grid">
+<div class="category-section" id="seccion-camisetas">
+  <h3 class="category-title">Camisetas</h3>
+  <div class="grid grid-3 product-grid" id="grid-camisetas">
+
             <!-- Camiseta 1 -->
             <article class="item product-card">
               <div class="product-image">
@@ -364,9 +380,10 @@
         </div>
 
         <!-- TOTE BAGS -->
-        <div class="category-section">
-          <h3 class="category-title">Tote Bags</h3>
-          <div class="grid grid-3 product-grid">
+<div class="category-section" id="seccion-tote-bags">
+  <h3 class="category-title">Tote Bags</h3>
+  <div class="grid grid-3 product-grid" id="grid-tote-bags">
+
             <!-- Tote 1 -->
             <article class="item product-card">
               <div class="product-image">
