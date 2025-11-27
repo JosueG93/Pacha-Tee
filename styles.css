@@ -546,25 +546,12 @@ body {
   font-weight: 500;
 }
 
-/* STEPS - VERSIÓN SIMPLIFICADA Y CORREGIDA */
+/* STEPS - VERSIÓN MÍNIMA */
 .checkout-steps {
   display: flex;
   justify-content: space-between;
   padding: 20px;
   border-bottom: 1px solid var(--borde);
-  position: relative;
-}
-
-.checkout-steps::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50px;
-  right: 50px;
-  height: 2px;
-  background: var(--borde);
-  transform: translateY(-50%);
-  z-index: 1;
 }
 
 .step {
@@ -573,46 +560,24 @@ body {
   padding: 10px;
   color: rgba(59, 75, 48, 0.5);
   font-weight: 500;
-  position: relative;
-  z-index: 2;
 }
 
 .step.active {
   color: var(--verde);
   font-weight: 600;
-}
-
-/* Círculo indicador */
-.step::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 12px;
-  height: 12px;
-  background: var(--crema);
-  border: 2px solid var(--borde);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 3;
+  position: relative;
 }
 
 .step.active::after {
-  background: var(--verde);
-  border-color: var(--verde);
-}
-
-/* Línea conectadora entre pasos activos */
-.step.active ~ .step.active::before {
   content: '';
   position: absolute;
-  top: 50%;
-  left: -100%;
-  width: 100%;
-  height: 2px;
+  bottom: -20px;
+  left: 50%;
+  width: 6px;
+  height: 6px;
   background: var(--verde);
-  transform: translateY(-50%);
-  z-index: 1;
+  border-radius: 50%;
+  transform: translateX(-50%);
 }
 
 /* PRODUCT GRID */
