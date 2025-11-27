@@ -492,23 +492,175 @@
 
   </main>
 
-  <!-- CART -->
-  <aside id="cart-panel" class="cart-panel" hidden>
-    <div class="cart-header">
-      <h3>Tu Carrito</h3>
-      <button id="btn-close-cart" class="btn-close">×</button>
+<!-- CART -->
+<aside id="cart-panel" class="cart-panel" hidden>
+  <div class="cart-header">
+    <h3>Tu Carrito</h3>
+    <button id="btn-close-cart" class="btn-close">×</button>
+  </div>
+  <div class="cart-items" id="cart-items">
+    <!-- Los productos del carrito se insertarán aquí -->
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total">
+      <span>Total:</span>
+      <span id="cart-total-price">$0</span>
     </div>
-    <div class="cart-items" id="cart-items">
-      <!-- Los productos del carrito se insertarán aquí -->
+    <button class="btn btn-primary btn-checkout" id="btn-checkout">Finalizar Compra</button>
+  </div>
+</aside>
+
+<!-- CHECKOUT MODAL -->
+<div id="checkout-modal" class="modal" hidden>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Finalizar Compra</h3>
+      <button class="btn-close" id="btn-close-modal">×</button>
     </div>
-    <div class="cart-footer">
-      <div class="cart-total">
-        <span>Total:</span>
-        <span id="cart-total-price">$0</span>
+    
+    <div class="checkout-steps">
+      <div class="step active" data-step="1">Carrito</div>
+      <div class="step" data-step="2">Envío</div>
+      <div class="step" data-step="3">Pago</div>
+      <div class="step" data-step="4">Confirmación</div>
+    </div>
+
+    <div class="checkout-content">
+      <!-- Paso 1: Resumen del Carrito -->
+      <div class="checkout-step active" id="step-1">
+        <h4>Resumen de tu pedido</h4>
+        <div class="order-summary" id="order-summary">
+          <!-- Los productos se insertarán aquí -->
+        </div>
+        <div class="order-total">
+          <div class="total-line">
+            <span>Subtotal:</span>
+            <span id="subtotal-price">$0</span>
+          </div>
+          <div class="total-line">
+            <span>Envío:</span>
+            <span id="shipping-price">$3</span>
+          </div>
+          <div class="total-line final">
+            <span>Total:</span>
+            <span id="final-total-price">$0</span>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-next" data-next="2">Continuar con el envío</button>
       </div>
-      <button class="btn btn-primary btn-checkout" id="btn-checkout">Finalizar Compra</button>
+
+      <!-- Paso 2: Información de Envío -->
+      <div class="checkout-step" id="step-2">
+        <h4>Información de envío</h4>
+        <form class="shipping-form">
+          <div class="form-group">
+            <label for="full-name">Nombre completo</label>
+            <input type="text" id="full-name" required placeholder="Juan Pérez">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" required placeholder="juan@ejemplo.com">
+          </div>
+          <div class="form-group">
+            <label for="address">Dirección</label>
+            <input type="text" id="address" required placeholder="Av. Principal 123">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="city">Ciudad</label>
+              <input type="text" id="city" required placeholder="Guayaquil">
+            </div>
+            <div class="form-group">
+              <label for="zip">Código postal</label>
+              <input type="text" id="zip" required placeholder="090150">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="phone">Teléfono</label>
+            <input type="tel" id="phone" required placeholder="0991234567">
+          </div>
+        </form>
+        <div class="step-actions">
+          <button class="btn btn-outline btn-prev" data-prev="1">Volver al carrito</button>
+          <button class="btn btn-primary btn-next" data-next="3">Continuar al pago</button>
+        </div>
+      </div>
+
+      <!-- Paso 3: Método de Pago -->
+      <div class="checkout-step" id="step-3">
+        <h4>Método de pago</h4>
+        <div class="payment-methods">
+          <label class="payment-option">
+            <input type="radio" name="payment-method" value="card" checked>
+            <div class="payment-content">
+              <span class="payment-icon">💳</span>
+              <span>Tarjeta de crédito/débito</span>
+            </div>
+          </label>
+          
+          <label class="payment-option">
+            <input type="radio" name="payment-method" value="paypal">
+            <div class="payment-content">
+              <span class="payment-icon">🔵</span>
+              <span>PayPal</span>
+            </div>
+          </label>
+          
+          <label class="payment-option">
+            <input type="radio" name="payment-method" value="transfer">
+            <div class="payment-content">
+              <span class="payment-icon">🏦</span>
+              <span>Transferencia bancaria</span>
+            </div>
+          </label>
+        </div>
+
+        <div class="card-form" id="card-form">
+          <div class="form-group">
+            <label for="card-number">Número de tarjeta</label>
+            <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="card-expiry">Fecha de vencimiento</label>
+              <input type="text" id="card-expiry" placeholder="MM/AA" maxlength="5">
+            </div>
+            <div class="form-group">
+              <label for="card-cvc">CVC</label>
+              <input type="text" id="card-cvc" placeholder="123" maxlength="3">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="card-name">Nombre en la tarjeta</label>
+            <input type="text" id="card-name" placeholder="JUAN PEREZ">
+          </div>
+        </div>
+
+        <div class="step-actions">
+          <button class="btn btn-outline btn-prev" data-prev="2">Volver al envío</button>
+          <button class="btn btn-primary btn-pay" id="btn-process-payment">Pagar ahora</button>
+        </div>
+      </div>
+
+      <!-- Paso 4: Confirmación -->
+      <div class="checkout-step" id="step-4">
+        <div class="confirmation">
+          <div class="confirmation-icon">✅</div>
+          <h4>¡Pago exitoso!</h4>
+          <p>Tu pedido ha sido procesado correctamente.</p>
+          <div class="order-details">
+            <p><strong>Número de orden:</strong> <span id="order-number">PT-${Date.now().toString().slice(-6)}</span></p>
+            <p><strong>Total pagado:</strong> <span id="paid-amount">$0</span></p>
+            <p><strong>Método de pago:</strong> <span id="payment-method-used">Tarjeta</span></p>
+          </div>
+          <p class="confirmation-text">Te hemos enviado un email con los detalles de tu compra. 
+          Tu pedido llegará en 3-5 días hábiles.</p>
+        </div>
+        <button class="btn btn-primary" id="btn-finish">Volver a la tienda</button>
+      </div>
     </div>
-  </aside>
+  </div>
+</div>
 
   <!-- FOOTER -->
   <footer class="footer">
