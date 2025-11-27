@@ -254,7 +254,7 @@ if (btnCloseCart) {
   });
 }
 
-// --- CHECKOUT MEJORADO ---
+ // --- CHECKOUT MEJORADO ---
 const checkoutModal = document.getElementById('checkout-modal');
 const btnProcessPayment = document.getElementById('btn-process-payment');
 const btnFinish = document.getElementById('btn-finish');
@@ -271,13 +271,6 @@ if (btnCheckout) {
     checkoutModal.removeAttribute('hidden');
     renderizarOrderSummary();
     goToCheckoutStep(1);
-  });
-}
-
-// Cerrar modal
-if (btnCloseModal) {
-  btnCloseModal.addEventListener('click', () => {
-    checkoutModal.setAttribute('hidden', '');
   });
 }
 
@@ -321,6 +314,7 @@ if (btnFinish) {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && checkoutModal && !checkoutModal.hasAttribute('hidden')) {
     checkoutModal.setAttribute('hidden', '');
+    limpiarFormulariosCheckout();
   }
 });
 
@@ -328,6 +322,7 @@ document.addEventListener('keydown', (e) => {
 checkoutModal?.addEventListener('click', (e) => {
   if (e.target === checkoutModal) {
     checkoutModal.setAttribute('hidden', '');
+    limpiarFormulariosCheckout();
   }
 });
 
@@ -363,8 +358,6 @@ if (modalContent) {
   modalContent.addEventListener('click', (e) => {
     e.stopPropagation();
   });
-}
-
 }
 
 function goToCheckoutStep(step) {
@@ -497,13 +490,6 @@ document.getElementById('card-expiry')?.addEventListener('input', function(e) {
 
 document.getElementById('card-cvc')?.addEventListener('input', function(e) {
   e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 3);
-});
-
-// Cerrar modal al hacer click fuera
-checkoutModal?.addEventListener('click', (e) => {
-  if (e.target === checkoutModal) {
-    checkoutModal.setAttribute('hidden', '');
-  }
 });
 
 // Cerrar carrito SOLO cuando se hace click fuera del carrito y NO es una acción del carrito
