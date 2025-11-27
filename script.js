@@ -786,4 +786,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Observar todas las tarjetas para animaciones
   const allCards = document.querySelectorAll('.card, .item, .step.card, .product-card');
   allCards.forEach((card) => observer.observe(card));
+  
+  // INICIALIZAR FILTROS DE TIENDA - Mostrar todos los productos por defecto
+  filtrarProductos('todos');
 });
