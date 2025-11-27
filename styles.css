@@ -1557,28 +1557,43 @@ body.modal-open {
     visibility: hidden;
     pointer-events: none;
   }
-  /* FILTROS DE TIENDA */
+  /* FILTROS DE TIENDA - VERSIÓN MEJORADA */
+.contenedor-productos {
+  position: relative;
+  min-height: 500px;
+}
+
 .category-section {
   transition: all 0.5s ease;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .category-section.oculta {
   opacity: 0;
+  transform: translateY(20px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 0;
   overflow: hidden;
-  margin: 0;
-  padding: 0;
+  pointer-events: none;
 }
 
 .category-section.mostrar {
   opacity: 1;
+  transform: translateY(0);
+  position: relative;
   height: auto;
   overflow: visible;
+  pointer-events: all;
 }
 
 /* Indicador de categoría activa */
 .categoria-activa {
   background: rgba(59, 75, 48, 0.1);
   border-radius: 5px;
+  font-weight: 600;
 }
 }
