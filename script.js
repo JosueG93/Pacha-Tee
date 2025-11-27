@@ -228,20 +228,6 @@ if (btnNos && dd && submenuNosotros) {
   });
 }
 
-// --- MOBILE MENU TOGGLE ---
-const btnMenu = document.getElementById('btn-menu');
-const mobileMenu = document.getElementById('mobile-menu');
-
-if (btnMenu && mobileMenu) {
-  btnMenu.addEventListener('click', () => {
-    if(mobileMenu.hasAttribute('hidden')) {
-      mobileMenu.removeAttribute('hidden');
-    } else {
-      mobileMenu.setAttribute('hidden','');
-    }
-  });
-}
-
 // --- CARRITO PANEL TOGGLE ---
 const btnCarrito = document.getElementById('btn-carrito');
 const cartPanel = document.getElementById('cart-panel');
