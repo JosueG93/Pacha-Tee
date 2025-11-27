@@ -510,12 +510,12 @@
   </div>
 </aside>
 
-<!-- CHECKOUT MODAL -->
+<!-- CHECKOUT MODAL MEJORADO -->
 <div id="checkout-modal" class="modal" hidden>
   <div class="modal-content">
     <div class="modal-header">
       <h3>Finalizar Compra</h3>
-      <button class="btn-close" id="btn-close-modal">×</button>
+      <button class="btn-close" id="btn-close-modal" type="button" aria-label="Cerrar modal">×</button>
     </div>
     
     <div class="checkout-steps">
@@ -546,7 +546,7 @@
             <span id="final-total-price">$0</span>
           </div>
         </div>
-        <button class="btn btn-primary btn-next" data-next="2">Continuar con el envío</button>
+        <button class="btn btn-primary btn-next" data-next="2" type="button">Continuar con el envío</button>
       </div>
 
       <!-- Paso 2: Información de Envío -->
@@ -581,8 +581,8 @@
           </div>
         </form>
         <div class="step-actions">
-          <button class="btn btn-outline btn-prev" data-prev="1">Volver al carrito</button>
-          <button class="btn btn-primary btn-next" data-next="3">Continuar al pago</button>
+          <button class="btn btn-outline btn-prev" data-prev="1" type="button">Volver al carrito</button>
+          <button class="btn btn-primary btn-next" data-next="3" type="button">Continuar al pago</button>
         </div>
       </div>
 
@@ -637,8 +637,8 @@
         </div>
 
         <div class="step-actions">
-          <button class="btn btn-outline btn-prev" data-prev="2">Volver al envío</button>
-          <button class="btn btn-primary btn-pay" id="btn-process-payment">Pagar ahora</button>
+          <button class="btn btn-outline btn-prev" data-prev="2" type="button">Volver al envío</button>
+          <button class="btn btn-primary btn-pay" id="btn-process-payment" type="button">Pagar ahora</button>
         </div>
       </div>
 
@@ -649,14 +649,14 @@
           <h4>¡Pago exitoso!</h4>
           <p>Tu pedido ha sido procesado correctamente.</p>
           <div class="order-details">
-            <p><strong>Número de orden:</strong> <span id="order-number">PT-${Date.now().toString().slice(-6)}</span></p>
+            <p><strong>Número de orden:</strong> <span id="order-number">PT-984723</span></p>
             <p><strong>Total pagado:</strong> <span id="paid-amount">$0</span></p>
             <p><strong>Método de pago:</strong> <span id="payment-method-used">Tarjeta</span></p>
           </div>
           <p class="confirmation-text">Te hemos enviado un email con los detalles de tu compra. 
           Tu pedido llegará en 3-5 días hábiles.</p>
         </div>
-        <button class="btn btn-primary" id="btn-finish">Volver a la tienda</button>
+        <button class="btn btn-primary" id="btn-finish" type="button">Volver a la tienda</button>
       </div>
     </div>
   </div>
