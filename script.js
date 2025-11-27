@@ -327,25 +327,38 @@ document.querySelectorAll('.btn-prev').forEach(btn => {
   });
 });
 
+// Función para actualizar los pasos activos
+function actualizarPasosCheckout(stepActual) {
+  const steps = document.querySelectorAll('.checkout-steps .step');
+  
+  steps.forEach((step) => {
+    const stepNumber = parseInt(step.getAttribute('data-step'));
+    
+    // Remover clase active de todos
+    step.classList.remove('active');
+    
+    // Agregar clase active al paso actual y a los anteriores
+    if (stepNumber <= stepActual) {
+      step.classList.add('active');
+    }
+  });
+}
+
+// Función para navegar entre pasos - VERSIÓN CORREGIDA
 function goToCheckoutStep(step) {
-  // Ocultar todos los pasos
+  // Ocultar todos los pasos del contenido
   document.querySelectorAll('.checkout-step').forEach(stepEl => {
     stepEl.classList.remove('active');
   });
   
-  // Mostrar paso actual
+  // Mostrar paso actual del contenido
   const currentStep = document.getElementById(`step-${step}`);
   if (currentStep) {
     currentStep.classList.add('active');
   }
   
-  // Actualizar indicadores de pasos
-  document.querySelectorAll('.step').forEach(stepIndicator => {
-    stepIndicator.classList.remove('active');
-    if (parseInt(stepIndicator.getAttribute('data-step')) <= step) {
-      stepIndicator.classList.add('active');
-    }
-  });
+  // Actualizar indicadores de pasos (los círculos/indicadores visuales)
+  actualizarPasosCheckout(step);
 }
 
 function renderizarOrderSummary() {
