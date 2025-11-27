@@ -1557,4 +1557,28 @@ body.modal-open {
     visibility: hidden;
     pointer-events: none;
   }
+  /* FILTROS DE TIENDA */
+.category-section {
+  transition: all 0.5s ease;
+}
+
+.category-section.oculta {
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.category-section.mostrar {
+  opacity: 1;
+  height: auto;
+  overflow: visible;
+}
+
+/* Indicador de categoría activa */
+.categoria-activa {
+  background: rgba(59, 75, 48, 0.1);
+  border-radius: 5px;
+}
 }
