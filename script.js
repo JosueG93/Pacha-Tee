@@ -353,7 +353,7 @@ function initNosotrosFullpage() {
   const dots = document.querySelectorAll('.page-dot');
   const nosotrosSection = document.querySelector('.nosotros-fullpage');
 
-  // Ocultar navegación inicialmente - ESTO ES CLAVE
+  // Ocultar navegación inicialmente
   if (navigation) {
     navigation.style.opacity = '0';
     navigation.style.visibility = 'hidden';
@@ -367,10 +367,18 @@ function initNosotrosFullpage() {
     currentPage = index;
     
     // Ocultar todas las páginas
-    pages.forEach(page => page.classList.remove('active'));
+    pages.forEach(page => {
+      page.classList.remove('active');
+      page.style.opacity = '0';
+      page.style.visibility = 'hidden';
+      page.style.pointerEvents = 'none';
+    });
     
     // Mostrar página actual
     pages[currentPage].classList.add('active');
+    pages[currentPage].style.opacity = '1';
+    pages[currentPage].style.visibility = 'visible';
+    pages[currentPage].style.pointerEvents = 'auto';
     
     // Actualizar dots de navegación
     dots.forEach((dot, i) => {
@@ -381,9 +389,14 @@ function initNosotrosFullpage() {
       }
     });
     
-    // Scroll a la sección
+    // Scroll a la sección si no estamos ya en ella
     if (nosotrosSection) {
-      nosotrosSection.scrollIntoView({ behavior: 'smooth' });
+      const rect = nosotrosSection.getBoundingClientRect();
+      const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+      
+      if (!isInView) {
+        nosotrosSection.scrollIntoView({ behavior: 'smooth' });
+      }
     }
     
     setTimeout(() => {
@@ -391,24 +404,26 @@ function initNosotrosFullpage() {
     }, 800);
   }
 
-  // Control de visibilidad de la navegación - FUNCIÓN MEJORADA
+  // Control de visibilidad de la navegación
   function toggleNavigationVisibility() {
     if (!navigation || !nosotrosSection) return;
     
     const rect = nosotrosSection.getBoundingClientRect();
     const windowHeight = window.innerHeight;
     
-    // Mostrar navegación solo cuando la sección esté visible en al menos 30% de la pantalla
-    const isSectionVisible = rect.top <= windowHeight * 0.7 && rect.bottom >= windowHeight * 0.3;
+    // Mostrar navegación solo cuando la sección esté visible en al menos 50% de la pantalla
+    const isSectionVisible = rect.top <= windowHeight * 0.5 && rect.bottom >= windowHeight * 0.5;
     
     if (isSectionVisible) {
       navigation.style.opacity = '1';
       navigation.style.visibility = 'visible';
       navigation.style.pointerEvents = 'auto';
+      navigation.classList.add('visible');
     } else {
       navigation.style.opacity = '0';
       navigation.style.visibility = 'hidden';
       navigation.style.pointerEvents = 'none';
+      navigation.classList.remove('visible');
     }
   }
 
@@ -440,14 +455,29 @@ function initNosotrosFullpage() {
   });
 
   // Observar cambios de scroll para mostrar/ocultar navegación
-  window.addEventListener('scroll', toggleNavigationVisibility);
+  let scrollTimeout;
+  function handleScroll() {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(toggleNavigationVisibility, 50);
+  }
+
+  window.addEventListener('scroll', handleScroll);
   window.addEventListener('resize', toggleNavigationVisibility);
 
   // Inicializar visibilidad
   toggleNavigationVisibility();
 
-  // NO inicializar automáticamente - solo cuando el usuario navegue a esa sección
+  // Solo mostrar la primera página al inicio
+  pages.forEach((page, index) => {
+    if (index !== 0) {
+      page.classList.remove('active');
+      page.style.opacity = '0';
+      page.style.visibility = 'hidden';
+      page.style.pointerEvents = 'none';
+    }
+  });
 }
+
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
   actualizarCarrito();
