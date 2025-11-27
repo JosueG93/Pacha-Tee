@@ -276,24 +276,25 @@ function abrirModalCheckout() {
 }
 
 function cerrarModalCheckout() {
+  // Cerrar modal primero
   if (checkoutModal) {
     checkoutModal.setAttribute('hidden', '');
   }
   
-  // Restaurar scroll del body - ESTO ES IMPORTANTE
+  // RESTAURAR SCROLL DEL BODY - ESTO ES LO MÁS IMPORTANTE
   document.body.classList.remove('modal-open');
   
+  // Limpiar formularios después de cerrar
   limpiarFormulariosCheckout();
 }
 
 function limpiarFormulariosCheckout() {
-  // Limpiar formulario de envío
+  // SOLO limpiar formularios, NO cerrar modal aquí
   const shippingForm = document.querySelector('.shipping-form');
   if (shippingForm) {
     shippingForm.reset();
   }
   
-  // Limpiar formulario de tarjeta
   const cardInputs = document.querySelectorAll('#card-form input');
   cardInputs.forEach(input => {
     input.value = '';
@@ -509,47 +510,6 @@ if (modalContent) {
     e.stopPropagation();
   });
 }
-
-// Formatear inputs de tarjeta
-document.getElementById('card-number')?.addEventListener('input', function(e) {
-  let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-  let formattedValue = value.match(/.{1,4}/g)?.join(' ');
-  if (formattedValue) {
-    e.target.value = formattedValue;
-  }
-});
-
-document.getElementById('card-expiry')?.addEventListener('input', function(e) {
-  let value = e.target.value.replace(/[^0-9]/g, '');
-  if (value.length >= 2) {
-    e.target.value = value.slice(0, 2) + '/' + value.slice(2, 4);
-  }
-});
-
-document.getElementById('card-cvc')?.addEventListener('input', function(e) {
-  e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 3);
-});
-
-// Cerrar carrito SOLO cuando se hace click fuera del carrito y NO es una acción del carrito
-document.addEventListener('click', (e) => {
-  if (!cartPanel || !btnCarrito || cartPanel.hasAttribute('hidden')) return;
-  
-  // Verificar si el click es en elementos relacionados con el carrito
-  const isCartElement = 
-    cartPanel.contains(e.target) || 
-    btnCarrito.contains(e.target) ||
-    e.target.closest('.quantity-btn') ||
-    e.target.closest('.remove-btn') ||
-    e.target.closest('.btn-add') ||
-    e.target.closest('.cart-item') ||
-    e.target.closest('.cart-header') ||
-    e.target.closest('.cart-footer');
-  
-  // Solo cerrar si NO es un elemento del carrito
-  if (!isCartElement) {
-    cartPanel.setAttribute('hidden','');
-  }
-});
 
 // --- BOTÓN DEMO AR ---
 const btnDemo = document.getElementById('btn-demo');
