@@ -533,6 +533,85 @@ function scrollToSection(id){
   }
 }
 
+// --- FILTRADO DE PRODUCTOS EN TIENDA ---
+function filtrarProductos(categoria) {
+  const seccionCamisetas = document.getElementById('seccion-camisetas');
+  const seccionToteBags = document.getElementById('seccion-tote-bags');
+  
+  // Remover clases activas de todos los enlaces
+  document.querySelectorAll('#dropdown-tienda a, .mobile-menu details[open] a').forEach(link => {
+    link.classList.remove('categoria-activa');
+  });
+  
+  // Agregar clase activa al enlace clickeado
+  const enlaceActivo = document.querySelector(`a[href="#${categoria}"]`);
+  if (enlaceActivo) {
+    enlaceActivo.classList.add('categoria-activa');
+  }
+  
+  // Mostrar/ocultar secciones según la categoría
+  switch(categoria) {
+    case 'camisetas':
+      seccionCamisetas.classList.remove('oculta');
+      seccionCamisetas.classList.add('mostrar');
+      seccionToteBags.classList.add('oculta');
+      seccionToteBags.classList.remove('mostrar');
+      break;
+      
+    case 'tote-bags':
+      seccionCamisetas.classList.add('oculta');
+      seccionCamisetas.classList.remove('mostrar');
+      seccionToteBags.classList.remove('oculta');
+      seccionToteBags.classList.add('mostrar');
+      break;
+      
+    case 'todos':
+    default:
+      seccionCamisetas.classList.remove('oculta');
+      seccionCamisetas.classList.add('mostrar');
+      seccionToteBags.classList.remove('oculta');
+      seccionToteBags.classList.add('mostrar');
+      break;
+  }
+  
+  // Cerrar menús móviles si están abiertos
+  if (mobileMenu && !mobileMenu.hasAttribute('hidden')) {
+    mobileMenu.setAttribute('hidden', '');
+  }
+  
+  // Scroll suave a la sección de tienda
+  const tiendaSection = document.getElementById('tienda');
+  if (tiendaSection) {
+    tiendaSection.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+// --- TOGGLE DROPDOWN TIENDA (igual que Nosotros) ---
+const btnTienda = document.getElementById('btn-tienda');
+const ddTienda = document.getElementById('dropdown-tienda');
+const submenuTienda = document.getElementById('submenu-tienda');
+
+if (btnTienda && ddTienda && submenuTienda) {
+  btnTienda.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const open = !ddTienda.hasAttribute('hidden');
+    if(open) {
+      ddTienda.setAttribute('hidden','');
+    } else {
+      ddTienda.removeAttribute('hidden');
+    }
+    btnTienda.setAttribute('aria-expanded', String(!open));
+  });
+
+  // Cerrar dropdown al hacer clic fuera
+  document.addEventListener('click', (e) => {
+    if(!submenuTienda.contains(e.target)) {
+      ddTienda.setAttribute('hidden','');
+      btnTienda.setAttribute('aria-expanded','false');
+    }
+  });
+}
+
 // --- FULLPAGE SCROLL CORREGIDO PARA SECCIÓN NOSOTROS ---
 function initNosotrosFullpage() {
   const pages = document.querySelectorAll('.nosotros-page');
