@@ -254,24 +254,60 @@ if (btnCloseCart) {
   });
 }
 
- // --- CHECKOUT MEJORADO ---
+// --- CHECKOUT MEJORADO ---
 const checkoutModal = document.getElementById('checkout-modal');
 const btnProcessPayment = document.getElementById('btn-process-payment');
 const btnFinish = document.getElementById('btn-finish');
 const btnCloseModal = document.getElementById('btn-close-modal');
 
+// FUNCIONES MEJORADAS PARA EL MODAL
+function abrirModalCheckout() {
+  if (carrito.length === 0) {
+    mostrarNotificacion('Tu carrito está vacío');
+    return;
+  }
+  
+  checkoutModal.removeAttribute('hidden');
+  renderizarOrderSummary();
+  goToCheckoutStep(1);
+  
+  // Prevenir scroll del body
+  document.body.classList.add('modal-open');
+}
+
+function cerrarModalCheckout() {
+  if (checkoutModal) {
+    checkoutModal.setAttribute('hidden', '');
+  }
+  limpiarFormulariosCheckout();
+  
+  // Restaurar scroll del body
+  document.body.classList.remove('modal-open');
+}
+
+function limpiarFormulariosCheckout() {
+  // Cerrar modal primero
+  cerrarModalCheckout();
+  
+  // Limpiar formulario de envío
+  const shippingForm = document.querySelector('.shipping-form');
+  if (shippingForm) {
+    shippingForm.reset();
+  }
+  
+  // Limpiar formulario de tarjeta
+  const cardInputs = document.querySelectorAll('#card-form input');
+  cardInputs.forEach(input => {
+    input.value = '';
+  });
+  
+  // Resetear al paso 1
+  goToCheckoutStep(1);
+}
+
 // Abrir modal de checkout
 if (btnCheckout) {
-  btnCheckout.addEventListener('click', () => {
-    if (carrito.length === 0) {
-      mostrarNotificacion('Tu carrito está vacío');
-      return;
-    }
-    
-    checkoutModal.removeAttribute('hidden');
-    renderizarOrderSummary();
-    goToCheckoutStep(1);
-  });
+  btnCheckout.addEventListener('click', abrirModalCheckout);
 }
 
 // Navegación entre pasos del checkout
@@ -291,75 +327,6 @@ document.querySelectorAll('.btn-prev').forEach(btn => {
   });
 });
 
-// Procesar pago
-if (btnProcessPayment) {
-  btnProcessPayment.addEventListener('click', processPayment);
-}
-
-// --- MEJORAS PARA EL MODAL CHECKOUT ---
-
-// 1. Cerrar modal al hacer click en "Volver a la tienda"
-if (btnFinish) {
-  btnFinish.addEventListener('click', () => {
-    checkoutModal.setAttribute('hidden', '');
-    cartPanel.setAttribute('hidden', '');
-    mostrarNotificacion('¡Gracias por tu compra! Recibirás un email de confirmación.');
-    
-    // Limpiar formularios
-    limpiarFormulariosCheckout();
-  });
-}
-
-// 2. Cerrar modal con la tecla ESC
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && checkoutModal && !checkoutModal.hasAttribute('hidden')) {
-    checkoutModal.setAttribute('hidden', '');
-    limpiarFormulariosCheckout();
-  }
-});
-
-// 3. Mejorar el cierre al hacer click fuera del modal
-checkoutModal?.addEventListener('click', (e) => {
-  if (e.target === checkoutModal) {
-    checkoutModal.setAttribute('hidden', '');
-    limpiarFormulariosCheckout();
-  }
-});
-
-// 4. Función para limpiar formularios cuando se cierra el modal
-function limpiarFormulariosCheckout() {
-  // Limpiar formulario de envío
-  const shippingForm = document.querySelector('.shipping-form');
-  if (shippingForm) {
-    shippingForm.reset();
-  }
-  
-  // Limpiar formulario de tarjeta
-  const cardInputs = document.querySelectorAll('#card-form input');
-  cardInputs.forEach(input => {
-    input.value = '';
-  });
-  
-  // Resetear al paso 1
-  goToCheckoutStep(1);
-}
-
-// 5. También agregar cierre al botón "×" del modal
-if (btnCloseModal) {
-  btnCloseModal.addEventListener('click', () => {
-    checkoutModal.setAttribute('hidden', '');
-    limpiarFormulariosCheckout();
-  });
-}
-
-// 6. Prevenir que el click dentro del modal content lo cierre
-const modalContent = document.querySelector('.modal-content');
-if (modalContent) {
-  modalContent.addEventListener('click', (e) => {
-    e.stopPropagation();
-  });
-}
-
 function goToCheckoutStep(step) {
   // Ocultar todos los pasos
   document.querySelectorAll('.checkout-step').forEach(stepEl => {
@@ -367,7 +334,10 @@ function goToCheckoutStep(step) {
   });
   
   // Mostrar paso actual
-  document.getElementById(`step-${step}`).classList.add('active');
+  const currentStep = document.getElementById(`step-${step}`);
+  if (currentStep) {
+    currentStep.classList.add('active');
+  }
   
   // Actualizar indicadores de pasos
   document.querySelectorAll('.step').forEach(stepIndicator => {
@@ -405,10 +375,10 @@ function renderizarOrderSummary() {
   const shipping = 3;
   const total = subtotal + shipping;
   
-  orderSummary.innerHTML = summaryHTML;
-  subtotalPrice.textContent = `$${subtotal.toFixed(2)}`;
-  finalTotalPrice.textContent = `$${total.toFixed(2)}`;
-  paidAmount.textContent = `$${total.toFixed(2)}`;
+  if (orderSummary) orderSummary.innerHTML = summaryHTML;
+  if (subtotalPrice) subtotalPrice.textContent = `$${subtotal.toFixed(2)}`;
+  if (finalTotalPrice) finalTotalPrice.textContent = `$${total.toFixed(2)}`;
+  if (paidAmount) paidAmount.textContent = `$${total.toFixed(2)}`;
 }
 
 function validateStep(step) {
@@ -422,11 +392,11 @@ function validateStep(step) {
       
       requiredFields.forEach(fieldId => {
         const field = document.getElementById(fieldId);
-        if (!field.value.trim()) {
-          field.style.borderColor = '#e74c3c';
+        if (!field || !field.value.trim()) {
+          if (field) field.style.borderColor = '#e74c3c';
           isValid = false;
         } else {
-          field.style.borderColor = '';
+          if (field) field.style.borderColor = '';
         }
       });
       
@@ -437,10 +407,15 @@ function validateStep(step) {
       return isValid;
       
     case 3: // Pago
-      const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
-      document.getElementById('payment-method-used').textContent = 
-        paymentMethod === 'card' ? 'Tarjeta de crédito' : 
-        paymentMethod === 'paypal' ? 'PayPal' : 'Transferencia bancaria';
+      const paymentMethod = document.querySelector('input[name="payment-method"]:checked');
+      if (paymentMethod) {
+        const paymentMethodUsed = document.getElementById('payment-method-used');
+        if (paymentMethodUsed) {
+          paymentMethodUsed.textContent = 
+            paymentMethod.value === 'card' ? 'Tarjeta de crédito' : 
+            paymentMethod.value === 'paypal' ? 'PayPal' : 'Transferencia bancaria';
+        }
+      }
       return true;
       
     default:
@@ -450,6 +425,8 @@ function validateStep(step) {
 
 function processPayment() {
   const btn = btnProcessPayment;
+  if (!btn) return;
+  
   const originalText = btn.textContent;
   
   // Mostrar estado de carga
@@ -461,7 +438,7 @@ function processPayment() {
     // Simular éxito del pago
     goToCheckoutStep(4);
     
-    // Limpiar carrito
+    // Limpiar carrito después de pago exitoso
     carrito = [];
     actualizarCarrito();
     
@@ -469,7 +446,57 @@ function processPayment() {
     btn.textContent = originalText;
     btn.disabled = false;
     
-  }, 3000);
+  }, 2000);
+}
+
+// Procesar pago
+if (btnProcessPayment) {
+  btnProcessPayment.addEventListener('click', processPayment);
+}
+
+// Cerrar modal al hacer click en el botón "Volver a la tienda"
+if (btnFinish) {
+  btnFinish.addEventListener('click', function() {
+    cerrarModalCheckout();
+    
+    // Limpiar carrito después de compra exitosa
+    carrito = [];
+    actualizarCarrito();
+    
+    mostrarNotificacion('¡Gracias por tu compra! Recibirás un email de confirmación.');
+  });
+}
+
+// Cerrar modal con la tecla ESC
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && checkoutModal && !checkoutModal.hasAttribute('hidden')) {
+    cerrarModalCheckout();
+  }
+});
+
+// Cerrar modal al hacer click fuera
+if (checkoutModal) {
+  checkoutModal.addEventListener('click', (e) => {
+    if (e.target === checkoutModal) {
+      cerrarModalCheckout();
+    }
+  });
+}
+
+// Cerrar modal con el botón "×"
+if (btnCloseModal) {
+  btnCloseModal.addEventListener('click', function(e) {
+    e.stopPropagation();
+    cerrarModalCheckout();
+  });
+}
+
+// Prevenir que el click dentro del modal content lo cierre
+const modalContent = document.querySelector('.modal-content');
+if (modalContent) {
+  modalContent.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
 }
 
 // Formatear inputs de tarjeta
@@ -683,6 +710,20 @@ function initNosotrosFullpage() {
       page.style.opacity = '0';
       page.style.visibility = 'hidden';
       page.style.pointerEvents = 'none';
+    }
+  });
+}
+
+// --- MOBILE MENU TOGGLE ---
+const mobileMenu = document.getElementById('mobile-menu');
+const btnMenu = document.getElementById('btn-menu');
+
+if (btnMenu && mobileMenu) {
+  btnMenu.addEventListener('click', () => {
+    if (mobileMenu.hasAttribute('hidden')) {
+      mobileMenu.removeAttribute('hidden');
+    } else {
+      mobileMenu.setAttribute('hidden', '');
     }
   });
 }
