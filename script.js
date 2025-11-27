@@ -465,27 +465,6 @@ checkoutModal?.addEventListener('click', (e) => {
   }
 });
 
-if (btnCloseCart) {
-  btnCloseCart.addEventListener('click', () => {
-    cartPanel.setAttribute('hidden','');
-  });
-}
-
-if (btnCheckout) {
-  btnCheckout.addEventListener('click', () => {
-    if (carrito.length === 0) {
-      alert('Tu carrito está vacío');
-      return;
-    }
-    
-    // Aquí iría la lógica de checkout
-    alert('¡Gracias por tu compra! En un entorno real, esto procesaría el pago.');
-    carrito = [];
-    actualizarCarrito();
-    cartPanel.setAttribute('hidden','');
-  });
-}
-
 // Cerrar carrito SOLO cuando se hace click fuera del carrito y NO es una acción del carrito
 document.addEventListener('click', (e) => {
   if (!cartPanel || !btnCarrito || cartPanel.hasAttribute('hidden')) return;
@@ -680,26 +659,7 @@ function initNosotrosFullpage() {
     }
   });
 }
-// Cerrar carrito SOLO cuando se hace click fuera del carrito y NO es una acción del carrito
-document.addEventListener('click', (e) => {
-  if (!cartPanel || !btnCarrito || cartPanel.hasAttribute('hidden')) return;
-  
-  // Verificar si el click es en elementos relacionados con el carrito
-  const isCartElement = 
-    cartPanel.contains(e.target) || 
-    btnCarrito.contains(e.target) ||
-    e.target.closest('.quantity-btn') ||
-    e.target.closest('.remove-btn') ||
-    e.target.closest('.btn-add') ||
-    e.target.closest('.cart-item') ||
-    e.target.closest('.cart-header') ||
-    e.target.closest('.cart-footer');
-  
-  // Solo cerrar si NO es un elemento del carrito
-  if (!isCartElement) {
-    cartPanel.setAttribute('hidden','');
-  }
-});
+
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
   actualizarCarrito();
