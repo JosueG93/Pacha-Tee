@@ -533,7 +533,7 @@ function scrollToSection(id){
   }
 }
 
-// --- FILTRADO DE PRODUCTOS EN TIENDA - VERSIÓN CORRECTA ---
+// --- FILTRADO DE PRODUCTOS EN TIENDA - VERSIÓN MEJORADA ---
 function filtrarProductos(categoria) {
   const seccionCamisetas = document.getElementById('seccion-camisetas');
   const seccionToteBags = document.getElementById('seccion-tote-bags');
@@ -546,35 +546,37 @@ function filtrarProductos(categoria) {
   // Agregar clase activa al enlace clickeado
   const enlaces = document.querySelectorAll(`a[href="#${categoria}"]`);
   enlaces.forEach(enlace => {
-    enlace.classList.add('categoria-activa');
+    if (enlace) {
+      enlace.classList.add('categoria-activa');
+    }
   });
   
-  // Mostrar/ocultar secciones según la categoría seleccionada
-  switch(categoria) {
-    case 'camisetas':
-      // Mostrar solo camisetas, ocultar tote bags
-      seccionCamisetas.classList.remove('oculta');
-      seccionCamisetas.classList.add('mostrar');
-      seccionToteBags.classList.remove('mostrar');
-      seccionToteBags.classList.add('oculta');
-      break;
-      
-    case 'tote-bags':
-      // Mostrar solo tote bags, ocultar camisetas
-      seccionCamisetas.classList.remove('mostrar');
-      seccionCamisetas.classList.add('oculta');
-      seccionToteBags.classList.remove('oculta');
-      seccionToteBags.classList.add('mostrar');
-      break;
-      
-    case 'todos':
-    default:
-      // Mostrar ambas categorías
-      seccionCamisetas.classList.remove('oculta');
-      seccionCamisetas.classList.add('mostrar');
-      seccionToteBags.classList.remove('oculta');
-      seccionToteBags.classList.add('mostrar');
-      break;
+  // Aplicar transiciones suaves
+  if (seccionCamisetas && seccionToteBags) {
+    // Primero aplicar las clases de ocultar con transición
+    switch(categoria) {
+      case 'camisetas':
+        seccionCamisetas.classList.remove('oculta');
+        seccionCamisetas.classList.add('mostrar');
+        seccionToteBags.classList.remove('mostrar');
+        seccionToteBags.classList.add('oculta');
+        break;
+        
+      case 'tote-bags':
+        seccionCamisetas.classList.remove('mostrar');
+        seccionCamisetas.classList.add('oculta');
+        seccionToteBags.classList.remove('oculta');
+        seccionToteBags.classList.add('mostrar');
+        break;
+        
+      case 'todos':
+      default:
+        seccionCamisetas.classList.remove('oculta');
+        seccionCamisetas.classList.add('mostrar');
+        seccionToteBags.classList.remove('oculta');
+        seccionToteBags.classList.add('mostrar');
+        break;
+    }
   }
   
   // Cerrar menús móviles si están abiertos
@@ -588,15 +590,37 @@ function filtrarProductos(categoria) {
     btnTienda.setAttribute('aria-expanded', 'false');
   }
   
-  // Scroll suave a la sección de tienda
+  // Scroll suave a la sección de tienda solo si no estamos ya en ella
   const tiendaSection = document.getElementById('tienda');
   if (tiendaSection) {
-    setTimeout(() => {
-      tiendaSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
+    const rect = tiendaSection.getBoundingClientRect();
+    const isInView = rect.top >= 0 && rect.bottom <= window.innerHeight;
+    
+    if (!isInView) {
+      setTimeout(() => {
+        tiendaSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
   }
 }
-
+// --- INICIALIZAR TIENDA ---
+function inicializarTienda() {
+  // Asegurarse de que ambas secciones estén visibles al cargar
+  const seccionCamisetas = document.getElementById('seccion-camisetas');
+  const seccionToteBags = document.getElementById('seccion-tote-bags');
+  
+  if (seccionCamisetas && seccionToteBags) {
+    seccionCamisetas.classList.remove('oculta');
+    seccionCamisetas.classList.add('mostrar');
+    seccionToteBags.classList.remove('oculta');
+    seccionToteBags.classList.add('mostrar');
+  }
+  
+  // Marcar "Ver Todo" como activo por defecto
+  document.querySelectorAll('a[href="#todos"]').forEach(enlace => {
+    enlace.classList.add('categoria-activa');
+  });
+}
 // --- TOGGLE DROPDOWN TIENDA (igual que Nosotros) ---
 const btnTienda = document.getElementById('btn-tienda');
 const ddTienda = document.getElementById('dropdown-tienda');
@@ -793,11 +817,9 @@ if (btnMenu && mobileMenu) {
 document.addEventListener('DOMContentLoaded', () => {
   actualizarCarrito();
   initNosotrosFullpage();
+  inicializarTienda(); // <-- AGREGAR ESTA LÍNEA
   
   // Observar todas las tarjetas para animaciones
   const allCards = document.querySelectorAll('.card, .item, .step.card, .product-card');
   allCards.forEach((card) => observer.observe(card));
-  
-  // NO inicializar filtros automáticamente - la página empieza en el INICIO
-  // Los productos se muestran todos por defecto cuando llegues a la tienda
 });
