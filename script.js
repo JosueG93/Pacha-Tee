@@ -303,13 +303,68 @@ if (btnProcessPayment) {
   btnProcessPayment.addEventListener('click', processPayment);
 }
 
-// Finalizar compra
+// --- MEJORAS PARA EL MODAL CHECKOUT ---
+
+// 1. Cerrar modal al hacer click en "Volver a la tienda"
 if (btnFinish) {
   btnFinish.addEventListener('click', () => {
     checkoutModal.setAttribute('hidden', '');
     cartPanel.setAttribute('hidden', '');
     mostrarNotificacion('¡Gracias por tu compra! Recibirás un email de confirmación.');
+    
+    // Limpiar formularios
+    limpiarFormulariosCheckout();
   });
+}
+
+// 2. Cerrar modal con la tecla ESC
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && checkoutModal && !checkoutModal.hasAttribute('hidden')) {
+    checkoutModal.setAttribute('hidden', '');
+  }
+});
+
+// 3. Mejorar el cierre al hacer click fuera del modal
+checkoutModal?.addEventListener('click', (e) => {
+  if (e.target === checkoutModal) {
+    checkoutModal.setAttribute('hidden', '');
+  }
+});
+
+// 4. Función para limpiar formularios cuando se cierra el modal
+function limpiarFormulariosCheckout() {
+  // Limpiar formulario de envío
+  const shippingForm = document.querySelector('.shipping-form');
+  if (shippingForm) {
+    shippingForm.reset();
+  }
+  
+  // Limpiar formulario de tarjeta
+  const cardInputs = document.querySelectorAll('#card-form input');
+  cardInputs.forEach(input => {
+    input.value = '';
+  });
+  
+  // Resetear al paso 1
+  goToCheckoutStep(1);
+}
+
+// 5. También agregar cierre al botón "×" del modal
+if (btnCloseModal) {
+  btnCloseModal.addEventListener('click', () => {
+    checkoutModal.setAttribute('hidden', '');
+    limpiarFormulariosCheckout();
+  });
+}
+
+// 6. Prevenir que el click dentro del modal content lo cierre
+const modalContent = document.querySelector('.modal-content');
+if (modalContent) {
+  modalContent.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
+}
+
 }
 
 function goToCheckoutStep(step) {
