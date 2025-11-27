@@ -1015,196 +1015,8 @@ body {
   transform: scale(1.05);
 }
 
-/* RESPONSIVE */
-@media (max-width: 992px) {
-  .hero-title {
-    font-size: 2.5rem;
-  }
-  
-  .section-title {
-    font-size: 2rem;
-  }
-  
-  .grid-3 {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  }
-}
-
-@media (max-width: 768px) {
-  .navbar {
-    padding: 15px 20px;
-  }
-  
-  .nav-links {
-    display: none;
-  }
-  
-  .hamburger {
-    display: block;
-  }
-  
-  .hero-title {
-    font-size: 2rem;
-  }
-  
-  .hero-sub {
-    font-size: 1rem;
-  }
-  
-  .hero-cta {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .btn {
-    width: 100%;
-    max-width: 250px;
-  }
-  
-  .section {
-    padding: 60px 0;
-  }
-  
-  .section.padded {
-    padding: 80px 0;
-  }
-  
-  .section-full {
-    padding: 80px 0;
-  }
-  
-  .page-title {
-    font-size: 2.5rem;
-  }
-  
-  .page-text p {
-    font-size: 1.1rem;
-  }
-  
-  .page-navigation {
-    right: 20px;
-  }
-  
-  .page-dot::after {
-    display: none;
-  }
-  
-  .cart-panel {
-    max-width: 100%;
-  }
-  
-  .category-title {
-    font-size: 1.5rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-title {
-    font-size: 1.8rem;
-  }
-  
-  .section-title {
-    font-size: 1.8rem;
-  }
-  
-  .page-title {
-    font-size: 2rem;
-  }
-  
-  .page-text p {
-    font-size: 1rem;
-  }
-  
-  .page-content {
-    padding: 0 15px;
-  }
-  
-  .grid-2, .grid-3 {
-    grid-template-columns: 1fr;
-  }
-  
-  .footer-content {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-  
-  .footer-contact a {
-    justify-content: center;
-  }
-
-  /* Asegurar que las secciones se muestren correctamente */
-.section {
-  position: relative;
-  z-index: 1;
-}
-
-/* Asegurar que el dropdown funcione */
-.submenu:hover .dropdown:not([hidden]) {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-/* Asegurar que las animaciones de reveal funcionen */
-.card, .item, .step, .product-card {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.6s ease;
-}
-
-.card.visible, .item.visible, .step.visible, .product-card.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Asegurar que el submenú de nosotros funcione */
-#submenu-nosotros:hover .dropdown {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-/* Asegurar que el menú móvil funcione */
-.mobile-menu details[open] summary {
-  color: var(--verde-claro);
-}
-
-.mobile-menu details[open] {
-  background: rgba(59, 75, 48, 0.05);
-}
-  /* Transición suave para la navegación */
-.page-navigation {
-  transition: all 0.5s ease;
-}
-
-/* Asegurar que la navegación esté oculta inicialmente */
-.page-navigation {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: all 0.5s ease;
-}
-
-/* Cuando está visible */
-.page-navigation.visible {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-}
-
-/* Ocultar sección Nosotros inicialmente excepto la primera página */
-.nosotros-fullpage {
-  height: 100vh;
-  position: relative;
-  overflow: hidden;
-}
-
-.nosotros-page:not(.active) {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-  /* MODAL CHECKOUT */
+/* ========== MODAL CHECKOUT ========== */
+/* (ESTE CSS DEBE ESTAR FUERA DE LOS MEDIA QUERIES) */
 .modal {
   position: fixed;
   top: 0;
@@ -1482,8 +1294,89 @@ body {
   to { transform: rotate(360deg); }
 }
 
-/* RESPONSIVE */
+/* ========== RESPONSIVE ========== */
+@media (max-width: 992px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .grid-3 {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+
 @media (max-width: 768px) {
+  .navbar {
+    padding: 15px 20px;
+  }
+  
+  .nav-links {
+    display: none;
+  }
+  
+  .hamburger {
+    display: block;
+  }
+  
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .hero-sub {
+    font-size: 1rem;
+  }
+  
+  .hero-cta {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .btn {
+    width: 100%;
+    max-width: 250px;
+  }
+  
+  .section {
+    padding: 60px 0;
+  }
+  
+  .section.padded {
+    padding: 80px 0;
+  }
+  
+  .section-full {
+    padding: 80px 0;
+  }
+  
+  .page-title {
+    font-size: 2.5rem;
+  }
+  
+  .page-text p {
+    font-size: 1.1rem;
+  }
+  
+  .page-navigation {
+    right: 20px;
+  }
+  
+  .page-dot::after {
+    display: none;
+  }
+  
+  .cart-panel {
+    max-width: 100%;
+  }
+  
+  .category-title {
+    font-size: 1.5rem;
+  }
+
+  /* Responsive para el modal checkout */
   .modal-content {
     margin: 10px;
     max-height: 95vh;
@@ -1506,4 +1399,112 @@ body {
     flex-direction: column;
   }
 }
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.8rem;
+  }
+  
+  .section-title {
+    font-size: 1.8rem;
+  }
+  
+  .page-title {
+    font-size: 2rem;
+  }
+  
+  .page-text p {
+    font-size: 1rem;
+  }
+  
+  .page-content {
+    padding: 0 15px;
+  }
+  
+  .grid-2, .grid-3 {
+    grid-template-columns: 1fr;
+  }
+  
+  .footer-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  
+  .footer-contact a {
+    justify-content: center;
+  }
+
+  /* Asegurar que las secciones se muestren correctamente */
+  .section {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Asegurar que el dropdown funcione */
+  .submenu:hover .dropdown:not([hidden]) {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  /* Asegurar que las animaciones de reveal funcionen */
+  .card, .item, .step, .product-card {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+  }
+
+  .card.visible, .item.visible, .step.visible, .product-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Asegurar que el submenú de nosotros funcione */
+  #submenu-nosotros:hover .dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  /* Asegurar que el menú móvil funcione */
+  .mobile-menu details[open] summary {
+    color: var(--verde-claro);
+  }
+
+  .mobile-menu details[open] {
+    background: rgba(59, 75, 48, 0.05);
+  }
+
+  /* Transición suave para la navegación */
+  .page-navigation {
+    transition: all 0.5s ease;
+  }
+
+  /* Asegurar que la navegación esté oculta inicialmente */
+  .page-navigation {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: all 0.5s ease;
+  }
+
+  /* Cuando está visible */
+  .page-navigation.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  /* Ocultar sección Nosotros inicialmente excepto la primera página */
+  .nosotros-fullpage {
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .nosotros-page:not(.active) {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
 }
