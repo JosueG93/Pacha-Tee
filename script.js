@@ -268,6 +268,209 @@ if (btnCloseCart) {
   });
 }
 
+// --- CHECKOUT MEJORADO ---
+const checkoutModal = document.getElementById('checkout-modal');
+const btnProcessPayment = document.getElementById('btn-process-payment');
+const btnFinish = document.getElementById('btn-finish');
+const btnCloseModal = document.getElementById('btn-close-modal');
+
+// Abrir modal de checkout
+if (btnCheckout) {
+  btnCheckout.addEventListener('click', () => {
+    if (carrito.length === 0) {
+      mostrarNotificacion('Tu carrito está vacío');
+      return;
+    }
+    
+    checkoutModal.removeAttribute('hidden');
+    renderizarOrderSummary();
+    goToCheckoutStep(1);
+  });
+}
+
+// Cerrar modal
+if (btnCloseModal) {
+  btnCloseModal.addEventListener('click', () => {
+    checkoutModal.setAttribute('hidden', '');
+  });
+}
+
+// Navegación entre pasos del checkout
+document.querySelectorAll('.btn-next').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    const nextStep = e.target.getAttribute('data-next');
+    if (validateStep(parseInt(nextStep) - 1)) {
+      goToCheckoutStep(parseInt(nextStep));
+    }
+  });
+});
+
+document.querySelectorAll('.btn-prev').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    const prevStep = e.target.getAttribute('data-prev');
+    goToCheckoutStep(parseInt(prevStep));
+  });
+});
+
+// Procesar pago
+if (btnProcessPayment) {
+  btnProcessPayment.addEventListener('click', processPayment);
+}
+
+// Finalizar compra
+if (btnFinish) {
+  btnFinish.addEventListener('click', () => {
+    checkoutModal.setAttribute('hidden', '');
+    cartPanel.setAttribute('hidden', '');
+    mostrarNotificacion('¡Gracias por tu compra! Recibirás un email de confirmación.');
+  });
+}
+
+function goToCheckoutStep(step) {
+  // Ocultar todos los pasos
+  document.querySelectorAll('.checkout-step').forEach(stepEl => {
+    stepEl.classList.remove('active');
+  });
+  
+  // Mostrar paso actual
+  document.getElementById(`step-${step}`).classList.add('active');
+  
+  // Actualizar indicadores de pasos
+  document.querySelectorAll('.step').forEach(stepIndicator => {
+    stepIndicator.classList.remove('active');
+    if (parseInt(stepIndicator.getAttribute('data-step')) <= step) {
+      stepIndicator.classList.add('active');
+    }
+  });
+}
+
+function renderizarOrderSummary() {
+  const orderSummary = document.getElementById('order-summary');
+  const subtotalPrice = document.getElementById('subtotal-price');
+  const finalTotalPrice = document.getElementById('final-total-price');
+  const paidAmount = document.getElementById('paid-amount');
+  
+  let subtotal = 0;
+  let summaryHTML = '';
+  
+  carrito.forEach(item => {
+    const itemTotal = item.precio * item.cantidad;
+    subtotal += itemTotal;
+    
+    summaryHTML += `
+      <div class="order-item">
+        <div class="order-item-info">
+          <h5>${item.nombre}</h5>
+          <p>Cantidad: ${item.cantidad}</p>
+        </div>
+        <div class="order-item-price">$${itemTotal.toFixed(2)}</div>
+      </div>
+    `;
+  });
+  
+  const shipping = 3;
+  const total = subtotal + shipping;
+  
+  orderSummary.innerHTML = summaryHTML;
+  subtotalPrice.textContent = `$${subtotal.toFixed(2)}`;
+  finalTotalPrice.textContent = `$${total.toFixed(2)}`;
+  paidAmount.textContent = `$${total.toFixed(2)}`;
+}
+
+function validateStep(step) {
+  switch(step) {
+    case 1: // Carrito - siempre válido
+      return true;
+      
+    case 2: // Envío
+      const requiredFields = ['full-name', 'email', 'address', 'city', 'zip', 'phone'];
+      let isValid = true;
+      
+      requiredFields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (!field.value.trim()) {
+          field.style.borderColor = '#e74c3c';
+          isValid = false;
+        } else {
+          field.style.borderColor = '';
+        }
+      });
+      
+      if (!isValid) {
+        mostrarNotificacion('Por favor completa todos los campos requeridos');
+      }
+      
+      return isValid;
+      
+    case 3: // Pago
+      const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+      document.getElementById('payment-method-used').textContent = 
+        paymentMethod === 'card' ? 'Tarjeta de crédito' : 
+        paymentMethod === 'paypal' ? 'PayPal' : 'Transferencia bancaria';
+      return true;
+      
+    default:
+      return true;
+  }
+}
+
+function processPayment() {
+  const btn = btnProcessPayment;
+  const originalText = btn.textContent;
+  
+  // Mostrar estado de carga
+  btn.innerHTML = '<span class="loading"></span> Procesando pago...';
+  btn.disabled = true;
+  
+  // Simular procesamiento de pago
+  setTimeout(() => {
+    // Simular éxito del pago
+    goToCheckoutStep(4);
+    
+    // Limpiar carrito
+    carrito = [];
+    actualizarCarrito();
+    
+    // Restaurar botón
+    btn.textContent = originalText;
+    btn.disabled = false;
+    
+  }, 3000);
+}
+
+// Formatear inputs de tarjeta
+document.getElementById('card-number')?.addEventListener('input', function(e) {
+  let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+  let formattedValue = value.match(/.{1,4}/g)?.join(' ');
+  if (formattedValue) {
+    e.target.value = formattedValue;
+  }
+});
+
+document.getElementById('card-expiry')?.addEventListener('input', function(e) {
+  let value = e.target.value.replace(/[^0-9]/g, '');
+  if (value.length >= 2) {
+    e.target.value = value.slice(0, 2) + '/' + value.slice(2, 4);
+  }
+});
+
+document.getElementById('card-cvc')?.addEventListener('input', function(e) {
+  e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 3);
+});
+
+// Cerrar modal al hacer click fuera
+checkoutModal?.addEventListener('click', (e) => {
+  if (e.target === checkoutModal) {
+    checkoutModal.setAttribute('hidden', '');
+  }
+});
+
+if (btnCloseCart) {
+  btnCloseCart.addEventListener('click', () => {
+    cartPanel.setAttribute('hidden','');
+  });
+}
+
 if (btnCheckout) {
   btnCheckout.addEventListener('click', () => {
     if (carrito.length === 0) {
@@ -477,7 +680,26 @@ function initNosotrosFullpage() {
     }
   });
 }
-
+// Cerrar carrito SOLO cuando se hace click fuera del carrito y NO es una acción del carrito
+document.addEventListener('click', (e) => {
+  if (!cartPanel || !btnCarrito || cartPanel.hasAttribute('hidden')) return;
+  
+  // Verificar si el click es en elementos relacionados con el carrito
+  const isCartElement = 
+    cartPanel.contains(e.target) || 
+    btnCarrito.contains(e.target) ||
+    e.target.closest('.quantity-btn') ||
+    e.target.closest('.remove-btn') ||
+    e.target.closest('.btn-add') ||
+    e.target.closest('.cart-item') ||
+    e.target.closest('.cart-header') ||
+    e.target.closest('.cart-footer');
+  
+  // Solo cerrar si NO es un elemento del carrito
+  if (!isCartElement) {
+    cartPanel.setAttribute('hidden','');
+  }
+});
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
   actualizarCarrito();
