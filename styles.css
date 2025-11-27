@@ -1016,7 +1016,6 @@ body {
 }
 
 /* ========== MODAL CHECKOUT ========== */
-/* (ESTE CSS DEBE ESTAR FUERA DE LOS MEDIA QUERIES) */
 .modal {
   position: fixed;
   top: 0;
@@ -1029,6 +1028,23 @@ body {
   justify-content: center;
   z-index: 1004;
   padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal:not([hidden]) {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.modal[hidden] {
+  display: flex !important;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .modal-content {
@@ -1039,6 +1055,12 @@ body {
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+}
+
+.modal:not([hidden]) .modal-content {
+  transform: scale(1);
 }
 
 .modal-header {
@@ -1047,6 +1069,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 }
 
 .modal-header h3 {
@@ -1292,6 +1315,32 @@ body {
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+/* NOTIFICATIONS */
+.notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--verde);
+  color: var(--crema);
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 1003;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.notification.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* BODY SCROLL LOCK */
+body.modal-open {
+  overflow: hidden;
 }
 
 /* ========== RESPONSIVE ========== */
