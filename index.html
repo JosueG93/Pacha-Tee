@@ -25,9 +25,9 @@
       <div class="submenu" id="submenu-nosotros">
         <button id="btn-nosotros" aria-expanded="false" class="nav-link">Nosotros ▾</button>
         <div class="dropdown" id="dropdown-nosotros" hidden>
-          <a href="#mision-page" onclick="goToPage(0); return false;" class="dropdown-link">Misión</a>
-          <a href="#vision-page" onclick="goToPage(1); return false;" class="dropdown-link">Visión</a>
-          <a href="#objetivos-page" onclick="goToPage(2); return false;" class="dropdown-link">Objetivo</a>
+          <a href="#quienes-somos" onclick="mostrarPagina('mision'); return false;" class="dropdown-link">Misión</a>
+          <a href="#quienes-somos" onclick="mostrarPagina('vision'); return false;" class="dropdown-link">Visión</a>
+          <a href="#quienes-somos" onclick="mostrarPagina('objetivos'); return false;" class="dropdown-link">Objetivo</a>
         </div>
       </div>
 
@@ -63,9 +63,9 @@
     <a href="#inicio" data-target="inicio" class="mobile-nav-link">Inicio</a>
     <details>
       <summary>Nosotros</summary>
-      <a href="#mision-page" onclick="goToPage(0); return false;" class="mobile-dropdown-link">Misión</a>
-      <a href="#vision-page" onclick="goToPage(1); return false;" class="mobile-dropdown-link">Visión</a>
-      <a href="#objetivos-page" onclick="goToPage(2); return false;" class="mobile-dropdown-link">Objetivo</a>
+      <a href="#quienes-somos" onclick="mostrarPagina('mision'); return false;" class="mobile-dropdown-link">Misión</a>
+      <a href="#quienes-somos" onclick="mostrarPagina('vision'); return false;" class="mobile-dropdown-link">Visión</a>
+      <a href="#quienes-somos" onclick="mostrarPagina('objetivos'); return false;" class="mobile-dropdown-link">Objetivo</a>
     </details>
     <details>
       <summary>Tienda</summary>
@@ -184,58 +184,53 @@
       </div>
     </section>
 
-    <!-- NOSOTROS FULLPAGE SECTION -->
-    <section class="nosotros-fullpage">
-      <!-- MISIÓN -->
-      <div class="nosotros-page active" id="mision-page">
-        <div class="page-background"></div>
-        <div class="page-content">
-          <div class="container">
-            <h2 class="page-title">Misión</h2>
-            <div class="page-text">
-              <p>Nuestro proyecto tiene como misión diseñar y comercializar camisetas que, mediante el uso de realidad aumentada, brinden experiencias visuales dinámicas con fines formativos y de entretenimiento.</p>
-            </div>
-            <div class="page-indicator">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 5V19M12 19L19 12M12 19L5 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+    <!-- QUIÉNES SOMOS - NUEVA SECCIÓN CON BOTONES -->
+    <section id="quienes-somos" class="section padded bg-soft">
+      <div class="container">
+        <h2 class="section-title">Quiénes Somos</h2>
+        
+        <!-- Botones de navegación -->
+        <div class="quienes-somos-filtros">
+          <button class="qs-filtro-btn active" data-pagina="mision">
+            <span>Misión</span>
+          </button>
+          <button class="qs-filtro-btn" data-pagina="vision">
+            <span>Visión</span>
+          </button>
+          <button class="qs-filtro-btn" data-pagina="objetivos">
+            <span>Objetivos</span>
+          </button>
+        </div>
+
+        <!-- Contenido de las páginas -->
+        <div class="quienes-somos-contenido">
+          <!-- MISIÓN -->
+          <div class="qs-pagina active" id="qs-mision">
+            <div class="qs-pagina-content">
+              <h3 class="qs-pagina-titulo">Misión</h3>
+              <div class="qs-pagina-texto">
+                <p>Nuestro proyecto tiene como misión diseñar y comercializar camisetas que, mediante el uso de realidad aumentada, brinden experiencias visuales dinámicas con fines formativos y de entretenimiento.</p>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <!-- VISIÓN -->
-      <div class="nosotros-page" id="vision-page">
-        <div class="page-background"></div>
-        <div class="page-content">
-          <div class="container">
-            <h2 class="page-title">Visión</h2>
-            <div class="page-text">
-              <p>El proyecto busca posicionarse como una propuesta innovadora en el mercado textil, integrando ilustración y realidad aumentada para ofrecer prendas interactivas con enfoque educativo y comercial.</p>
-            </div>
-            <div class="page-indicator">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 5V19M12 19L19 12M12 19L5 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+          <!-- VISIÓN -->
+          <div class="qs-pagina" id="qs-vision">
+            <div class="qs-pagina-content">
+              <h3 class="qs-pagina-titulo">Visión</h3>
+              <div class="qs-pagina-texto">
+                <p>El proyecto busca posicionarse como una propuesta innovadora en el mercado textil, integrando ilustración y realidad aumentada para ofrecer prendas interactivas con enfoque educativo y comercial.</p>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <!-- OBJETIVOS -->
-      <div class="nosotros-page" id="objetivos-page">
-        <div class="page-background"></div>
-        <div class="page-content">
-          <div class="container">
-            <h2 class="page-title">Objetivo</h2>
-            <div class="page-text">
-              <p>Desarrollar camisetas con ilustraciones interactivas, mediante un dispositivo electrónico utilizando la realidad aumentada para ofrecer experiencias visuales con un valor comercial y educativo, fomentando una nueva forma de interacción entre la moda, la tecnología y el aprendizaje, creando nuevas experiencias para el público ajustándose a un nuevo mercado de forma innovadora y práctica.</p>
-            </div>
-            <div class="page-indicator">
-              <span>Ver catálogo</span>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 5V19M12 19L19 12M12 19L5 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+          <!-- OBJETIVOS -->
+          <div class="qs-pagina" id="qs-objetivos">
+            <div class="qs-pagina-content">
+              <h3 class="qs-pagina-titulo">Objetivos</h3>
+              <div class="qs-pagina-texto">
+                <p>Desarrollar camisetas con ilustraciones interactivas, mediante un dispositivo electrónico utilizando la realidad aumentada para ofrecer experiencias visuales con un valor comercial y educativo, fomentando una nueva forma de interacción entre la moda, la tecnología y el aprendizaje, creando nuevas experiencias para el público ajustándose a un nuevo mercado de forma innovadora y práctica.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -555,7 +550,7 @@
     </div>
   </aside>
 
-  <!-- CHECKOUT MODAL -->
+  <!-- CHECKOUT MODAL MEJORADO -->
   <div id="checkout-modal" class="modal" hidden role="dialog" aria-labelledby="checkout-title" aria-modal="true">
     <div class="modal-content">
       <div class="modal-header">
@@ -599,91 +594,91 @@
         <!-- Paso 2: Información de Envío -->
         <div class="checkout-step" id="step-2">
           <h4>Información de envío</h4>
-          <form class="shipping-form">
+          <form class="shipping-form" id="shipping-form">
             <div class="form-group">
-              <label for="full-name">Nombre completo</label>
+              <label for="full-name">Nombre completo *</label>
               <input type="text" id="full-name" required placeholder="Juan Pérez">
             </div>
             <div class="form-group">
-              <label for="email">Email</label>
+              <label for="email">Email *</label>
               <input type="email" id="email" required placeholder="juan@ejemplo.com">
             </div>
             <div class="form-group">
-              <label for="address">Dirección</label>
-              <input type="text" id="address" required placeholder="Av. Principal 123">
+              <label for="phone">Teléfono *</label>
+              <input type="tel" id="phone" required placeholder="0991234567">
+            </div>
+            <div class="form-group">
+              <label for="address">Dirección completa *</label>
+              <input type="text" id="address" required placeholder="Av. Principal 123, Barrio, Referencia">
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label for="city">Ciudad</label>
+                <label for="city">Ciudad *</label>
                 <input type="text" id="city" required placeholder="Guayaquil">
               </div>
               <div class="form-group">
-                <label for="zip">Código postal</label>
+                <label for="zip">Código postal *</label>
                 <input type="text" id="zip" required placeholder="090150">
               </div>
-            </div>
-            <div class="form-group">
-              <label for="phone">Teléfono</label>
-              <input type="tel" id="phone" required placeholder="0991234567">
             </div>
           </form>
           <div class="step-actions">
             <button class="btn btn-outline btn-prev" data-prev="1" type="button">
               <span>Volver al carrito</span>
             </button>
-            <button class="btn btn-primary btn-next" data-next="3" type="button">
+            <button class="btn btn-primary btn-next" data-next="3" type="button" id="btn-to-payment">
               <span>Continuar al pago</span>
             </button>
           </div>
         </div>
 
-        <!-- Paso 3: Método de Pago -->
+        <!-- Paso 3: Método de Pago MEJORADO -->
         <div class="checkout-step" id="step-3">
-          <h4>Método de pago</h4>
-          <div class="payment-methods">
-            <label class="payment-option">
-              <input type="radio" name="payment-method" value="card" checked>
-              <div class="payment-content">
-                <span class="payment-icon">💳</span>
-                <span>Tarjeta de crédito/débito</span>
+          <h4>Selecciona tu método de pago</h4>
+          
+          <div class="payment-options-container">
+            <!-- Opción 1: Transferencia Bancaria -->
+            <div class="payment-option-card active" data-method="transfer">
+              <div class="payment-option-header">
+                <input type="radio" name="payment-method" value="transfer" checked id="transfer-method">
+                <label for="transfer-method" class="payment-label">
+                  <span class="payment-icon">🏦</span>
+                  <span class="payment-title">Transferencia Bancaria</span>
+                </label>
               </div>
-            </label>
-            
-            <label class="payment-option">
-              <input type="radio" name="payment-method" value="paypal">
-              <div class="payment-content">
-                <span class="payment-icon">🔵</span>
-                <span>PayPal</span>
+              <div class="payment-option-content">
+                <p>Realiza tu transferencia y envíanos el comprobante por WhatsApp</p>
+                <div class="transfer-details">
+                  <p><strong>Banco:</strong> Banco del Pacífico</p>
+                  <p><strong>Cuenta:</strong> 1234567890</p>
+                  <p><strong>Titular:</strong> Pacha-Tee</p>
+                  <p><strong>RUC:</strong> 1234567890001</p>
+                </div>
+                <a href="https://wa.me/593987654321?text=Hola,%20acabo%20de%20realizar%20una%20transferencia%20para%20mi%20pedido%20Pacha-Tee" 
+                   class="btn btn-success whatsapp-btn" target="_blank">
+                  <span>📱 Enviar comprobante por WhatsApp</span>
+                </a>
               </div>
-            </label>
-            
-            <label class="payment-option">
-              <input type="radio" name="payment-method" value="transfer">
-              <div class="payment-content">
-                <span class="payment-icon">🏦</span>
-                <span>Transferencia bancaria</span>
-              </div>
-            </label>
-          </div>
+            </div>
 
-          <div class="card-form" id="card-form">
-            <div class="form-group">
-              <label for="card-number">Número de tarjeta</label>
-              <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="card-expiry">Fecha de vencimiento</label>
-                <input type="text" id="card-expiry" placeholder="MM/AA" maxlength="5">
+            <!-- Opción 2: PayPal -->
+            <div class="payment-option-card" data-method="paypal">
+              <div class="payment-option-header">
+                <input type="radio" name="payment-method" value="paypal" id="paypal-method">
+                <label for="paypal-method" class="payment-label">
+                  <span class="payment-icon">🔵</span>
+                  <span class="payment-title">PayPal</span>
+                </label>
               </div>
-              <div class="form-group">
-                <label for="card-cvc">CVC</label>
-                <input type="text" id="card-cvc" placeholder="123" maxlength="3">
+              <div class="payment-option-content">
+                <p>Paga de forma segura con tu tarjeta de crédito/débito a través de PayPal</p>
+                <button class="btn btn-primary paypal-btn" id="btn-paypal">
+                  <span>Pagar con PayPal</span>
+                </button>
+                <div class="paypal-security">
+                  <p>🔒 Pago 100% seguro - Tus datos están protegidos</p>
+                </div>
               </div>
-            </div>
-            <div class="form-group">
-              <label for="card-name">Nombre en la tarjeta</label>
-              <input type="text" id="card-name" placeholder="JUAN PEREZ">
             </div>
           </div>
 
@@ -691,8 +686,8 @@
             <button class="btn btn-outline btn-prev" data-prev="2" type="button">
               <span>Volver al envío</span>
             </button>
-            <button class="btn btn-primary btn-pay" id="btn-process-payment" type="button">
-              <span>Pagar ahora</span>
+            <button class="btn btn-primary" id="btn-complete-order" type="button">
+              <span>Completar Pedido</span>
             </button>
           </div>
         </div>
@@ -701,15 +696,17 @@
         <div class="checkout-step" id="step-4">
           <div class="confirmation">
             <div class="confirmation-icon">✅</div>
-            <h4>¡Pago exitoso!</h4>
+            <h4>¡Pedido Confirmado!</h4>
             <p>Tu pedido ha sido procesado correctamente.</p>
             <div class="order-details">
               <p><strong>Número de orden:</strong> <span id="order-number">PT-984723</span></p>
-              <p><strong>Total pagado:</strong> <span id="paid-amount">$0</span></p>
-              <p><strong>Método de pago:</strong> <span id="payment-method-used">Tarjeta</span></p>
+              <p><strong>Total:</strong> <span id="paid-amount">$0</span></p>
+              <p><strong>Método de pago:</strong> <span id="payment-method-used">Transferencia</span></p>
+              <p><strong>Estado:</strong> <span class="status-pending">Pendiente de pago</span></p>
             </div>
-            <p class="confirmation-text">Te hemos enviado un email con los detalles de tu compra. 
-            Tu pedido llegará en 3-5 días hábiles.</p>
+            <div class="confirmation-instructions" id="confirmation-instructions">
+              <!-- Instrucciones específicas según el método de pago -->
+            </div>
           </div>
           <button class="btn btn-primary" id="btn-finish" type="button">
             <span>Volver a la tienda</span>
@@ -732,6 +729,7 @@
           <a href="#inicio">Inicio</a>
           <a href="#tienda">Tienda</a>
           <a href="#como-funciona">Cómo funciona</a>
+          <a href="#quienes-somos">Quiénes Somos</a>
         </div>
         <div class="footer-contact">
           <h4>Contacto</h4>
