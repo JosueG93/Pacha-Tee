@@ -22,7 +22,7 @@ document.querySelectorAll('a[data-target]').forEach(link => {
     });
 });
 
-// ===== SUBMENÚS ESCRITORIO - CORREGIDO =====
+// ===== SUBMENÚS ESCRITORIO - MEJORADO =====
 document.addEventListener('DOMContentLoaded', function() {
     // Submenú Nosotros
     const btnNosotros = document.getElementById('btn-nosotros');
@@ -32,12 +32,24 @@ document.addEventListener('DOMContentLoaded', function() {
     const btnTienda = document.getElementById('btn-tienda');
     const dropdownTienda = document.getElementById('dropdown-tienda');
     
+    // Función para cerrar todos los dropdowns
+    function cerrarTodosLosDropdowns() {
+        if (dropdownNosotros) {
+            dropdownNosotros.hidden = true;
+            btnNosotros.setAttribute('aria-expanded', 'false');
+        }
+        if (dropdownTienda) {
+            dropdownTienda.hidden = true;
+            btnTienda.setAttribute('aria-expanded', 'false');
+        }
+    }
+    
     if (btnNosotros && dropdownNosotros) {
         btnNosotros.addEventListener('click', function(e) {
             e.stopPropagation();
             const isExpanded = this.getAttribute('aria-expanded') === 'true';
             
-            // Cerrar otros dropdowns
+            // Cerrar otros dropdowns primero
             if (dropdownTienda) {
                 dropdownTienda.hidden = true;
                 btnTienda.setAttribute('aria-expanded', 'false');
@@ -54,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.stopPropagation();
             const isExpanded = this.getAttribute('aria-expanded') === 'true';
             
-            // Cerrar otros dropdowns
+            // Cerrar otros dropdowns primero
             if (dropdownNosotros) {
                 dropdownNosotros.hidden = true;
                 btnNosotros.setAttribute('aria-expanded', 'false');
@@ -68,14 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Cerrar dropdowns al hacer clic fuera
     document.addEventListener('click', function() {
-        if (dropdownNosotros) {
-            dropdownNosotros.hidden = true;
-            btnNosotros.setAttribute('aria-expanded', 'false');
-        }
-        if (dropdownTienda) {
-            dropdownTienda.hidden = true;
-            btnTienda.setAttribute('aria-expanded', 'false');
-        }
+        cerrarTodosLosDropdowns();
     });
     
     // Prevenir que los dropdowns se cierren al hacer clic dentro
@@ -91,6 +96,65 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// ===== REINICIAR CARRITO AL FINALIZAR COMPRA =====
+function reiniciarCarrito() {
+    cart = [];
+    updateCartCount();
+    updateCartDisplay();
+    
+    // Mostrar notificación
+    showCartNotification('¡Pedido completado! El carrito ha sido reiniciado.');
+}
+
+// Modificar el evento del botón finalizar
+const btnFinish = document.getElementById('btn-finish');
+if (btnFinish) {
+    btnFinish.addEventListener('click', function() {
+        checkoutModal.hidden = true;
+        if (cartPanel) cartPanel.hidden = true;
+        reiniciarCarrito(); // ← Aquí se reinicia el carrito
+    });
+}
+
+// También reiniciar cuando se completa el pedido en el paso 4
+const btnCompleteOrder = document.getElementById('btn-complete-order');
+if (btnCompleteOrder) {
+    btnCompleteOrder.addEventListener('click', function() {
+        const selectedMethod = document.querySelector('input[name="payment-method"]:checked');
+        if (!selectedMethod) return;
+        
+        // Actualizar información en el paso de confirmación
+        const paymentMethodUsed = document.getElementById('payment-method-used');
+        if (paymentMethodUsed) {
+            paymentMethodUsed.textContent = 
+                selectedMethod.value === 'transfer' ? 'Transferencia Bancaria' : 'PayPal';
+        }
+        
+        // Mostrar instrucciones según el método de pago
+        const instructions = document.getElementById('confirmation-instructions');
+        if (instructions) {
+            if (selectedMethod.value === 'transfer') {
+                instructions.innerHTML = `
+                    <p><strong>Instrucciones:</strong></p>
+                    <p>1. Realiza la transferencia a la cuenta proporcionada</p>
+                    <p>2. Envía el comprobante por WhatsApp</p>
+                    <p>3. Tu pedido será procesado una vez confirmado el pago</p>
+                `;
+            } else {
+                instructions.innerHTML = `
+                    <p><strong>Instrucciones:</strong></p>
+                    <p>Tu pedido será procesado una vez confirmado el pago a través de PayPal</p>
+                `;
+            }
+        }
+        
+        goToStep(4);
+        
+        // Reiniciar carrito automáticamente cuando llega al paso 4
+        reiniciarCarrito();
+    });
+}
 
 // ===== MENÚ MÓVIL =====
 const btnMenu = document.getElementById('btn-menu');
