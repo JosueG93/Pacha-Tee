@@ -391,8 +391,6 @@ function initCheckout() {
   const btnCompleteOrder = document.getElementById('btn-complete-order');
   const btnFinish = document.getElementById('btn-finish');
   const btnCloseModal = document.getElementById('btn-close-modal');
-  const btnToPayment = document.getElementById('btn-to-payment');
-  const btnPaypal = document.getElementById('btn-paypal');
   
   // Abrir modal de checkout
   if (btnCheckout) {
@@ -401,7 +399,7 @@ function initCheckout() {
   
   // Completar pedido
   if (btnCompleteOrder) {
-    btnCompleteOrder.addEventListener('click', completarPedido);
+    btnCompleteOrder.addEventListener('click', procesarPedidoCompleto);
   }
   
   // Finalizar compra
@@ -411,6 +409,160 @@ function initCheckout() {
       mostrarNotificacion('¡Gracias por tu compra! Revisa tu email para más detalles.');
     });
   }
+  
+  // Cerrar modal
+  if (btnCloseModal) {
+    btnCloseModal.addEventListener('click', cerrarModalCheckout);
+  }
+  
+  // Navegación entre pasos
+  document.querySelectorAll('.btn-next').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const nextStep = parseInt(e.target.getAttribute('data-next'));
+      if (validarPasoActual(currentCheckoutStep)) {
+        goToCheckoutStep(nextStep);
+      }
+    });
+  });
+  
+  document.querySelectorAll('.btn-prev').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const prevStep = parseInt(e.target.getAttribute('data-prev'));
+      goToCheckoutStep(prevStep);
+    });
+  });
+  
+  // Manejar selección de método de pago
+  document.querySelectorAll('input[name="payment-method"]').forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      selectedPaymentMethod = e.target.value;
+      actualizarOpcionesPago();
+    });
+  });
+  
+  // Botón PayPal (solo demo)
+  const btnPaypal = document.getElementById('btn-paypal');
+  if (btnPaypal) {
+    btnPaypal.addEventListener('click', () => {
+      mostrarNotificacion('🚧 Integración PayPal en desarrollo - Usa transferencia bancaria');
+    });
+  }
+  
+  // Inicializar opciones de pago
+  actualizarOpcionesPago();
+}
+
+function actualizarOpcionesPago() {
+  const paymentCards = document.querySelectorAll('.payment-option-card');
+  
+  paymentCards.forEach(card => {
+    card.classList.remove('active');
+    if (card.getAttribute('data-method') === selectedPaymentMethod) {
+      card.classList.add('active');
+    }
+  });
+}
+
+function validarPasoActual(paso) {
+  switch(paso) {
+    case 1:
+      return true; // Carrito siempre válido
+    case 2:
+      return validarFormularioEnvio();
+    case 3:
+      return true; // Pago siempre válido
+    default:
+      return true;
+  }
+}
+
+function validarFormularioEnvio() {
+  const requiredFields = ['full-name', 'email', 'phone', 'address', 'city', 'zip'];
+  let isValid = true;
+  
+  requiredFields.forEach(fieldId => {
+    const field = document.getElementById(fieldId);
+    if (!field || !field.value.trim()) {
+      field.classList.add('error');
+      isValid = false;
+    } else {
+      field.classList.remove('error');
+    }
+  });
+  
+  if (!isValid) {
+    mostrarNotificacion('Por favor completa todos los campos requeridos');
+  }
+  
+  return isValid;
+}
+
+function procesarPedidoCompleto() {
+  const total = calcularTotalCarrito() + 3; // + envío
+  const orderNumber = 'PT-' + Date.now().toString().slice(-6);
+  
+  // Actualizar información en el paso 4
+  document.getElementById('order-number').textContent = orderNumber;
+  document.getElementById('paid-amount').textContent = `$${total.toFixed(2)}`;
+  document.getElementById('payment-method-used').textContent = 
+    selectedPaymentMethod === 'transfer' ? 'Transferencia Bancaria' : 'PayPal';
+  
+  // Mostrar instrucciones específicas según el método de pago
+  const instrucciones = document.getElementById('confirmation-instructions');
+  
+  if (selectedPaymentMethod === 'transfer') {
+    // Crear mensaje para WhatsApp con información del pedido
+    const mensajeWhatsApp = `Hola Pacha-Tee! 👋\n\nAcabo de realizar mi pedido #${orderNumber}\n📦 Total: $${total.toFixed(2)}\n👤 Nombre: ${document.getElementById('full-name').value}\n📞 Teléfono: ${document.getElementById('phone').value}\n📍 Dirección: ${document.getElementById('address').value}\n\nAdjunto comprobante de transferencia. ¡Gracias!`;
+    const urlWhatsApp = `https://wa.me/593987654321?text=${encodeURIComponent(mensajeWhatsApp)}`;
+    
+    instrucciones.innerHTML = `
+      <div class="transfer-instructions">
+        <h5>💳 Instrucciones para Transferencia Bancaria</h5>
+        <div class="bank-details">
+          <p><strong>🏦 Banco:</strong> Banco del Pacífico</p>
+          <p><strong>📊 Tipo de Cuenta:</strong> Cuenta Corriente</p>
+          <p><strong>🔢 Número de Cuenta:</strong> 2105678901</p>
+          <p><strong>👤 Titular:</strong> Pacha-Tee Ecuador S.A.</p>
+          <p><strong>📝 RUC:</strong> 1234567890001</p>
+          <p><strong>💰 Total a Transferir:</strong> <span style="color: var(--verde); font-weight: bold;">$${total.toFixed(2)}</span></p>
+        </div>
+        <div class="transfer-steps">
+          <p><strong>Pasos a seguir:</strong></p>
+          <ol>
+            <li>Realiza la transferencia por <strong>$${total.toFixed(2)}</strong> a la cuenta indicada</li>
+            <li>Toma una captura de pantalla del comprobante</li>
+            <li>Haz clic en el botón de abajo para enviarnos el comprobante por WhatsApp</li>
+            <li>Tu pedido será procesado en 24-48 horas después de confirmar el pago</li>
+          </ol>
+        </div>
+        <a href="${urlWhatsApp}" class="btn btn-success whatsapp-btn" target="_blank" style="margin-top: 15px; width: 100%; text-align: center;">
+          <span>📱 Enviar Comprobante por WhatsApp</span>
+        </a>
+        <p style="margin-top: 10px; font-size: 0.9rem; color: #666; text-align: center;">
+          ⚡ Tiempo de entrega: 3-5 días hábiles después de confirmar el pago
+        </p>
+      </div>
+    `;
+  } else {
+    instrucciones.innerHTML = `
+      <div class="paypal-instructions">
+        <h5>🔵 Instrucciones para PayPal</h5>
+        <p>Tu pedido ha sido confirmado. Recibirás un email con los detalles de tu compra.</p>
+        <p><strong>Tiempo de entrega:</strong> 3-5 días hábiles</p>
+      </div>
+    `;
+  }
+  
+  goToCheckoutStep(4);
+  
+  // Limpiar carrito después de completar pedido
+  carrito = [];
+  actualizarCarrito();
+}
+
+function calcularTotalCarrito() {
+  return carrito.reduce((total, item) => total + (item.precio * item.cantidad), 0);
+}
   
   // Cerrar modal
   if (btnCloseModal) {
