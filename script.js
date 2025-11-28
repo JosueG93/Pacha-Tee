@@ -376,6 +376,7 @@ function closeCartPanel() {
 // ===== CHECKOUT =====
 function openCheckoutModal() {
     if (cart.length === 0) {
+        closeCartPanel();  // Cerrar el carrito primero
         showCartNotification('El carrito está vacío');
         return;
     }
@@ -510,14 +511,17 @@ function showCartNotification(message) {
     notification.textContent = message;
     notification.style.cssText = `
         position: fixed;
-        top: 100px;
+        top: 120px;  /* Un poco más abajo para que no se superponga con el navbar */
         right: 20px;
         background: var(--verde);
         color: var(--crema);
         padding: 12px 20px;
         border-radius: 8px;
-        z-index: 1000;
+        z-index: 1003;  /* Mayor que el carrito (1002) y checkout (1004) */
         animation: slideIn 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        font-weight: 500;
+        max-width: 300px;
     `;
     
     document.body.appendChild(notification);
