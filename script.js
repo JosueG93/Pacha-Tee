@@ -13,12 +13,7 @@ const btnMenu = document.getElementById('btn-menu');
 document.addEventListener('DOMContentLoaded', function() {
   console.log('🚀 Inicializando Pacha-Tee...');
   
-  // Asegurar que el carrito esté cerrado al inicio
-  if (cartPanel) {
-    cartPanel.setAttribute('hidden', '');
-  }
-  
-  // Inicializar sistemas en orden
+  // Inicializar todos los sistemas
   initSmoothNavigation();
   initNavbarScroll();
   initDropdowns();
@@ -36,7 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
   
   console.log('✅ Pacha-Tee inicializado correctamente');
 });
-
 
 // --- NAVEGACIÓN SUAVE ---
 function initSmoothNavigation() {
@@ -69,6 +63,7 @@ function closeAllMenus() {
   // Cerrar carrito
   if (cartPanel && !cartPanel.hasAttribute('hidden')) {
     cartPanel.setAttribute('hidden', '');
+    document.body.style.overflow = '';
   }
   
   // Cerrar dropdowns
@@ -413,6 +408,18 @@ function initCheckout() {
       goToCheckoutStep(prevStep);
     });
   });
+  
+  // Manejar cambios en método de pago
+  document.querySelectorAll('input[name="payment-method"]').forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      const cardForm = document.getElementById('card-form');
+      if (e.target.value === 'card') {
+        cardForm.style.display = 'block';
+      } else {
+        cardForm.style.display = 'none';
+      }
+    });
+  });
 }
 
 function abrirModalCheckout() {
@@ -538,16 +545,21 @@ function initMobileMenu() {
   }
 }
 
-// --- NOSOTROS FULLPAGE SIMPLIFICADO ---
+// --- NOSOTROS FULLPAGE CORREGIDO ---
 function initNosotrosFullpage() {
   const pages = document.querySelectorAll('.nosotros-page');
   const navigation = document.querySelector('.page-navigation');
+  
+  if (pages.length === 0) return;
+  
   let currentPage = 0;
   let isScrolling = false;
+  let isInSection = false;
 
   // Crear navegación si no existe
   if (navigation && navigation.children.length === 0) {
     const pageTitles = ['Misión', 'Visión', 'Objetivo'];
+    
     pageTitles.forEach((title, index) => {
       const dot = document.createElement('button');
       dot.className = 'page-dot';
@@ -580,7 +592,9 @@ function initNosotrosFullpage() {
     });
     
     // Mostrar página actual
-    pages[currentPage].classList.add('active');
+    setTimeout(() => {
+      pages[currentPage].classList.add('active');
+    }, 100);
     
     // Actualizar dots de navegación
     dots.forEach((dot, i) => {
@@ -592,23 +606,7 @@ function initNosotrosFullpage() {
     }, 800);
   }
 
-  // Control con rueda del mouse
-  nosotrosSection.addEventListener('wheel', (e) => {
-    if (isScrolling) return;
-    
-    e.preventDefault();
-    
-    if (e.deltaY > 0 && currentPage < pages.length - 1) {
-      goToPage(currentPage + 1);
-    } else if (e.deltaY < 0 && currentPage > 0) {
-      goToPage(currentPage - 1);
-    }
-  });
-
-  // Hacer la función global para los enlaces del menú
-  window.goToPage = goToPage;
-
-  // Control de visibilidad de la navegación
+  // Control de visibilidad de la navegación y comportamiento de scroll
   function toggleNavigationVisibility() {
     if (!navigation || !nosotrosSection) return;
     
@@ -620,17 +618,75 @@ function initNosotrosFullpage() {
     
     if (isSectionVisible) {
       navigation.classList.add('visible');
+      isInSection = true;
     } else {
       navigation.classList.remove('visible');
+      isInSection = false;
     }
   }
 
-  window.addEventListener('scroll', toggleNavigationVisibility);
+  // Hacer la función global para los enlaces del menú
+  window.goToPage = function(index) {
+    // Primero hacer scroll a la sección
+    if (nosotrosSection) {
+      nosotrosSection.scrollIntoView({ behavior: 'smooth' });
+      
+      // Luego cambiar de página después de un delay
+      setTimeout(() => {
+        goToPage(index);
+      }, 500);
+    }
+  };
+
+  // Control con rueda del mouse solo cuando estamos en la sección
+  let wheelTimeout;
+  window.addEventListener('wheel', (e) => {
+    if (!isInSection || isScrolling) return;
+    
+    clearTimeout(wheelTimeout);
+    wheelTimeout = setTimeout(() => {
+      if (e.deltaY > 50 && currentPage < pages.length - 1) {
+        goToPage(currentPage + 1);
+      } else if (e.deltaY < -50 && currentPage > 0) {
+        goToPage(currentPage - 1);
+      }
+    }, 50);
+  });
+
+  // Control con teclado
+  document.addEventListener('keydown', (e) => {
+    if (!isInSection || isScrolling) return;
+    
+    if ((e.key === 'ArrowDown' || e.key === 'PageDown') && currentPage < pages.length - 1) {
+      e.preventDefault();
+      goToPage(currentPage + 1);
+    } else if ((e.key === 'ArrowUp' || e.key === 'PageUp') && currentPage > 0) {
+      e.preventDefault();
+      goToPage(currentPage - 1);
+    }
+  });
+
+  // Observar cambios de scroll para mostrar/ocultar navegación
+  function handleScroll() {
+    toggleNavigationVisibility();
+  }
+
+  window.addEventListener('scroll', handleScroll);
   window.addEventListener('resize', toggleNavigationVisibility);
 
   // Inicializar visibilidad
   toggleNavigationVisibility();
+
+  // Solo mostrar la primera página al inicio
+  pages.forEach((page, index) => {
+    if (index !== 0) {
+      page.classList.remove('active');
+    }
+  });
+
+  console.log('✅ Navegación Nosotros inicializada');
 }
+
 // --- DEMO AR ---
 function initDemoAR() {
   const btnDemo = document.getElementById('btn-demo');
@@ -644,6 +700,7 @@ function initDemoAR() {
 // --- EVENT DELEGATION ---
 function initEventDelegation() {
   document.addEventListener('click', (e) => {
+    // Botones agregar al carrito
     if (e.target.matches('.btn-add') || e.target.closest('.btn-add')) {
       const btn = e.target.matches('.btn-add') ? e.target : e.target.closest('.btn-add');
       const producto = btn.getAttribute('data-producto');
@@ -653,7 +710,21 @@ function initEventDelegation() {
         agregarAlCarrito(producto, precio);
       }
     }
+    
+    // Cerrar menús al hacer click en enlaces
+    if (e.target.matches('a[href^="#"]')) {
+      closeAllMenus();
+    }
   });
+}
+
+// --- SCROLL TO SECTION HELPER ---
+function scrollToSection(id) {
+  const target = document.getElementById(id);
+  if (target) {
+    closeAllMenus();
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }
 
 // --- FUNCIONES GLOBALES ---
