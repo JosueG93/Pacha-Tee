@@ -2064,3 +2064,156 @@ body.modal-open {
   border-color: #e74c3c;
   box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.1);
 }
+
+/* Estilos para las notificaciones del carrito */
+.cart-notification {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    background: #10B981;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    z-index: 1000;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Estilos para el menú hamburguesa activo */
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+.hamburger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: currentColor;
+    margin: 3px 0;
+    transition: 0.3s;
+}
+
+/* Estilos para los dropdowns */
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    min-width: 200px;
+    z-index: 100;
+}
+
+.dropdown-link {
+    display: block;
+    padding: 12px 16px;
+    color: #333;
+    text-decoration: none;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.dropdown-link:hover {
+    background: #f8f8f8;
+}
+
+.dropdown-link:last-child {
+    border-bottom: none;
+}
+
+/* Estilos para los filtros activos */
+.filtro-btn.active,
+.qs-filtro-btn.active {
+    background: #10B981;
+    color: white;
+}
+
+/* Estilos para el checkout */
+.checkout-step {
+    display: none;
+}
+
+.checkout-step.active {
+    display: block;
+}
+
+.payment-option-card {
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+.payment-option-card.active {
+    border-color: #10B981;
+    background: #f0f9ff;
+}
+
+.payment-option-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.payment-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    flex: 1;
+}
+
+.payment-icon {
+    font-size: 1.5em;
+}
+
+.payment-title {
+    font-weight: 600;
+}
+
+.payment-option-content {
+    padding-left: 32px;
+}
+
+.whatsapp-btn {
+    background: #25D366;
+    color: white;
+    margin-top: 12px;
+}
+
+.whatsapp-btn:hover {
+    background: #128C7E;
+}
+
+/* Estados de los pasos del checkout */
+.step {
+    padding: 8px 16px;
+    border-radius: 20px;
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+.step.active {
+    background: #10B981;
+    color: white;
+}
