@@ -1832,3 +1832,66 @@ body.modal-open {
   color: rgba(45, 59, 36, 0.8);
 }
 }
+
+/* Estilos para los botones de Nosotros */
+.quienes-somos-filtros {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.qs-filtro-btn {
+  padding: 12px 24px;
+  background: transparent;
+  border: 1.5px solid var(--borde);
+  border-radius: 12px;
+  color: var(--verde);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transicion);
+  font-family: inherit;
+  font-size: 15px;
+  backdrop-filter: blur(10px);
+}
+
+.qs-filtro-btn:hover {
+  border-color: var(--verde);
+  background: rgba(45, 59, 36, 0.05);
+}
+
+.qs-filtro-btn.active {
+  background: var(--verde);
+  color: var(--crema);
+  border-color: var(--verde);
+  box-shadow: 0 4px 20px rgba(45, 59, 36, 0.2);
+}
+
+.qs-pagina {
+  display: none;
+}
+
+.qs-pagina.active {
+  display: block;
+  animation: fadeIn 0.5s ease;
+}
+
+.qs-pagina-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.qs-pagina-titulo {
+  font-size: 2.5rem;
+  color: var(--verde);
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+.qs-pagina-texto p {
+  font-size: 1.2rem;
+  line-height: 1.7;
+  color: rgba(45, 59, 36, 0.8);
+}
