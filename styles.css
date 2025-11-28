@@ -306,7 +306,7 @@ body {
   color: var(--verde);
   margin-bottom: 24px;
   animation: fadeDown 1.2s ease;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1.1;
   letter-spacing: -0.02em;
 }
