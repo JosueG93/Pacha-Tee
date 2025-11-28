@@ -13,6 +13,11 @@ const btnMenu = document.getElementById('btn-menu');
 document.addEventListener('DOMContentLoaded', function() {
   console.log('🚀 Inicializando Pacha-Tee...');
   
+  // Asegurar que el carrito esté cerrado al inicio
+  if (cartPanel) {
+    cartPanel.setAttribute('hidden', '');
+  }
+  
   // Inicializar sistemas en orden
   initSmoothNavigation();
   initNavbarScroll();
@@ -31,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   console.log('✅ Pacha-Tee inicializado correctamente');
 });
+
 
 // --- NAVEGACIÓN SUAVE ---
 function initSmoothNavigation() {
