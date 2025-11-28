@@ -1,6 +1,148 @@
-// script.js - VERSIÓN CORREGIDA PARA ESCRITORIO
+// script.js - VERSIÓN ESTABLE Y FUNCIONAL
 
-// ===== NAVEGACIÓN Y MENÚ ESCRITORIO =====
+// ===== VARIABLES GLOBALES =====
+let cart = [];
+let btnMenu, mobileMenu, btnCarrito, cartPanel, btnCloseCart;
+let checkoutModal, btnCheckout, btnCloseModal, btnFinish;
+
+// ===== INICIALIZACIÓN =====
+document.addEventListener('DOMContentLoaded', function() {
+    initializeElements();
+    initializeEventListeners();
+    updateCartCount();
+    updateCartDisplay();
+});
+
+function initializeElements() {
+    // Elementos del DOM
+    btnMenu = document.getElementById('btn-menu');
+    mobileMenu = document.getElementById('mobile-menu');
+    btnCarrito = document.getElementById('btn-carrito');
+    cartPanel = document.getElementById('cart-panel');
+    btnCloseCart = document.getElementById('btn-close-cart');
+    checkoutModal = document.getElementById('checkout-modal');
+    btnCheckout = document.getElementById('btn-checkout');
+    btnCloseModal = document.getElementById('btn-close-modal');
+    btnFinish = document.getElementById('btn-finish');
+}
+
+function initializeEventListeners() {
+    // Navegación suave
+    document.querySelectorAll('a[data-target]').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = this.getAttribute('data-target');
+            scrollToSection(target);
+            closeMobileMenu();
+        });
+    });
+
+    // Submenús desktop
+    initializeSubmenus();
+    
+    // Menú móvil
+    if (btnMenu && mobileMenu) {
+        btnMenu.addEventListener('click', toggleMobileMenu);
+    }
+
+    // Carrito
+    if (btnCarrito && cartPanel) {
+        btnCarrito.addEventListener('click', toggleCartPanel);
+    }
+
+    if (btnCloseCart && cartPanel) {
+        btnCloseCart.addEventListener('click', closeCartPanel);
+    }
+
+    // Checkout
+    if (btnCheckout && checkoutModal) {
+        btnCheckout.addEventListener('click', openCheckoutModal);
+    }
+
+    if (btnCloseModal && checkoutModal) {
+        btnCloseModal.addEventListener('click', closeCheckoutModal);
+    }
+
+    if (btnFinish && checkoutModal) {
+        btnFinish.addEventListener('click', finishCheckout);
+    }
+
+    // Botones agregar al carrito
+    document.querySelectorAll('.btn-add').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const productName = this.getAttribute('data-producto');
+            const price = parseFloat(this.getAttribute('data-precio'));
+            addToCart(productName, price);
+        });
+    });
+
+    // Filtros de tienda
+    document.querySelectorAll('.filtro-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const categoria = this.getAttribute('data-categoria');
+            filtrarProductos(categoria);
+        });
+    });
+
+    // Botones Quiénes Somos
+    document.querySelectorAll('.qs-filtro-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const pagina = this.getAttribute('data-pagina');
+            mostrarPaginaNosotros(pagina);
+        });
+    });
+
+    // Navegación checkout
+    document.querySelectorAll('.btn-next').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const nextStep = this.getAttribute('data-next');
+            goToStep(nextStep);
+        });
+    });
+
+    document.querySelectorAll('.btn-prev').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const prevStep = this.getAttribute('data-prev');
+            goToStep(prevStep);
+        });
+    });
+
+    // Métodos de pago
+    document.querySelectorAll('.payment-option-card').forEach(card => {
+        card.addEventListener('click', function() {
+            selectPaymentMethod(this);
+        });
+    });
+
+    // Completar pedido
+    const btnCompleteOrder = document.getElementById('btn-complete-order');
+    if (btnCompleteOrder) {
+        btnCompleteOrder.addEventListener('click', completeOrder);
+    }
+
+    // Demo AR
+    const btnDemo = document.getElementById('btn-demo');
+    if (btnDemo) {
+        btnDemo.addEventListener('click', function() {
+            showCartNotification('Función de demo AR próximamente');
+        });
+    }
+
+    // Cerrar modales con ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeAllModals();
+        }
+    });
+
+    // Cerrar dropdowns al hacer clic fuera
+    document.addEventListener('click', function() {
+        closeAllDropdowns();
+    });
+}
+
+// ===== FUNCIONES DE NAVEGACIÓN =====
 function scrollToSection(sectionId) {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -8,189 +150,97 @@ function scrollToSection(sectionId) {
     }
 }
 
-// Navegación por enlaces principales
-document.querySelectorAll('a[data-target]').forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const target = e.target.getAttribute('data-target');
-        scrollToSection(target);
-        
-        // Cerrar menú móvil si está abierto
-        mobileMenu.hidden = true;
-        btnMenu.setAttribute('aria-expanded', 'false');
-        btnMenu.classList.remove('active');
-    });
-});
-
-// ===== SUBMENÚS ESCRITORIO - MEJORADO =====
-document.addEventListener('DOMContentLoaded', function() {
-    // Submenú Nosotros
+// ===== SUBMENÚS DESKTOP =====
+function initializeSubmenus() {
     const btnNosotros = document.getElementById('btn-nosotros');
     const dropdownNosotros = document.getElementById('dropdown-nosotros');
-    
-    // Submenú Tienda
     const btnTienda = document.getElementById('btn-tienda');
     const dropdownTienda = document.getElementById('dropdown-tienda');
-    
-    // Función para cerrar todos los dropdowns
-    function cerrarTodosLosDropdowns() {
-        if (dropdownNosotros) {
-            dropdownNosotros.hidden = true;
-            btnNosotros.setAttribute('aria-expanded', 'false');
-        }
-        if (dropdownTienda) {
-            dropdownTienda.hidden = true;
-            btnTienda.setAttribute('aria-expanded', 'false');
-        }
-    }
-    
+
     if (btnNosotros && dropdownNosotros) {
         btnNosotros.addEventListener('click', function(e) {
             e.stopPropagation();
-            const isExpanded = this.getAttribute('aria-expanded') === 'true';
-            
-            // Cerrar otros dropdowns primero
-            if (dropdownTienda) {
-                dropdownTienda.hidden = true;
-                btnTienda.setAttribute('aria-expanded', 'false');
-            }
-            
-            // Toggle este dropdown
-            this.setAttribute('aria-expanded', !isExpanded);
-            dropdownNosotros.hidden = isExpanded;
+            toggleDropdown(this, dropdownNosotros, dropdownTienda, btnTienda);
         });
     }
-    
+
     if (btnTienda && dropdownTienda) {
         btnTienda.addEventListener('click', function(e) {
             e.stopPropagation();
-            const isExpanded = this.getAttribute('aria-expanded') === 'true';
-            
-            // Cerrar otros dropdowns primero
-            if (dropdownNosotros) {
-                dropdownNosotros.hidden = true;
-                btnNosotros.setAttribute('aria-expanded', 'false');
-            }
-            
-            // Toggle este dropdown
-            this.setAttribute('aria-expanded', !isExpanded);
-            dropdownTienda.hidden = isExpanded;
+            toggleDropdown(this, dropdownTienda, dropdownNosotros, btnNosotros);
         });
     }
-    
-    // Cerrar dropdowns al hacer clic fuera
-    document.addEventListener('click', function() {
-        cerrarTodosLosDropdowns();
-    });
-    
-    // Prevenir que los dropdowns se cierren al hacer clic dentro
+
+    // Prevenir cierre al hacer clic dentro de dropdowns
     if (dropdownNosotros) {
         dropdownNosotros.addEventListener('click', function(e) {
             e.stopPropagation();
         });
     }
-    
+
     if (dropdownTienda) {
         dropdownTienda.addEventListener('click', function(e) {
             e.stopPropagation();
         });
     }
-});
+}
 
-// ===== REINICIAR CARRITO AL FINALIZAR COMPRA =====
-function reiniciarCarrito() {
-    cart = [];
-    updateCartCount();
-    updateCartDisplay();
+function toggleDropdown(button, dropdown, otherDropdown, otherButton) {
+    const isExpanded = button.getAttribute('aria-expanded') === 'true';
     
-    // Mostrar notificación
-    showCartNotification('¡Pedido completado! El carrito ha sido reiniciado.');
+    // Cerrar otros dropdowns
+    if (otherDropdown && otherButton) {
+        otherDropdown.hidden = true;
+        otherButton.setAttribute('aria-expanded', 'false');
+    }
+    
+    // Toggle este dropdown
+    button.setAttribute('aria-expanded', !isExpanded);
+    dropdown.hidden = isExpanded;
 }
 
-// Modificar el evento del botón finalizar
-const btnFinish = document.getElementById('btn-finish');
-if (btnFinish) {
-    btnFinish.addEventListener('click', function() {
-        checkoutModal.hidden = true;
-        if (cartPanel) cartPanel.hidden = true;
-        reiniciarCarrito(); // ← Aquí se reinicia el carrito
+function closeAllDropdowns() {
+    document.querySelectorAll('.dropdown').forEach(dropdown => {
+        dropdown.hidden = true;
     });
-}
-
-// También reiniciar cuando se completa el pedido en el paso 4
-const btnCompleteOrder = document.getElementById('btn-complete-order');
-if (btnCompleteOrder) {
-    btnCompleteOrder.addEventListener('click', function() {
-        const selectedMethod = document.querySelector('input[name="payment-method"]:checked');
-        if (!selectedMethod) return;
-        
-        // Actualizar información en el paso de confirmación
-        const paymentMethodUsed = document.getElementById('payment-method-used');
-        if (paymentMethodUsed) {
-            paymentMethodUsed.textContent = 
-                selectedMethod.value === 'transfer' ? 'Transferencia Bancaria' : 'PayPal';
-        }
-        
-        // Mostrar instrucciones según el método de pago
-        const instructions = document.getElementById('confirmation-instructions');
-        if (instructions) {
-            if (selectedMethod.value === 'transfer') {
-                instructions.innerHTML = `
-                    <p><strong>Instrucciones:</strong></p>
-                    <p>1. Realiza la transferencia a la cuenta proporcionada</p>
-                    <p>2. Envía el comprobante por WhatsApp</p>
-                    <p>3. Tu pedido será procesado una vez confirmado el pago</p>
-                `;
-            } else {
-                instructions.innerHTML = `
-                    <p><strong>Instrucciones:</strong></p>
-                    <p>Tu pedido será procesado una vez confirmado el pago a través de PayPal</p>
-                `;
-            }
-        }
-        
-        goToStep(4);
-        
-        // Reiniciar carrito automáticamente cuando llega al paso 4
-        reiniciarCarrito();
+    document.querySelectorAll('.submenu button').forEach(button => {
+        button.setAttribute('aria-expanded', 'false');
     });
 }
 
 // ===== MENÚ MÓVIL =====
-const btnMenu = document.getElementById('btn-menu');
-const mobileMenu = document.getElementById('mobile-menu');
-
-if (btnMenu && mobileMenu) {
-    btnMenu.addEventListener('click', function() {
-        const isExpanded = this.getAttribute('aria-expanded') === 'true';
-        this.setAttribute('aria-expanded', !isExpanded);
-        mobileMenu.hidden = isExpanded;
-        
-        // Animación hamburguesa
-        this.classList.toggle('active');
-        
-        // Cerrar dropdowns de escritorio al abrir menú móvil
-        document.querySelectorAll('.dropdown').forEach(dropdown => {
-            dropdown.hidden = true;
-        });
-        document.querySelectorAll('.submenu button').forEach(button => {
-            button.setAttribute('aria-expanded', 'false');
-        });
-    });
+function toggleMobileMenu() {
+    const isExpanded = this.getAttribute('aria-expanded') === 'true';
+    this.setAttribute('aria-expanded', !isExpanded);
+    mobileMenu.hidden = isExpanded;
+    
+    // Animación hamburguesa - SIN CLASE ACTIVE PARA EVITAR CONFLICTOS
+    const spans = this.querySelectorAll('span');
+    if (!isExpanded) {
+        spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
+    } else {
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'none';
+    }
+    
+    closeAllDropdowns();
 }
 
-// Cerrar menú móvil al hacer clic en enlaces
-document.querySelectorAll('.mobile-nav-link, .mobile-dropdown-link').forEach(link => {
-    link.addEventListener('click', function() {
-        mobileMenu.hidden = true;
-        if (btnMenu) {
-            btnMenu.setAttribute('aria-expanded', 'false');
-            btnMenu.classList.remove('active');
-        }
-    });
-});
+function closeMobileMenu() {
+    if (mobileMenu) mobileMenu.hidden = true;
+    if (btnMenu) {
+        btnMenu.setAttribute('aria-expanded', 'false');
+        const spans = btnMenu.querySelectorAll('span');
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'none';
+    }
+}
 
-// ===== FUNCIONES DE NAVEGACIÓN ESPECÍFICAS =====
+// ===== FUNCIONES ESPECÍFICAS =====
 function mostrarPaginaNosotros(pagina) {
     const botones = document.querySelectorAll('.qs-filtro-btn');
     const paginas = document.querySelectorAll('.qs-pagina');
@@ -211,23 +261,9 @@ function mostrarPaginaNosotros(pagina) {
         }
     });
     
-    // Scroll a la sección
     scrollToSection('quienes-somos');
-    
-    // Cerrar menús
-    mobileMenu.hidden = true;
-    if (btnMenu) {
-        btnMenu.setAttribute('aria-expanded', 'false');
-        btnMenu.classList.remove('active');
-    }
-    
-    // Cerrar dropdowns desktop
-    document.querySelectorAll('.dropdown').forEach(dropdown => {
-        dropdown.hidden = true;
-    });
-    document.querySelectorAll('.submenu button').forEach(button => {
-        button.setAttribute('aria-expanded', 'false');
-    });
+    closeMobileMenu();
+    closeAllDropdowns();
 }
 
 function filtrarProductos(categoria) {
@@ -256,28 +292,12 @@ function filtrarProductos(categoria) {
         }
     });
     
-    // Scroll a la tienda
     scrollToSection('tienda');
-    
-    // Cerrar menús
-    mobileMenu.hidden = true;
-    if (btnMenu) {
-        btnMenu.setAttribute('aria-expanded', 'false');
-        btnMenu.classList.remove('active');
-    }
-    
-    // Cerrar dropdowns desktop
-    document.querySelectorAll('.dropdown').forEach(dropdown => {
-        dropdown.hidden = true;
-    });
-    document.querySelectorAll('.submenu button').forEach(button => {
-        button.setAttribute('aria-expanded', 'false');
-    });
+    closeMobileMenu();
+    closeAllDropdowns();
 }
 
 // ===== CARRITO DE COMPRAS =====
-let cart = [];
-
 function updateCartCount() {
     const cartCount = document.getElementById('cart-count');
     if (cartCount) {
@@ -344,133 +364,36 @@ function updateCartDisplay() {
     cartTotalPrice.textContent = `$${total}`;
 }
 
-// Panel del carrito
-const btnCarrito = document.getElementById('btn-carrito');
-const cartPanel = document.getElementById('cart-panel');
-const btnCloseCart = document.getElementById('btn-close-cart');
-
-if (btnCarrito && cartPanel) {
-    btnCarrito.addEventListener('click', function(e) {
-        e.stopPropagation();
-        cartPanel.hidden = !cartPanel.hidden;
-    });
+function toggleCartPanel(e) {
+    e.stopPropagation();
+    cartPanel.hidden = !cartPanel.hidden;
 }
 
-if (btnCloseCart && cartPanel) {
-    btnCloseCart.addEventListener('click', function() {
-        cartPanel.hidden = true;
-    });
+function closeCartPanel() {
+    cartPanel.hidden = true;
 }
 
-// Cerrar carrito al hacer clic fuera
-document.addEventListener('click', function(e) {
-    if (cartPanel && btnCarrito) {
-        if (!cartPanel.contains(e.target) && !btnCarrito.contains(e.target)) {
-            cartPanel.hidden = true;
-        }
+// ===== CHECKOUT =====
+function openCheckoutModal() {
+    if (cart.length === 0) {
+        showCartNotification('El carrito está vacío');
+        return;
     }
-});
-
-// ===== BOTONES AGREGAR AL CARRITO =====
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.btn-add').forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.stopPropagation();
-            const productName = this.getAttribute('data-producto');
-            const price = parseFloat(this.getAttribute('data-precio'));
-            addToCart(productName, price);
-        });
-    });
-});
-
-// Notificación de carrito
-function showCartNotification(message) {
-    const notification = document.createElement('div');
-    notification.className = 'cart-notification';
-    notification.textContent = message;
-    notification.style.cssText = `
-        position: fixed;
-        top: 100px;
-        right: 20px;
-        background: #10B981;
-        color: white;
-        padding: 12px 20px;
-        border-radius: 8px;
-        z-index: 1000;
-        animation: slideIn 0.3s ease;
-    `;
     
-    document.body.appendChild(notification);
-    
-    setTimeout(() => {
-        notification.remove();
-    }, 3000);
+    checkoutModal.hidden = false;
+    updateOrderSummary();
+    goToStep(1);
 }
 
-// ===== INICIALIZACIÓN BOTONES QUIÉNES SOMOS =====
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.qs-filtro-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const pagina = this.getAttribute('data-pagina');
-            mostrarPaginaNosotros(pagina);
-        });
-    });
-    
-    // Inicializar filtros de tienda
-    document.querySelectorAll('.filtro-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const categoria = this.getAttribute('data-categoria');
-            filtrarProductos(categoria);
-        });
-    });
-});
-
-// ===== CHECKOUT MODAL =====
-const checkoutModal = document.getElementById('checkout-modal');
-const btnCheckout = document.getElementById('btn-checkout');
-const btnCloseModal = document.getElementById('btn-close-modal');
-const btnFinish = document.getElementById('btn-finish');
-
-if (btnCheckout && checkoutModal) {
-    btnCheckout.addEventListener('click', function() {
-        if (cart.length === 0) {
-            showCartNotification('El carrito está vacío');
-            return;
-        }
-        
-        checkoutModal.hidden = false;
-        updateOrderSummary();
-        goToStep(1);
-    });
+function closeCheckoutModal() {
+    checkoutModal.hidden = true;
 }
 
-if (btnCloseModal && checkoutModal) {
-    btnCloseModal.addEventListener('click', function() {
-        checkoutModal.hidden = true;
-    });
+function finishCheckout() {
+    checkoutModal.hidden = true;
+    if (cartPanel) cartPanel.hidden = true;
+    reiniciarCarrito();
 }
-
-if (btnFinish && checkoutModal) {
-    btnFinish.addEventListener('click', function() {
-        checkoutModal.hidden = true;
-        if (cartPanel) cartPanel.hidden = true;
-    });
-}
-
-// Navegación entre pasos del checkout
-document.querySelectorAll('.btn-next').forEach(btn => {
-    btn.addEventListener('click', function() {
-        const nextStep = this.getAttribute('data-next');
-        goToStep(nextStep);
-    });
-});
-
-document.querySelectorAll('.btn-prev').forEach(btn => {
-    btn.addEventListener('click', function() {
-        const prevStep = this.getAttribute('data-prev');
-        goToStep(prevStep);
-    });
-});
 
 function goToStep(stepNumber) {
     // Ocultar todos los pasos
@@ -523,88 +446,101 @@ function updateOrderSummary() {
     subtotalPrice.textContent = `$${subtotal}`;
     finalTotalPrice.textContent = `$${total}`;
     
-    // Actualizar también en el paso de confirmación
     const paidAmount = document.getElementById('paid-amount');
     if (paidAmount) {
         paidAmount.textContent = `$${total}`;
     }
 }
 
-// Métodos de pago
-document.querySelectorAll('.payment-option-card').forEach(card => {
-    card.addEventListener('click', function() {
-        document.querySelectorAll('.payment-option-card').forEach(c => {
-            c.classList.remove('active');
-        });
-        this.classList.add('active');
-        
-        const method = this.getAttribute('data-method');
-        const radio = document.querySelector(`#${method}-method`);
-        if (radio) {
-            radio.checked = true;
-        }
+function selectPaymentMethod(card) {
+    document.querySelectorAll('.payment-option-card').forEach(c => {
+        c.classList.remove('active');
     });
-});
-
-// Completar pedido
-const btnCompleteOrder = document.getElementById('btn-complete-order');
-if (btnCompleteOrder) {
-    btnCompleteOrder.addEventListener('click', function() {
-        const selectedMethod = document.querySelector('input[name="payment-method"]:checked');
-        if (!selectedMethod) return;
-        
-        // Actualizar información en el paso de confirmación
-        const paymentMethodUsed = document.getElementById('payment-method-used');
-        if (paymentMethodUsed) {
-            paymentMethodUsed.textContent = 
-                selectedMethod.value === 'transfer' ? 'Transferencia Bancaria' : 'PayPal';
-        }
-        
-        // Mostrar instrucciones según el método de pago
-        const instructions = document.getElementById('confirmation-instructions');
-        if (instructions) {
-            if (selectedMethod.value === 'transfer') {
-                instructions.innerHTML = `
-                    <p><strong>Instrucciones:</strong></p>
-                    <p>1. Realiza la transferencia a la cuenta proporcionada</p>
-                    <p>2. Envía el comprobante por WhatsApp</p>
-                    <p>3. Tu pedido será procesado una vez confirmado el pago</p>
-                `;
-            } else {
-                instructions.innerHTML = `
-                    <p><strong>Instrucciones:</strong></p>
-                    <p>Tu pedido será procesado una vez confirmado el pago a través de PayPal</p>
-                `;
-            }
-        }
-        
-        goToStep(4);
-    });
+    card.classList.add('active');
+    
+    const method = card.getAttribute('data-method');
+    const radio = document.querySelector(`#${method}-method`);
+    if (radio) {
+        radio.checked = true;
+    }
 }
 
-// ===== DEMO AR =====
-const btnDemo = document.getElementById('btn-demo');
-if (btnDemo) {
-    btnDemo.addEventListener('click', function() {
-        showCartNotification('Función de demo AR próximamente');
-    });
+function completeOrder() {
+    const selectedMethod = document.querySelector('input[name="payment-method"]:checked');
+    if (!selectedMethod) return;
+    
+    const paymentMethodUsed = document.getElementById('payment-method-used');
+    if (paymentMethodUsed) {
+        paymentMethodUsed.textContent = 
+            selectedMethod.value === 'transfer' ? 'Transferencia Bancaria' : 'PayPal';
+    }
+    
+    const instructions = document.getElementById('confirmation-instructions');
+    if (instructions) {
+        if (selectedMethod.value === 'transfer') {
+            instructions.innerHTML = `
+                <p><strong>Instrucciones:</strong></p>
+                <p>1. Realiza la transferencia a la cuenta proporcionada</p>
+                <p>2. Envía el comprobante por WhatsApp</p>
+                <p>3. Tu pedido será procesado una vez confirmado el pago</p>
+            `;
+        } else {
+            instructions.innerHTML = `
+                <p><strong>Instrucciones:</strong></p>
+                <p>Tu pedido será procesado una vez confirmado el pago a través de PayPal</p>
+            `;
+        }
+    }
+    
+    goToStep(4);
+    reiniciarCarrito();
 }
 
-// ===== INICIALIZACIÓN GENERAL =====
-document.addEventListener('DOMContentLoaded', function() {
+function reiniciarCarrito() {
+    cart = [];
     updateCartCount();
     updateCartDisplay();
+    showCartNotification('¡Pedido completado! El carrito ha sido reiniciado.');
+}
+
+// ===== UTILIDADES =====
+function showCartNotification(message) {
+    const notification = document.createElement('div');
+    notification.className = 'cart-notification';
+    notification.textContent = message;
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: var(--verde);
+        color: var(--crema);
+        padding: 12px 20px;
+        border-radius: 8px;
+        z-index: 1000;
+        animation: slideIn 0.3s ease;
+    `;
     
-    // Cerrar modales con ESC
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            if (checkoutModal) checkoutModal.hidden = true;
-            if (cartPanel) cartPanel.hidden = true;
-            if (mobileMenu) mobileMenu.hidden = true;
-            if (btnMenu) {
-                btnMenu.setAttribute('aria-expanded', 'false');
-                btnMenu.classList.remove('active');
-            }
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.parentNode.removeChild(notification);
         }
-    });
+    }, 3000);
+}
+
+function closeAllModals() {
+    if (checkoutModal) checkoutModal.hidden = true;
+    if (cartPanel) cartPanel.hidden = true;
+    closeMobileMenu();
+    closeAllDropdowns();
+}
+
+// Cerrar carrito al hacer clic fuera
+document.addEventListener('click', function(e) {
+    if (cartPanel && btnCarrito) {
+        if (!cartPanel.contains(e.target) && !btnCarrito.contains(e.target)) {
+            cartPanel.hidden = true;
+        }
+    }
 });
