@@ -1,7 +1,8 @@
 // --- CONFIGURACIÓN INICIAL ---
 let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 let currentCheckoutStep = 1;
-let isAnimating = false;
+let selectedPaymentMethod = 'transfer';
+let customerInfo = {};
 
 // --- ELEMENTOS GLOBALES ---
 const cartPanel = document.getElementById('cart-panel');
@@ -13,7 +14,7 @@ const btnMenu = document.getElementById('btn-menu');
 document.addEventListener('DOMContentLoaded', function() {
   console.log('🚀 Inicializando Pacha-Tee...');
   
-  // Inicializar todos los sistemas
+  // Inicializar sistemas
   initSmoothNavigation();
   initNavbarScroll();
   initDropdowns();
@@ -21,13 +22,13 @@ document.addEventListener('DOMContentLoaded', function() {
   initFiltrosTienda();
   initCheckout();
   initMobileMenu();
-  initNosotrosFullpage();
+  initQuienesSomos();
   initDemoAR();
   initEventDelegation();
   
   // Estado inicial
   actualizarCarrito();
-  mostrarCategoria('todos'); // Mostrar todos los productos al inicio
+  mostrarCategoria('todos');
   
   console.log('✅ Pacha-Tee inicializado correctamente');
 });
@@ -54,19 +55,15 @@ function initSmoothNavigation() {
 }
 
 function closeAllMenus() {
-  // Cerrar menú móvil
   if (mobileMenu && !mobileMenu.hasAttribute('hidden')) {
     mobileMenu.setAttribute('hidden', '');
     btnMenu.setAttribute('aria-expanded', 'false');
   }
   
-  // Cerrar carrito
   if (cartPanel && !cartPanel.hasAttribute('hidden')) {
     cartPanel.setAttribute('hidden', '');
-    document.body.style.overflow = '';
   }
   
-  // Cerrar dropdowns
   closeAllDropdowns();
 }
 
@@ -93,13 +90,10 @@ function initNavbarScroll() {
   }
 }
 
-// --- DROPDOWNS CORREGIDOS ---
+// --- DROPDOWNS ---
 function initDropdowns() {
-  // Dropdown Nosotros
   const btnNos = document.getElementById('btn-nosotros');
   const ddNos = document.getElementById('dropdown-nosotros');
-  
-  // Dropdown Tienda
   const btnTienda = document.getElementById('btn-tienda');
   const ddTienda = document.getElementById('dropdown-tienda');
   
@@ -108,11 +102,9 @@ function initDropdowns() {
       e.stopPropagation();
       const isOpen = !ddNos.hasAttribute('hidden');
       
-      // Cerrar el otro dropdown
       if (ddTienda) ddTienda.setAttribute('hidden', '');
       if (btnTienda) btnTienda.setAttribute('aria-expanded', 'false');
       
-      // Toggle este dropdown
       if (isOpen) {
         ddNos.setAttribute('hidden', '');
         btnNos.setAttribute('aria-expanded', 'false');
@@ -128,11 +120,9 @@ function initDropdowns() {
       e.stopPropagation();
       const isOpen = !ddTienda.hasAttribute('hidden');
       
-      // Cerrar el otro dropdown
       if (ddNos) ddNos.setAttribute('hidden', '');
       if (btnNos) btnNos.setAttribute('aria-expanded', 'false');
       
-      // Toggle este dropdown
       if (isOpen) {
         ddTienda.setAttribute('hidden', '');
         btnTienda.setAttribute('aria-expanded', 'false');
@@ -143,7 +133,6 @@ function initDropdowns() {
     });
   }
   
-  // Cerrar dropdowns al hacer click fuera
   document.addEventListener('click', () => {
     closeAllDropdowns();
   });
@@ -309,7 +298,7 @@ function initCartPanel() {
   }
 }
 
-// --- FILTROS DE TIENDA CORREGIDOS ---
+// --- FILTROS DE TIENDA ---
 function initFiltrosTienda() {
   const filtroBtns = document.querySelectorAll('.filtro-btn');
   
@@ -317,14 +306,10 @@ function initFiltrosTienda() {
     btn.addEventListener('click', () => {
       const categoria = btn.getAttribute('data-categoria');
       
-      // Actualizar botones activos
       filtroBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       
-      // Mostrar categoría
       mostrarCategoria(categoria);
-      
-      // Cerrar menús
       closeAllMenus();
     });
   });
@@ -333,12 +318,10 @@ function initFiltrosTienda() {
 function mostrarCategoria(categoria) {
   const categorias = document.querySelectorAll('.categoria-productos');
   
-  // Ocultar todas las categorías primero
   categorias.forEach(cat => {
     cat.classList.remove('active');
   });
   
-  // Mostrar la categoría seleccionada
   if (categoria === 'todos') {
     categorias.forEach(cat => {
       cat.classList.add('active');
@@ -351,45 +334,102 @@ function mostrarCategoria(categoria) {
   }
 }
 
-// Función global para filtrado desde el menú
 function filtrarProductos(categoria) {
   const filtroBtn = document.querySelector(`[data-categoria="${categoria}"]`);
   if (filtroBtn) {
-    // Actualizar botón activo
     document.querySelectorAll('.filtro-btn').forEach(btn => btn.classList.remove('active'));
     filtroBtn.classList.add('active');
-    
-    // Mostrar categoría
     mostrarCategoria(categoria);
   }
-  
   closeAllMenus();
 }
 
-// --- CHECKOUT ---
+// --- QUIÉNES SOMOS CON BOTONES ---
+function initQuienesSomos() {
+  const qsFiltroBtns = document.querySelectorAll('.qs-filtro-btn');
+  
+  qsFiltroBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const pagina = btn.getAttribute('data-pagina');
+      
+      qsFiltroBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      mostrarPagina(pagina);
+    });
+  });
+}
+
+function mostrarPagina(pagina) {
+  // Cerrar menús si estamos en móvil
+  closeAllMenus();
+  
+  // Scroll a la sección Quiénes Somos
+  const quienesSomosSection = document.getElementById('quienes-somos');
+  if (quienesSomosSection) {
+    quienesSomosSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  
+  // Mostrar la página seleccionada después de un pequeño delay
+  setTimeout(() => {
+    const paginas = document.querySelectorAll('.qs-pagina');
+    paginas.forEach(pag => pag.classList.remove('active'));
+    
+    const paginaSeleccionada = document.getElementById(`qs-${pagina}`);
+    if (paginaSeleccionada) {
+      paginaSeleccionada.classList.add('active');
+    }
+  }, 300);
+}
+
+// Hacer la función global para el menú
+window.mostrarPagina = mostrarPagina;
+
+// --- CHECKOUT MEJORADO ---
 function initCheckout() {
   const btnCheckout = document.getElementById('btn-checkout');
-  const btnProcessPayment = document.getElementById('btn-process-payment');
+  const btnCompleteOrder = document.getElementById('btn-complete-order');
   const btnFinish = document.getElementById('btn-finish');
   const btnCloseModal = document.getElementById('btn-close-modal');
+  const btnToPayment = document.getElementById('btn-to-payment');
+  const btnPaypal = document.getElementById('btn-paypal');
   
+  // Abrir modal de checkout
   if (btnCheckout) {
     btnCheckout.addEventListener('click', abrirModalCheckout);
   }
   
-  if (btnProcessPayment) {
-    btnProcessPayment.addEventListener('click', processPayment);
+  // Completar pedido
+  if (btnCompleteOrder) {
+    btnCompleteOrder.addEventListener('click', completarPedido);
   }
   
+  // Finalizar compra
   if (btnFinish) {
     btnFinish.addEventListener('click', () => {
       cerrarModalCheckout();
-      mostrarNotificacion('¡Gracias por tu compra! Recibirás un email de confirmación.');
+      mostrarNotificacion('¡Gracias por tu compra! Revisa tu email para más detalles.');
     });
   }
   
+  // Cerrar modal
   if (btnCloseModal) {
     btnCloseModal.addEventListener('click', cerrarModalCheckout);
+  }
+  
+  // Ir a pago
+  if (btnToPayment) {
+    btnToPayment.addEventListener('click', (e) => {
+      if (validarFormularioEnvio()) {
+        goToCheckoutStep(3);
+        guardarInformacionCliente();
+      }
+    });
+  }
+  
+  // Botón PayPal
+  if (btnPaypal) {
+    btnPaypal.addEventListener('click', procesarPagoPaypal);
   }
   
   // Navegación entre pasos
@@ -409,16 +449,26 @@ function initCheckout() {
     });
   });
   
-  // Manejar cambios en método de pago
+  // Manejar selección de método de pago
   document.querySelectorAll('input[name="payment-method"]').forEach(radio => {
     radio.addEventListener('change', (e) => {
-      const cardForm = document.getElementById('card-form');
-      if (e.target.value === 'card') {
-        cardForm.style.display = 'block';
-      } else {
-        cardForm.style.display = 'none';
-      }
+      selectedPaymentMethod = e.target.value;
+      actualizarOpcionesPago();
     });
+  });
+  
+  // Inicializar opciones de pago
+  actualizarOpcionesPago();
+}
+
+function actualizarOpcionesPago() {
+  const paymentCards = document.querySelectorAll('.payment-option-card');
+  
+  paymentCards.forEach(card => {
+    card.classList.remove('active');
+    if (card.getAttribute('data-method') === selectedPaymentMethod) {
+      card.classList.add('active');
+    }
   });
 }
 
@@ -505,24 +555,112 @@ function renderizarOrderSummary() {
   if (paidAmount) paidAmount.textContent = `$${total.toFixed(2)}`;
 }
 
-function validateStep(step) {
-  return true; // Simplificado para demo
+function validarFormularioEnvio() {
+  const requiredFields = ['full-name', 'email', 'phone', 'address', 'city', 'zip'];
+  let isValid = true;
+  
+  requiredFields.forEach(fieldId => {
+    const field = document.getElementById(fieldId);
+    if (!field || !field.value.trim()) {
+      field.classList.add('error');
+      isValid = false;
+    } else {
+      field.classList.remove('error');
+    }
+  });
+  
+  if (!isValid) {
+    mostrarNotificacion('Por favor completa todos los campos requeridos');
+  }
+  
+  return isValid;
 }
 
-function processPayment() {
-  const btn = document.getElementById('btn-process-payment');
+function guardarInformacionCliente() {
+  customerInfo = {
+    nombre: document.getElementById('full-name').value,
+    email: document.getElementById('email').value,
+    telefono: document.getElementById('phone').value,
+    direccion: document.getElementById('address').value,
+    ciudad: document.getElementById('city').value,
+    codigoPostal: document.getElementById('zip').value
+  };
+}
+
+function validateStep(step) {
+  switch(step) {
+    case 1:
+      return true;
+    case 2:
+      return validarFormularioEnvio();
+    case 3:
+      return true;
+    default:
+      return true;
+  }
+}
+
+function completarPedido() {
+  const orderNumber = 'PT-' + Date.now().toString().slice(-6);
+  const total = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0) + 3;
+  
+  // Actualizar información en la confirmación
+  document.getElementById('order-number').textContent = orderNumber;
+  document.getElementById('paid-amount').textContent = `$${total.toFixed(2)}`;
+  document.getElementById('payment-method-used').textContent = 
+    selectedPaymentMethod === 'transfer' ? 'Transferencia Bancaria' : 'PayPal';
+  
+  // Mostrar instrucciones según el método de pago
+  const instructions = document.getElementById('confirmation-instructions');
+  if (selectedPaymentMethod === 'transfer') {
+    instructions.innerHTML = `
+      <h5>Instrucciones para transferencia:</h5>
+      <ul>
+        <li>Realiza la transferencia por $${total.toFixed(2)} a la cuenta proporcionada</li>
+        <li>Envía el comprobante por WhatsApp</li>
+        <li>Tu pedido será procesado una vez confirmemos el pago</li>
+        <li>Tiempo de entrega: 3-5 días hábiles</li>
+      </ul>
+    `;
+  } else {
+    instructions.innerHTML = `
+      <h5>Instrucciones para PayPal:</h5>
+      <ul>
+        <li>Tu pedido ha sido confirmado</li>
+        <li>Recibirás un email con los detalles de tu compra</li>
+        <li>Tiempo de entrega: 3-5 días hábiles</li>
+      </ul>
+    `;
+  }
+  
+  goToCheckoutStep(4);
+  
+  // Limpiar carrito después de completar el pedido
+  carrito = [];
+  actualizarCarrito();
+}
+
+function procesarPagoPaypal() {
+  const total = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0) + 3;
+  
+  // Simular procesamiento de PayPal
+  const btn = document.getElementById('btn-paypal');
   const originalText = btn.innerHTML;
   
-  btn.innerHTML = '<span class="loading"></span> Procesando pago...';
+  btn.innerHTML = '<span class="loading"></span> Redirigiendo a PayPal...';
   btn.disabled = true;
   
   setTimeout(() => {
-    goToCheckoutStep(4);
-    carrito = [];
-    actualizarCarrito();
-    btn.innerHTML = originalText;
-    btn.disabled = false;
-  }, 2000);
+    // En un caso real, aquí redirigirías a PayPal
+    mostrarNotificacion('Redirigiendo a PayPal para completar el pago...');
+    
+    // Simular pago exitoso
+    setTimeout(() => {
+      completarPedido();
+      btn.innerHTML = originalText;
+      btn.disabled = false;
+    }, 2000);
+  }, 1000);
 }
 
 // --- MENÚ MÓVIL ---
@@ -545,148 +683,6 @@ function initMobileMenu() {
   }
 }
 
-// --- NOSOTROS FULLPAGE CORREGIDO ---
-function initNosotrosFullpage() {
-  const pages = document.querySelectorAll('.nosotros-page');
-  const navigation = document.querySelector('.page-navigation');
-  
-  if (pages.length === 0) return;
-  
-  let currentPage = 0;
-  let isScrolling = false;
-  let isInSection = false;
-
-  // Crear navegación si no existe
-  if (navigation && navigation.children.length === 0) {
-    const pageTitles = ['Misión', 'Visión', 'Objetivo'];
-    
-    pageTitles.forEach((title, index) => {
-      const dot = document.createElement('button');
-      dot.className = 'page-dot';
-      dot.setAttribute('data-title', title);
-      dot.setAttribute('aria-label', `Ir a ${title}`);
-      dot.setAttribute('data-index', index);
-      
-      if (index === 0) dot.classList.add('active');
-      
-      dot.addEventListener('click', () => {
-        goToPage(index);
-      });
-      
-      navigation.appendChild(dot);
-    });
-  }
-
-  const dots = document.querySelectorAll('.page-dot');
-  const nosotrosSection = document.querySelector('.nosotros-fullpage');
-
-  function goToPage(index) {
-    if (index < 0 || index >= pages.length || isScrolling) return;
-    
-    isScrolling = true;
-    currentPage = index;
-    
-    // Ocultar todas las páginas
-    pages.forEach(page => {
-      page.classList.remove('active');
-    });
-    
-    // Mostrar página actual
-    setTimeout(() => {
-      pages[currentPage].classList.add('active');
-    }, 100);
-    
-    // Actualizar dots de navegación
-    dots.forEach((dot, i) => {
-      dot.classList.toggle('active', i === currentPage);
-    });
-    
-    setTimeout(() => {
-      isScrolling = false;
-    }, 800);
-  }
-
-  // Control de visibilidad de la navegación y comportamiento de scroll
-  function toggleNavigationVisibility() {
-    if (!navigation || !nosotrosSection) return;
-    
-    const rect = nosotrosSection.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-    
-    // Mostrar navegación solo cuando la sección esté visible
-    const isSectionVisible = rect.top < windowHeight * 0.8 && rect.bottom > windowHeight * 0.2;
-    
-    if (isSectionVisible) {
-      navigation.classList.add('visible');
-      isInSection = true;
-    } else {
-      navigation.classList.remove('visible');
-      isInSection = false;
-    }
-  }
-
-  // Hacer la función global para los enlaces del menú
-  window.goToPage = function(index) {
-    // Primero hacer scroll a la sección
-    if (nosotrosSection) {
-      nosotrosSection.scrollIntoView({ behavior: 'smooth' });
-      
-      // Luego cambiar de página después de un delay
-      setTimeout(() => {
-        goToPage(index);
-      }, 500);
-    }
-  };
-
-  // Control con rueda del mouse solo cuando estamos en la sección
-  let wheelTimeout;
-  window.addEventListener('wheel', (e) => {
-    if (!isInSection || isScrolling) return;
-    
-    clearTimeout(wheelTimeout);
-    wheelTimeout = setTimeout(() => {
-      if (e.deltaY > 50 && currentPage < pages.length - 1) {
-        goToPage(currentPage + 1);
-      } else if (e.deltaY < -50 && currentPage > 0) {
-        goToPage(currentPage - 1);
-      }
-    }, 50);
-  });
-
-  // Control con teclado
-  document.addEventListener('keydown', (e) => {
-    if (!isInSection || isScrolling) return;
-    
-    if ((e.key === 'ArrowDown' || e.key === 'PageDown') && currentPage < pages.length - 1) {
-      e.preventDefault();
-      goToPage(currentPage + 1);
-    } else if ((e.key === 'ArrowUp' || e.key === 'PageUp') && currentPage > 0) {
-      e.preventDefault();
-      goToPage(currentPage - 1);
-    }
-  });
-
-  // Observar cambios de scroll para mostrar/ocultar navegación
-  function handleScroll() {
-    toggleNavigationVisibility();
-  }
-
-  window.addEventListener('scroll', handleScroll);
-  window.addEventListener('resize', toggleNavigationVisibility);
-
-  // Inicializar visibilidad
-  toggleNavigationVisibility();
-
-  // Solo mostrar la primera página al inicio
-  pages.forEach((page, index) => {
-    if (index !== 0) {
-      page.classList.remove('active');
-    }
-  });
-
-  console.log('✅ Navegación Nosotros inicializada');
-}
-
 // --- DEMO AR ---
 function initDemoAR() {
   const btnDemo = document.getElementById('btn-demo');
@@ -700,7 +696,6 @@ function initDemoAR() {
 // --- EVENT DELEGATION ---
 function initEventDelegation() {
   document.addEventListener('click', (e) => {
-    // Botones agregar al carrito
     if (e.target.matches('.btn-add') || e.target.closest('.btn-add')) {
       const btn = e.target.matches('.btn-add') ? e.target : e.target.closest('.btn-add');
       const producto = btn.getAttribute('data-producto');
@@ -710,15 +705,10 @@ function initEventDelegation() {
         agregarAlCarrito(producto, precio);
       }
     }
-    
-    // Cerrar menús al hacer click en enlaces
-    if (e.target.matches('a[href^="#"]')) {
-      closeAllMenus();
-    }
   });
 }
 
-// --- SCROLL TO SECTION HELPER ---
+// --- SCROLL TO SECTION ---
 function scrollToSection(id) {
   const target = document.getElementById(id);
   if (target) {
