@@ -22,23 +22,24 @@
     <nav class="nav-links" role="navigation" aria-label="Navegación principal">
       <a href="#inicio" data-target="inicio" class="nav-link">Inicio</a>
 
-      <div class="submenu" id="submenu-nosotros">
-        <button id="btn-nosotros" aria-expanded="false" class="nav-link">Nosotros ▾</button>
-        <div class="dropdown" id="dropdown-nosotros" hidden>
-          <a href="#quienes-somos" onclick="mostrarPagina('mision'); return false;" class="dropdown-link">Misión</a>
-          <a href="#quienes-somos" onclick="mostrarPagina('vision'); return false;" class="dropdown-link">Visión</a>
-          <a href="#quienes-somos" onclick="mostrarPagina('objetivos'); return false;" class="dropdown-link">Objetivo</a>
-        </div>
-      </div>
+<!-- En el NAV principal -->
+<div class="submenu" id="submenu-nosotros">
+  <button id="btn-nosotros" aria-expanded="false" class="nav-link">Nosotros ▾</button>
+  <div class="dropdown" id="dropdown-nosotros" hidden>
+    <a href="#quienes-somos" onclick="mostrarPaginaNosotros('mision'); return false;" class="dropdown-link">Misión</a>
+    <a href="#quienes-somos" onclick="mostrarPaginaNosotros('vision'); return false;" class="dropdown-link">Visión</a>
+    <a href="#quienes-somos" onclick="mostrarPaginaNosotros('objetivos'); return false;" class="dropdown-link">Objetivo</a>
+  </div>
+</div>
 
-      <div class="submenu" id="submenu-tienda">
-        <button id="btn-tienda" aria-expanded="false" class="nav-link">Tienda ▾</button>
-        <div class="dropdown" id="dropdown-tienda" hidden>
-          <a href="#camisetas" onclick="filtrarProductos('camisetas'); return false;" class="dropdown-link">Camisetas</a>
-          <a href="#tote-bags" onclick="filtrarProductos('tote-bags'); return false;" class="dropdown-link">Tote Bags</a>
-          <a href="#tienda" onclick="filtrarProductos('todos'); return false;" class="dropdown-link">Ver Todo</a>
-        </div>
-      </div>
+<div class="submenu" id="submenu-tienda">
+  <button id="btn-tienda" aria-expanded="false" class="nav-link">Tienda ▾</button>
+  <div class="dropdown" id="dropdown-tienda" hidden>
+    <a href="#tienda" onclick="filtrarProductos('camisetas'); return false;" class="dropdown-link">Camisetas</a>
+    <a href="#tienda" onclick="filtrarProductos('tote-bags'); return false;" class="dropdown-link">Tote Bags</a>
+    <a href="#tienda" onclick="filtrarProductos('todos'); return false;" class="dropdown-link">Ver Todo</a>
+  </div>
+</div>
       
       <a href="#como-funciona" data-target="como-funciona" class="nav-link">Cómo funciona</a>
     </nav>
@@ -61,18 +62,19 @@
   <!-- MOBILE MENU -->
   <div id="mobile-menu" class="mobile-menu" hidden role="dialog" aria-label="Menú móvil">
     <a href="#inicio" data-target="inicio" class="mobile-nav-link">Inicio</a>
-    <details>
-      <summary>Nosotros</summary>
-      <a href="#quienes-somos" onclick="mostrarPagina('mision'); return false;" class="mobile-dropdown-link">Misión</a>
-      <a href="#quienes-somos" onclick="mostrarPagina('vision'); return false;" class="mobile-dropdown-link">Visión</a>
-      <a href="#quienes-somos" onclick="mostrarPagina('objetivos'); return false;" class="mobile-dropdown-link">Objetivo</a>
-    </details>
-    <details>
-      <summary>Tienda</summary>
-      <a href="#camisetas" onclick="filtrarProductos('camisetas'); return false;" class="mobile-dropdown-link">Camisetas</a>
-      <a href="#tote-bags" onclick="filtrarProductos('tote-bags'); return false;" class="mobile-dropdown-link">Tote Bags</a>
-      <a href="#tienda" onclick="filtrarProductos('todos'); return false;" class="mobile-dropdown-link">Ver Todo</a>
-    </details>
+<details>
+  <summary>Nosotros</summary>
+  <a href="#quienes-somos" onclick="mostrarPaginaNosotros('mision'); return false;" class="mobile-dropdown-link">Misión</a>
+  <a href="#quienes-somos" onclick="mostrarPaginaNosotros('vision'); return false;" class="mobile-dropdown-link">Visión</a>
+  <a href="#quienes-somos" onclick="mostrarPaginaNosotros('objetivos'); return false;" class="mobile-dropdown-link">Objetivo</a>
+</details>
+<details>
+  <summary>Tienda</summary>
+  <a href="#tienda" onclick="filtrarProductos('camisetas'); return false;" class="mobile-dropdown-link">Camisetas</a>
+  <a href="#tienda" onclick="filtrarProductos('tote-bags'); return false;" class="mobile-dropdown-link">Tote Bags</a>
+  <a href="#tienda" onclick="filtrarProductos('todos'); return false;" class="mobile-dropdown-link">Ver Todo</a>
+</details>
+
     <a href="#como-funciona" data-target="como-funciona" class="mobile-nav-link">Cómo funciona</a>
     <div class="mobile-social">
       <a href="https://www.instagram.com/pacha.tee/" target="_blank" rel="noopener noreferrer" aria-label="Síguenos en Instagram">
