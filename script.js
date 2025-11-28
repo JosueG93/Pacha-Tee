@@ -541,28 +541,96 @@ function initMobileMenu() {
 // --- NOSOTROS FULLPAGE SIMPLIFICADO ---
 function initNosotrosFullpage() {
   const pages = document.querySelectorAll('.nosotros-page');
+  const navigation = document.querySelector('.page-navigation');
   let currentPage = 0;
+  let isScrolling = false;
 
-  // Solo mostrar la primera página al inicio
-  pages.forEach((page, index) => {
-    if (index !== 0) {
+  // Crear navegación si no existe
+  if (navigation && navigation.children.length === 0) {
+    const pageTitles = ['Misión', 'Visión', 'Objetivo'];
+    pageTitles.forEach((title, index) => {
+      const dot = document.createElement('button');
+      dot.className = 'page-dot';
+      dot.setAttribute('data-title', title);
+      dot.setAttribute('aria-label', `Ir a ${title}`);
+      dot.setAttribute('data-index', index);
+      
+      if (index === 0) dot.classList.add('active');
+      
+      dot.addEventListener('click', () => {
+        goToPage(index);
+      });
+      
+      navigation.appendChild(dot);
+    });
+  }
+
+  const dots = document.querySelectorAll('.page-dot');
+  const nosotrosSection = document.querySelector('.nosotros-fullpage');
+
+  function goToPage(index) {
+    if (index < 0 || index >= pages.length || isScrolling) return;
+    
+    isScrolling = true;
+    currentPage = index;
+    
+    // Ocultar todas las páginas
+    pages.forEach(page => {
       page.classList.remove('active');
+    });
+    
+    // Mostrar página actual
+    pages[currentPage].classList.add('active');
+    
+    // Actualizar dots de navegación
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentPage);
+    });
+    
+    setTimeout(() => {
+      isScrolling = false;
+    }, 800);
+  }
+
+  // Control con rueda del mouse
+  nosotrosSection.addEventListener('wheel', (e) => {
+    if (isScrolling) return;
+    
+    e.preventDefault();
+    
+    if (e.deltaY > 0 && currentPage < pages.length - 1) {
+      goToPage(currentPage + 1);
+    } else if (e.deltaY < 0 && currentPage > 0) {
+      goToPage(currentPage - 1);
     }
   });
 
-  // Función global para cambiar página
-  window.goToPage = function(index) {
-    if (index < 0 || index >= pages.length) return;
-    
-    // Ocultar todas las páginas
-    pages.forEach(page => page.classList.remove('active'));
-    
-    // Mostrar página seleccionada
-    pages[index].classList.add('active');
-    currentPage = index;
-  };
-}
+  // Hacer la función global para los enlaces del menú
+  window.goToPage = goToPage;
 
+  // Control de visibilidad de la navegación
+  function toggleNavigationVisibility() {
+    if (!navigation || !nosotrosSection) return;
+    
+    const rect = nosotrosSection.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    
+    // Mostrar navegación solo cuando la sección esté visible
+    const isSectionVisible = rect.top < windowHeight * 0.8 && rect.bottom > windowHeight * 0.2;
+    
+    if (isSectionVisible) {
+      navigation.classList.add('visible');
+    } else {
+      navigation.classList.remove('visible');
+    }
+  }
+
+  window.addEventListener('scroll', toggleNavigationVisibility);
+  window.addEventListener('resize', toggleNavigationVisibility);
+
+  // Inicializar visibilidad
+  toggleNavigationVisibility();
+}
 // --- DEMO AR ---
 function initDemoAR() {
   const btnDemo = document.getElementById('btn-demo');
