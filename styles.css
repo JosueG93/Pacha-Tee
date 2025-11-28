@@ -2375,3 +2375,96 @@ body.modal-open {
         opacity: 1;
     }
 }
+/* ===== CORRECCIONES ESPECÍFICAS PARA ESCRITORIO ===== */
+@media (min-width: 769px) {
+    /* Asegurar que los dropdowns se muestren correctamente */
+    .dropdown:not([hidden]) {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) !important;
+    }
+    
+    .dropdown[hidden] {
+        display: none !important;
+    }
+    
+    /* Submenús desktop funcionando */
+    .submenu {
+        position: relative;
+    }
+    
+    .dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: var(--glass);
+        backdrop-filter: blur(20px) saturate(180%);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        box-shadow: 0 20px 40px var(--sombra-fuerte);
+        min-width: 200px;
+        z-index: 1001;
+        margin-top: 8px;
+    }
+    
+    /* Botones del menú desktop con cursor pointer */
+    .nav-link {
+        cursor: pointer;
+        position: relative;
+    }
+    
+    /* Indicador visual cuando el dropdown está abierto */
+    .submenu button[aria-expanded="true"] {
+        color: var(--verde-claro);
+    }
+    
+    .submenu button[aria-expanded="true"]::after {
+        width: 100%;
+    }
+    
+    /* Ocultar menú móvil en desktop */
+    .mobile-menu {
+        display: none !important;
+    }
+    
+    .hamburger {
+        display: none !important;
+    }
+    
+    /* Mostrar nav-links en desktop */
+    .nav-links {
+        display: flex !important;
+    }
+}
+
+/* ===== CORRECCIONES PARA EL JAVASCRIPT ===== */
+/* Asegurar que las animaciones funcionen */
+@keyframes dropdownFade {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Estado visible para dropdowns */
+.dropdown:not([hidden]) {
+    animation: dropdownFade 0.2s ease;
+}
+
+/* ===== CORRECCIÓN ESPECÍFICA DEL BOTÓN CARRITO ===== */
+/* Asegurar que el carrito funcione en desktop */
+@media (min-width: 769px) {
+    .cart-panel:not([hidden]) {
+        transform: translateX(0);
+    }
+    
+    .cart-panel {
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+    }
+}
