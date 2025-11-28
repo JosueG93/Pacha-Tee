@@ -708,8 +708,10 @@ body {
 }
 
 /* CORRECCIÓN COMPLETA - SECCIÓN NOSOTROS FULLPAGE */
+/* Sección Nosotros con scroll snapping */
 .nosotros-fullpage {
   height: 100vh;
+  scroll-snap-align: start;
   position: relative;
   overflow: hidden;
 }
@@ -725,16 +727,24 @@ body {
   justify-content: center;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(20px);
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  pointer-events: none;
+  transition: all 0.8s ease;
 }
 
 .nosotros-page.active {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
-  pointer-events: all;
+}
+
+/* Contenedor principal para scroll snapping */
+.main-container {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100vh;
+}
+
+/* Aplicar scroll snapping a las secciones fullpage */
+.section-full {
+  scroll-snap-align: start;
 }
 
 /* Fondos diferentes para cada página */
