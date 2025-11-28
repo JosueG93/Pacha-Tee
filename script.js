@@ -716,7 +716,160 @@ function scrollToSection(id) {
     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 }
+// --- FUNCIONES PARA NOSOTROS ---
+function mostrarPaginaNosotros(pagina) {
+  // Primero hacer scroll a la sección
+  const seccionNosotros = document.getElementById('quienes-somos');
+  if (seccionNosotros) {
+    seccionNosotros.scrollIntoView({ behavior: 'smooth' });
+    
+    // Luego cambiar a la página específica después de un delay
+    setTimeout(() => {
+      const botones = document.querySelectorAll('.qs-filtro-btn');
+      const paginas = document.querySelectorAll('.qs-pagina');
+      
+      // Remover activo de todos los botones y páginas
+      botones.forEach(btn => btn.classList.remove('active'));
+      paginas.forEach(pag => pag.classList.remove('active'));
+      
+      // Activar el botón y página correspondiente
+      const botonActivo = document.querySelector(`[data-pagina="${pagina}"]`);
+      const paginaActiva = document.getElementById(`qs-${pagina}`);
+      
+      if (botonActivo) botonActivo.classList.add('active');
+      if (paginaActiva) paginaActiva.classList.add('active');
+    }, 500);
+  }
+  closeAllMenus();
+}
 
+// --- MEJORAS EN EL CHECKOUT ---
+function initCheckout() {
+  const btnCheckout = document.getElementById('btn-checkout');
+  const btnCloseModal = document.getElementById('btn-close-modal');
+  const btnFinish = document.getElementById('btn-finish');
+  const btnCompleteOrder = document.getElementById('btn-complete-order');
+  
+  if (btnCheckout) {
+    btnCheckout.addEventListener('click', abrirModalCheckout);
+  }
+  
+  if (btnCloseModal) {
+    btnCloseModal.addEventListener('click', cerrarModalCheckout);
+  }
+  
+  if (btnFinish) {
+    btnFinish.addEventListener('click', () => {
+      cerrarModalCheckout();
+      mostrarNotificacion('¡Gracias por tu compra! Recibirás un email de confirmación.');
+    });
+  }
+  
+  if (btnCompleteOrder) {
+    btnCompleteOrder.addEventListener('click', procesarPedido);
+  }
+  
+  // Navegación entre pasos
+  document.querySelectorAll('.btn-next').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const nextStep = parseInt(e.target.getAttribute('data-next'));
+      if (validateStep(currentCheckoutStep)) {
+        goToCheckoutStep(nextStep);
+      }
+    });
+  });
+  
+  document.querySelectorAll('.btn-prev').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const prevStep = parseInt(e.target.getAttribute('data-prev'));
+      goToCheckoutStep(prevStep);
+    });
+  });
+  
+  // Manejar cambios en método de pago
+  document.querySelectorAll('input[name="payment-method"]').forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      actualizarOpcionPago(e.target.value);
+    });
+  });
+  
+  // Botón PayPal (solo demo)
+  const btnPaypal = document.getElementById('btn-paypal');
+  if (btnPaypal) {
+    btnPaypal.addEventListener('click', () => {
+      mostrarNotificacion('🚧 Integración PayPal en desarrollo');
+    });
+  }
+}
+
+function actualizarOpcionPago(metodo) {
+  const opciones = document.querySelectorAll('.payment-option-card');
+  opciones.forEach(opcion => {
+    opcion.classList.remove('active');
+    if (opcion.getAttribute('data-method') === metodo) {
+      opcion.classList.add('active');
+    }
+  });
+}
+
+function procesarPedido() {
+  const metodoPago = document.querySelector('input[name="payment-method"]:checked').value;
+  const total = calcularTotalCarrito() + 3; // + envío
+  
+  if (metodoPago === 'transfer') {
+    // Para transferencia, mostrar información bancaria y WhatsApp
+    const orderNumber = 'PT-' + Date.now().toString().slice(-6);
+    
+    // Actualizar información en el paso 4
+    document.getElementById('order-number').textContent = orderNumber;
+    document.getElementById('paid-amount').textContent = `$${total.toFixed(2)}`;
+    document.getElementById('payment-method-used').textContent = 'Transferencia Bancaria';
+    
+    // Crear mensaje para WhatsApp
+    const mensajeWhatsApp = `Hola Pacha-Tee! Acabo de realizar mi pedido #${orderNumber} por un total de $${total.toFixed(2)}. Adjunto comprobante de transferencia.`;
+    const urlWhatsApp = `https://wa.me/593987654321?text=${encodeURIComponent(mensajeWhatsApp)}`;
+    
+    // Actualizar instrucciones de confirmación
+    const instrucciones = document.getElementById('confirmation-instructions');
+    instrucciones.innerHTML = `
+      <div class="transfer-instructions">
+        <h5>Instrucciones para completar tu pedido:</h5>
+        <div class="bank-details">
+          <p><strong>Banco:</strong> Banco del Pacífico</p>
+          <p><strong>Cuenta Corriente:</strong> 2105678901</p>
+          <p><strong>Cuenta de Ahorros:</strong> 1234567890</p>
+          <p><strong>Titular:</strong> Pacha-Tee Ecuador S.A.</p>
+          <p><strong>RUC:</strong> 1234567890001</p>
+          <p><strong>Total a transferir:</strong> $${total.toFixed(2)}</p>
+        </div>
+        <a href="${urlWhatsApp}" class="btn btn-success whatsapp-btn" target="_blank" style="margin-top: 15px;">
+          <span>📱 Enviar comprobante por WhatsApp</span>
+        </a>
+        <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">
+          Una vez enviado el comprobante, procesaremos tu pedido en 24-48 horas.
+        </p>
+      </div>
+    `;
+    
+    goToCheckoutStep(4);
+    
+  } else if (metodoPago === 'paypal') {
+    // Para PayPal (demo)
+    mostrarNotificacion('🔧 Integración PayPal en desarrollo - Usa transferencia bancaria');
+  }
+  
+  // Limpiar carrito después de completar pedido
+  carrito = [];
+  actualizarCarrito();
+}
+
+function calcularTotalCarrito() {
+  return carrito.reduce((total, item) => total + (item.precio * item.cantidad), 0);
+}
+
+// Agregar al final del archivo las funciones globales
+window.mostrarPaginaNosotros = mostrarPaginaNosotros;
+window.mostrarPagina = mostrarPaginaNosotros; // Para compatibilidad
 // --- FUNCIONES GLOBALES ---
 window.agregarAlCarrito = agregarAlCarrito;
 window.eliminarDelCarrito = eliminarDelCarrito;
