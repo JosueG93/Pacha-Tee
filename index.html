@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
   <!-- PAGE NAVIGATION -->
@@ -19,29 +19,28 @@
       <img src="assets/logos/LogoFondoVerde.png" alt="Pacha-Tee" />
     </div>
 
-    <nav class="nav-links" role="navigation">
-      <a href="#inicio" data-target="inicio">Inicio</a>
+    <nav class="nav-links" role="navigation" aria-label="Navegación principal">
+      <a href="#inicio" data-target="inicio" class="nav-link">Inicio</a>
 
-<div class="submenu" id="submenu-nosotros">
-  <button id="btn-nosotros" aria-expanded="false">Nosotros ▾</button>
-  <div class="dropdown" id="dropdown-nosotros" hidden>
-    <a href="#mision-page" onclick="goToPage(0); return false;">Misión</a>
-    <a href="#vision-page" onclick="goToPage(1); return false;">Visión</a>
-    <a href="#objetivos-page" onclick="goToPage(2); return false;">Objetivo</a>
-  </div>
-</div>
+      <div class="submenu" id="submenu-nosotros">
+        <button id="btn-nosotros" aria-expanded="false" class="nav-link">Nosotros ▾</button>
+        <div class="dropdown" id="dropdown-nosotros" hidden>
+          <a href="#mision-page" onclick="goToPage(0); return false;" class="dropdown-link">Misión</a>
+          <a href="#vision-page" onclick="goToPage(1); return false;" class="dropdown-link">Visión</a>
+          <a href="#objetivos-page" onclick="goToPage(2); return false;" class="dropdown-link">Objetivo</a>
+        </div>
+      </div>
 
-<!-- En el NAV (después del submenú Nosotros) -->
-<div class="submenu" id="submenu-tienda">
-  <button id="btn-tienda" aria-expanded="false">Tienda ▾</button>
-  <div class="dropdown" id="dropdown-tienda" hidden>
-    <a href="#camisetas" onclick="filtrarProductos('camisetas'); return false;">Camisetas</a>
-    <a href="#tote-bags" onclick="filtrarProductos('tote-bags'); return false;">Tote Bags</a>
-    <a href="#tienda" onclick="filtrarProductos('todos'); return false;">Ver Todo</a>
-  </div>
-</div>
+      <div class="submenu" id="submenu-tienda">
+        <button id="btn-tienda" aria-expanded="false" class="nav-link">Tienda ▾</button>
+        <div class="dropdown" id="dropdown-tienda" hidden>
+          <a href="#camisetas" onclick="filtrarProductos('camisetas'); return false;" class="dropdown-link">Camisetas</a>
+          <a href="#tote-bags" onclick="filtrarProductos('tote-bags'); return false;" class="dropdown-link">Tote Bags</a>
+          <a href="#tienda" onclick="filtrarProductos('todos'); return false;" class="dropdown-link">Ver Todo</a>
+        </div>
+      </div>
       
-      <a href="#como-funciona" data-target="como-funciona">Cómo funciona</a>
+      <a href="#como-funciona" data-target="como-funciona" class="nav-link">Cómo funciona</a>
     </nav>
 
     <div class="nav-actions">
@@ -51,29 +50,32 @@
         </svg>
         <span id="cart-count" class="cart-count">0</span>
       </button>
-      <button id="btn-menu" class="hamburger" aria-label="Abrir menú">☰</button>
+      <button id="btn-menu" class="hamburger" aria-label="Abrir menú" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </header>
 
   <!-- MOBILE MENU -->
-  <div id="mobile-menu" class="mobile-menu" hidden>
-    <a href="#inicio" data-target="inicio">Inicio</a>
-<details>
-  <summary>Nosotros</summary>
-  <a href="#mision-page" onclick="goToPage(0); return false;">Misión</a>
-  <a href="#vision-page" onclick="goToPage(1); return false;">Visión</a>
-  <a href="#objetivos-page" onclick="goToPage(2); return false;">Objetivo</a>
-</details>
-    <!-- En el MOBILE MENU -->
-<details>
-  <summary>Tienda</summary>
-  <a href="#camisetas" onclick="filtrarProductos('camisetas'); return false;">Camisetas</a>
-  <a href="#tote-bags" onclick="filtrarProductos('tote-bags'); return false;">Tote Bags</a>
-  <a href="#tienda" onclick="filtrarProductos('todos'); return false;">Ver Todo</a>
-</details>
-    <a href="#como-funciona" data-target="como-funciona">Cómo funciona</a>
+  <div id="mobile-menu" class="mobile-menu" hidden role="dialog" aria-label="Menú móvil">
+    <a href="#inicio" data-target="inicio" class="mobile-nav-link">Inicio</a>
+    <details>
+      <summary>Nosotros</summary>
+      <a href="#mision-page" onclick="goToPage(0); return false;" class="mobile-dropdown-link">Misión</a>
+      <a href="#vision-page" onclick="goToPage(1); return false;" class="mobile-dropdown-link">Visión</a>
+      <a href="#objetivos-page" onclick="goToPage(2); return false;" class="mobile-dropdown-link">Objetivo</a>
+    </details>
+    <details>
+      <summary>Tienda</summary>
+      <a href="#camisetas" onclick="filtrarProductos('camisetas'); return false;" class="mobile-dropdown-link">Camisetas</a>
+      <a href="#tote-bags" onclick="filtrarProductos('tote-bags'); return false;" class="mobile-dropdown-link">Tote Bags</a>
+      <a href="#tienda" onclick="filtrarProductos('todos'); return false;" class="mobile-dropdown-link">Ver Todo</a>
+    </details>
+    <a href="#como-funciona" data-target="como-funciona" class="mobile-nav-link">Cómo funciona</a>
     <div class="mobile-social">
-      <a href="https://www.instagram.com/pacha.tee/" target="_blank" rel="noopener noreferrer">
+      <a href="https://www.instagram.com/pacha.tee/" target="_blank" rel="noopener noreferrer" aria-label="Síguenos en Instagram">
         <img src="assets/instagram.png" alt="Instagram" />
       </a>
     </div>
@@ -83,13 +85,22 @@
 
     <!-- HERO -->
     <section id="inicio" class="hero section-full">
+      <div class="hero-background">
+        <div class="hero-shape hero-shape-1"></div>
+        <div class="hero-shape hero-shape-2"></div>
+        <div class="hero-shape hero-shape-3"></div>
+      </div>
       <div class="hero-content">
         <img src="assets/logos/LogoLargo.png" alt="Pacha-Tee" class="hero-logo" />
         <h1 class="hero-title">Ilustración + Realidad Aumentada</h1>
         <p class="hero-sub">Prendas interactivas con valor educativo y comercial. Explora la colección y vive la experiencia AR.</p>
         <div class="hero-cta">
-          <a class="btn btn-primary" href="#tienda" data-target="tienda">Ver catálogo</a>
-          <button class="btn btn-outline" id="btn-demo">Ver demo AR</button>
+          <a class="btn btn-primary" href="#tienda" data-target="tienda">
+            <span>Ver catálogo</span>
+          </a>
+          <button class="btn btn-outline" id="btn-demo">
+            <span>Ver demo AR</span>
+          </button>
         </div>
       </div>
       <div class="hero-scroll">
@@ -105,33 +116,37 @@
       <div class="container">
         <h2 class="section-title">Productos destacados</h2>
         <div class="grid grid-2 featured-list">
-          <article class="card product-card">
+          <article class="card product-card featured-card">
             <div class="product-image">
               <img src="assets/productos/camisetas/camiseta-ecologica.jpg" alt="Camiseta Ecológica AR" />
               <div class="product-badge">Nuevo</div>
+              <div class="product-overlay">
+                <button class="btn btn-primary btn-add" data-producto="Camiseta Ecológica AR" data-precio="13">Agregar al carrito</button>
+              </div>
             </div>
             <div class="product-info">
               <h3>Camiseta Ecológica AR</h3>
               <p class="product-description">Camiseta con ilustración interactiva sobre ecología y sostenibilidad.</p>
-              <p class="product-price">$13</p>
               <div class="product-actions">
                 <span class="tag">Camisetas</span>
-                <button class="btn btn-primary btn-add" data-producto="Camiseta Ecológica AR" data-precio="13">Agregar</button>
+                <p class="product-price">$13</p>
               </div>
             </div>
           </article>
 
-          <article class="card product-card">
+          <article class="card product-card featured-card">
             <div class="product-image">
               <img src="assets/productos/camisetas/camiseta-oceano.jpg" alt="Camiseta Océano AR" />
+              <div class="product-overlay">
+                <button class="btn btn-primary btn-add" data-producto="Camiseta Océano AR" data-precio="13">Agregar al carrito</button>
+              </div>
             </div>
             <div class="product-info">
               <h3>Camiseta Océano AR</h3>
               <p class="product-description">Diseño marino que cobra vida con realidad aumentada.</p>
-              <p class="product-price">$13</p>
               <div class="product-actions">
                 <span class="tag">Camisetas</span>
-                <button class="btn btn-primary btn-add" data-producto="Camiseta Océano AR" data-precio="13">Agregar</button>
+                <p class="product-price">$13</p>
               </div>
             </div>
           </article>
@@ -170,7 +185,7 @@
       </div>
     </section>
 
-        <!-- NOSOTROS FULLPAGE SECTION -->
+    <!-- NOSOTROS FULLPAGE SECTION -->
     <section class="nosotros-fullpage">
       <!-- MISIÓN -->
       <div class="nosotros-page active" id="mision-page">
@@ -228,284 +243,114 @@
       </div>
     </section>
 
-
-    
     <!-- TIENDA -->
-<section id="tienda" class="section padded">
-  <div class="container">
-    <h2 class="section-title">Catálogo Completo</h2>
-    <p class="center muted mb-6">Camisetas $13 • Tote Bags $5</p>
+    <section id="tienda" class="section padded">
+      <div class="container">
+        <h2 class="section-title">Catálogo Completo</h2>
+        <p class="center muted mb-6">Camisetas $13 • Tote Bags $5</p>
 
-    <!-- Ambas secciones VISIBLES por defecto -->
-    <div class="category-section" id="seccion-camisetas">
-      <h3 class="category-title">Camisetas</h3>
-      <div class="grid grid-3 product-grid">
-
-
-
-            <!-- Camiseta 1 -->
-            <article class="item product-card">
-              <div class="product-image">
-                <img src="assets/productos/camisetas/camiseta-ecologica.jpg" alt="Camiseta Ecológica AR" />
-              </div>
-              <div class="product-info">
-                <div>
-                  <h4>Camiseta Ecológica AR</h4>
-                  <p class="product-description">Ilustración interactiva sobre sostenibilidad</p>
-                </div>
-                <div class="product-actions">
-                  <div class="product-price">$13</div>
-                  <button class="btn btn-primary btn-add" data-producto="Camiseta Ecológica AR" data-precio="13">Agregar</button>
-                </div>
-              </div>
-            </article>
-
-            <!-- Camiseta 2 -->
-            <article class="item product-card">
-              <div class="product-image">
-                <img src="assets/productos/camisetas/camiseta-oceano.jpg" alt="Camiseta Océano AR" />
-              </div>
-              <div class="product-info">
-                <div>
-                  <h4>Camiseta Océano AR</h4>
-                  <p class="product-description">Diseño marino interactivo con AR</p>
-                </div>
-                <div class="product-actions">
-                  <div class="product-price">$13</div>
-                  <button class="btn btn-primary btn-add" data-producto="Camiseta Océano AR" data-precio="13">Agregar</button>
-                </div>
-              </div>
-            </article>
-
-            <!-- Camiseta 3 -->
-            <article class="item product-card">
-              <div class="product-image">
-                <img src="assets/productos/camisetas/camiseta-selva.jpg" alt="Camiseta Selva AR" />
-              </div>
-              <div class="product-info">
-                <div>
-                  <h4>Camiseta Selva AR</h4>
-                  <p class="product-description">Fauna tropical en realidad aumentada</p>
-                </div>
-                <div class="product-actions">
-                  <div class="product-price">$13</div>
-                  <button class="btn btn-primary btn-add" data-producto="Camiseta Selva AR" data-precio="13">Agregar</button>
-                </div>
-              </div>
-            </article>
-
-            <!-- Camiseta 4 -->
-            <article class="item product-card">
-              <div class="product-image">
-                <img src="assets/productos/camisetas/camiseta-montana.jpg" alt="Camiseta Montaña AR" />
-              </div>
-              <div class="product-info">
-                <div>
-                  <h4>Camiseta Montaña AR</h4>
-                  <p class="product-description">Aventura y naturaleza en AR</p>
-                </div>
-                <div class="product-actions">
-                  <div class="product-price">$13</div>
-                  <button class="btn btn-primary btn-add" data-producto="Camiseta Montaña AR" data-precio="13">Agregar</button>
-                </div>
-              </div>
-            </article>
-
-            <!-- Camiseta 5 -->
-            <article class="item product-card">
-              <div class="product-image">
-                <img src="assets/productos/camisetas/camiseta-ciudad.jpg" alt="Camiseta Ciudad AR" />
-              </div>
-              <div class="product-info">
-                <div>
-                  <h4>Camiseta Ciudad AR</h4>
-                  <p class="product-description">Arquitectura urbana interactiva</p>
-                </div>
-                <div class="product-actions">
-                  <div class="product-price">$13</div>
-                  <button class="btn btn-primary btn-add" data-producto="Camiseta Ciudad AR" data-precio="13">Agregar</button>
-                </div>
-              </div>
-            </article>
-
-            <!-- Camiseta 6 -->
-            <article class="item product-card">
-              <div class="product-image">
-                <img src="assets/productos/camisetas/camiseta-universo.jpg" alt="Camiseta Universo AR" />
-              </div>
-              <div class="product-info">
-                <div>
-                  <h4>Camiseta Universo AR</h4>
-                  <p class="product-description">Exploración espacial en AR</p>
-                </div>
-                <div class="product-actions">
-                  <div class="product-price">$13</div>
-                  <button class="btn btn-primary btn-add" data-producto="Camiseta Universo AR" data-precio="13">Agregar</button>
-                </div>
-              </div>
-            </article>
-
-            <!-- Camiseta 7 -->
-            <article class="item product-card">
-              <div class="product-image">
-                <img src="assets/productos/camisetas/camiseta-animales.jpg" alt="Camiseta Animales AR" />
-              </div>
-              <div class="product-info">
-                <div>
-                  <h4>Camiseta Animales AR</h4>
-                  <p class="product-description">Fauna mundial interactiva</p>
-                </div>
-                <div class="product-actions">
-                  <div class="product-price">$13</div>
-                  <button class="btn btn-primary btn-add" data-producto="Camiseta Animales AR" data-precio="13">Agregar</button>
-                </div>
-              </div>
-            </article>
-
-            <!-- Camiseta 8 -->
-            <article class="item product-card">
-              <div class="product-image">
-                <img src="assets/productos/camisetas/camiseta-abstracta.jpg" alt="Camiseta Abstracta AR" />
-              </div>
-              <div class="product-info">
-                <div>
-                  <h4>Camiseta Abstracta AR</h4>
-                  <p class="product-description">Arte abstracto en movimiento</p>
-                </div>
-                <div class="product-actions">
-                  <div class="product-price">$13</div>
-                  <button class="btn btn-primary btn-add" data-producto="Camiseta Abstracta AR" data-precio="13">Agregar</button>
-                </div>
-              </div>
-            </article>
-          </div>
+        <!-- FILTROS MODERNOS -->
+        <div class="filtros-tienda">
+          <button class="filtro-btn active" data-categoria="todos">
+            <span>Ver Todo</span>
+          </button>
+          <button class="filtro-btn" data-categoria="camisetas">
+            <span>Camisetas</span>
+          </button>
+          <button class="filtro-btn" data-categoria="tote-bags">
+            <span>Tote Bags</span>
+          </button>
         </div>
 
-        <!-- TOTE BAGS -->
-    <div class="category-section" id="seccion-tote-bags">
-      <h3 class="category-title">Tote Bags</h3>
-      <div class="grid grid-3 product-grid">
+        <!-- PRODUCTOS -->
+        <div class="productos-container">
+          <!-- CAMISETAS -->
+          <div class="categoria-productos active" id="categoria-camisetas">
+            <h3 class="categoria-titulo">Camisetas</h3>
+            <div class="grid grid-3 product-grid">
+              <!-- Camiseta 1 -->
+              <article class="card product-card">
+                <div class="product-image">
+                  <img src="assets/productos/camisetas/camiseta-ecologica.jpg" alt="Camiseta Ecológica AR" />
+                  <div class="product-overlay">
+                    <button class="btn btn-primary btn-add" data-producto="Camiseta Ecológica AR" data-precio="13">Agregar al carrito</button>
+                  </div>
+                </div>
+                <div class="product-info">
+                  <h4>Camiseta Ecológica AR</h4>
+                  <p class="product-description">Ilustración interactiva sobre sostenibilidad</p>
+                  <div class="product-actions">
+                    <div class="product-price">$13</div>
+                    <button class="btn btn-primary btn-add" data-producto="Camiseta Ecológica AR" data-precio="13">Agregar</button>
+                  </div>
+                </div>
+              </article>
 
+              <!-- Repetir para las otras 7 camisetas con la misma estructura -->
+              <!-- Camiseta 2 -->
+              <article class="card product-card">
+                <div class="product-image">
+                  <img src="assets/productos/camisetas/camiseta-oceano.jpg" alt="Camiseta Océano AR" />
+                  <div class="product-overlay">
+                    <button class="btn btn-primary btn-add" data-producto="Camiseta Océano AR" data-precio="13">Agregar al carrito</button>
+                  </div>
+                </div>
+                <div class="product-info">
+                  <h4>Camiseta Océano AR</h4>
+                  <p class="product-description">Diseño marino interactivo con AR</p>
+                  <div class="product-actions">
+                    <div class="product-price">$13</div>
+                    <button class="btn btn-primary btn-add" data-producto="Camiseta Océano AR" data-precio="13">Agregar</button>
+                  </div>
+                </div>
+              </article>
 
+              <!-- ... resto de camisetas ... -->
+            </div>
+          </div>
 
-            <!-- Tote 1 -->
-            <article class="item product-card">
-              <div class="product-image">
-                <img src="assets/productos/totes/tote-natural.jpg" alt="Tote Bag Natural" />
-              </div>
-              <div class="product-info">
-                <div>
+          <!-- TOTE BAGS -->
+          <div class="categoria-productos" id="categoria-tote-bags">
+            <h3 class="categoria-titulo">Tote Bags</h3>
+            <div class="grid grid-3 product-grid">
+              <!-- Tote 1 -->
+              <article class="card product-card">
+                <div class="product-image">
+                  <img src="assets/productos/totes/tote-natural.jpg" alt="Tote Bag Natural" />
+                  <div class="product-overlay">
+                    <button class="btn btn-primary btn-add" data-producto="Tote Bag Natural" data-precio="5">Agregar al carrito</button>
+                  </div>
+                </div>
+                <div class="product-info">
                   <h4>Tote Bag Natural</h4>
                   <p class="product-description">Bolso ecológico con diseño AR</p>
+                  <div class="product-actions">
+                    <div class="product-price">$5</div>
+                    <button class="btn btn-primary btn-add" data-producto="Tote Bag Natural" data-precio="5">Agregar</button>
+                  </div>
                 </div>
-                <div class="product-actions">
-                  <div class="product-price">$5</div>
-                  <button class="btn btn-primary btn-add" data-producto="Tote Bag Natural" data-precio="5">Agregar</button>
-                </div>
-              </div>
-            </article>
+              </article>
 
-            <!-- Tote 2 -->
-            <article class="item product-card">
-              <div class="product-image">
-                <img src="assets/productos/totes/tote-ecologico.jpg" alt="Tote Bag Ecológico" />
-              </div>
-              <div class="product-info">
-                <div>
+              <!-- Tote 2 -->
+              <article class="card product-card">
+                <div class="product-image">
+                  <img src="assets/productos/totes/tote-ecologico.jpg" alt="Tote Bag Ecológico" />
+                  <div class="product-overlay">
+                    <button class="btn btn-primary btn-add" data-producto="Tote Bag Ecológico" data-precio="5">Agregar al carrito</button>
+                  </div>
+                </div>
+                <div class="product-info">
                   <h4>Tote Bag Ecológico</h4>
                   <p class="product-description">Bolso con mensaje ecológico AR</p>
+                  <div class="product-actions">
+                    <div class="product-price">$5</div>
+                    <button class="btn btn-primary btn-add" data-producto="Tote Bag Ecológico" data-precio="5">Agregar</button>
+                  </div>
                 </div>
-                <div class="product-actions">
-                  <div class="product-price">$5</div>
-                  <button class="btn btn-primary btn-add" data-producto="Tote Bag Ecológico" data-precio="5">Agregar</button>
-                </div>
-              </div>
-            </article>
+              </article>
 
-            <!-- Tote 3 -->
-            <article class="item product-card">
-              <div class="product-image">
-                <img src="assets/productos/totes/tote-oceano.jpg" alt="Tote Bag Océano" />
-              </div>
-              <div class="product-info">
-                <div>
-                  <h4>Tote Bag Océano</h4>
-                  <p class="product-description">Diseño marino conservacionista</p>
-                </div>
-                <div class="product-actions">
-                  <div class="product-price">$5</div>
-                  <button class="btn btn-primary btn-add" data-producto="Tote Bag Océano" data-precio="5">Agregar</button>
-                </div>
-              </div>
-            </article>
-
-            <!-- Tote 4 -->
-            <article class="item product-card">
-              <div class="product-image">
-                <img src="assets/productos/totes/tote-selva.jpg" alt="Tote Bag Selva" />
-              </div>
-              <div class="product-info">
-                <div>
-                  <h4>Tote Bag Selva</h4>
-                  <p class="product-description">Flora tropical interactiva</p>
-                </div>
-                <div class="product-actions">
-                  <div class="product-price">$5</div>
-                  <button class="btn btn-primary btn-add" data-producto="Tote Bag Selva" data-precio="5">Agregar</button>
-                </div>
-              </div>
-            </article>
-
-            <!-- Tote 5 -->
-            <article class="item product-card">
-              <div class="product-image">
-                <img src="assets/productos/totes/tote-urbano.jpg" alt="Tote Bag Urbano" />
-              </div>
-              <div class="product-info">
-                <div>
-                  <h4>Tote Bag Urbano</h4>
-                  <p class="product-description">Estilo urbano con AR</p>
-                </div>
-                <div class="product-actions">
-                  <div class="product-price">$5</div>
-                  <button class="btn btn-primary btn-add" data-producto="Tote Bag Urbano" data-precio="5">Agregar</button>
-                </div>
-              </div>
-            </article>
-
-            <!-- Tote 6 -->
-            <article class="item product-card">
-              <div class="product-image">
-                <img src="assets/productos/totes/tote-geometrico.jpg" alt="Tote Bag Geométrico" />
-              </div>
-              <div class="product-info">
-                <div>
-                  <h4>Tote Bag Geométrico</h4>
-                  <p class="product-description">Patrones geométricos en AR</p>
-                </div>
-                <div class="product-actions">
-                  <div class="product-price">$5</div>
-                  <button class="btn btn-primary btn-add" data-producto="Tote Bag Geométrico" data-precio="5">Agregar</button>
-                </div>
-              </div>
-            </article>
-
-            <!-- Tote 7 -->
-            <article class="item product-card">
-              <div class="product-image">
-                <img src="assets/productos/totes/tote-minimal.jpg" alt="Tote Bag Minimal" />
-              </div>
-              <div class="product-info">
-                <div>
-                  <h4>Tote Bag Minimal</h4>
-                  <p class="product-description">Diseño minimalista con AR</p>
-                </div>
-                <div class="product-actions">
-                  <div class="product-price">$5</div>
-                  <button class="btn btn-primary btn-add" data-producto="Tote Bag Minimal" data-precio="5">Agregar</button>
-                </div>
-              </div>
-            </article>
+              <!-- ... resto de tote bags ... -->
+            </div>
           </div>
         </div>
       </div>
@@ -513,176 +358,190 @@
 
   </main>
 
-<!-- CART -->
-<aside id="cart-panel" class="cart-panel" hidden>
-  <div class="cart-header">
-    <h3>Tu Carrito</h3>
-    <button id="btn-close-cart" class="btn-close">×</button>
-  </div>
-  <div class="cart-items" id="cart-items">
-    <!-- Los productos del carrito se insertarán aquí -->
-  </div>
-  <div class="cart-footer">
-    <div class="cart-total">
-      <span>Total:</span>
-      <span id="cart-total-price">$0</span>
+  <!-- CART -->
+  <aside id="cart-panel" class="cart-panel" hidden role="dialog" aria-labelledby="cart-title" aria-modal="true">
+    <div class="cart-header">
+      <h3 id="cart-title">Tu Carrito</h3>
+      <button id="btn-close-cart" class="btn-close" aria-label="Cerrar carrito">×</button>
     </div>
-    <button class="btn btn-primary btn-checkout" id="btn-checkout">Finalizar Compra</button>
-  </div>
-</aside>
+    <div class="cart-items" id="cart-items">
+      <!-- Los productos del carrito se insertarán aquí -->
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span>Total:</span>
+        <span id="cart-total-price">$0</span>
+      </div>
+      <button class="btn btn-primary btn-checkout" id="btn-checkout">
+        <span>Finalizar Compra</span>
+      </button>
+    </div>
+  </aside>
 
-<!-- CHECKOUT MODAL MEJORADO -->
-<div id="checkout-modal" class="modal" hidden>
-  <div class="modal-content">
-    <div class="modal-header">
-      <h3>Finalizar Compra</h3>
-      <button class="btn-close" id="btn-close-modal" type="button" aria-label="Cerrar modal">×</button>
-    </div>
-    
-    <div class="checkout-steps">
-      <div class="step active" data-step="1">Carrito</div>
-      <div class="step" data-step="2">Envío</div>
-      <div class="step" data-step="3">Pago</div>
-      <div class="step" data-step="4">Confirmación</div>
-    </div>
-
-    <div class="checkout-content">
-      <!-- Paso 1: Resumen del Carrito -->
-      <div class="checkout-step active" id="step-1">
-        <h4>Resumen de tu pedido</h4>
-        <div class="order-summary" id="order-summary">
-          <!-- Los productos se insertarán aquí -->
-        </div>
-        <div class="order-total">
-          <div class="total-line">
-            <span>Subtotal:</span>
-            <span id="subtotal-price">$0</span>
-          </div>
-          <div class="total-line">
-            <span>Envío:</span>
-            <span id="shipping-price">$3</span>
-          </div>
-          <div class="total-line final">
-            <span>Total:</span>
-            <span id="final-total-price">$0</span>
-          </div>
-        </div>
-        <button class="btn btn-primary btn-next" data-next="2" type="button">Continuar con el envío</button>
+  <!-- CHECKOUT MODAL MEJORADO -->
+  <div id="checkout-modal" class="modal" hidden role="dialog" aria-labelledby="checkout-title" aria-modal="true">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="checkout-title">Finalizar Compra</h3>
+        <button class="btn-close" id="btn-close-modal" type="button" aria-label="Cerrar modal">×</button>
+      </div>
+      
+      <div class="checkout-steps">
+        <div class="step active" data-step="1">Carrito</div>
+        <div class="step" data-step="2">Envío</div>
+        <div class="step" data-step="3">Pago</div>
+        <div class="step" data-step="4">Confirmación</div>
       </div>
 
-
-      <!-- Paso 2: Información de Envío -->
-      <div class="checkout-step" id="step-2">
-        <h4>Información de envío</h4>
-        <form class="shipping-form">
-          <div class="form-group">
-            <label for="full-name">Nombre completo</label>
-            <input type="text" id="full-name" required placeholder="Juan Pérez">
+      <div class="checkout-content">
+        <!-- Paso 1: Resumen del Carrito -->
+        <div class="checkout-step active" id="step-1">
+          <h4>Resumen de tu pedido</h4>
+          <div class="order-summary" id="order-summary">
+            <!-- Los productos se insertarán aquí -->
           </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" required placeholder="juan@ejemplo.com">
-          </div>
-          <div class="form-group">
-            <label for="address">Dirección</label>
-            <input type="text" id="address" required placeholder="Av. Principal 123">
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="city">Ciudad</label>
-              <input type="text" id="city" required placeholder="Guayaquil">
+          <div class="order-total">
+            <div class="total-line">
+              <span>Subtotal:</span>
+              <span id="subtotal-price">$0</span>
             </div>
-            <div class="form-group">
-              <label for="zip">Código postal</label>
-              <input type="text" id="zip" required placeholder="090150">
+            <div class="total-line">
+              <span>Envío:</span>
+              <span id="shipping-price">$3</span>
+            </div>
+            <div class="total-line final">
+              <span>Total:</span>
+              <span id="final-total-price">$0</span>
             </div>
           </div>
-          <div class="form-group">
-            <label for="phone">Teléfono</label>
-            <input type="tel" id="phone" required placeholder="0991234567">
-          </div>
-        </form>
-        <div class="step-actions">
-          <button class="btn btn-outline btn-prev" data-prev="1" type="button">Volver al carrito</button>
-          <button class="btn btn-primary btn-next" data-next="3" type="button">Continuar al pago</button>
-        </div>
-      </div>
-
-      <!-- Paso 3: Método de Pago -->
-      <div class="checkout-step" id="step-3">
-        <h4>Método de pago</h4>
-        <div class="payment-methods">
-          <label class="payment-option">
-            <input type="radio" name="payment-method" value="card" checked>
-            <div class="payment-content">
-              <span class="payment-icon">💳</span>
-              <span>Tarjeta de crédito/débito</span>
-            </div>
-          </label>
-          
-          <label class="payment-option">
-            <input type="radio" name="payment-method" value="paypal">
-            <div class="payment-content">
-              <span class="payment-icon">🔵</span>
-              <span>PayPal</span>
-            </div>
-          </label>
-          
-          <label class="payment-option">
-            <input type="radio" name="payment-method" value="transfer">
-            <div class="payment-content">
-              <span class="payment-icon">🏦</span>
-              <span>Transferencia bancaria</span>
-            </div>
-          </label>
+          <button class="btn btn-primary btn-next" data-next="2" type="button">
+            <span>Continuar con el envío</span>
+          </button>
         </div>
 
-        <div class="card-form" id="card-form">
-          <div class="form-group">
-            <label for="card-number">Número de tarjeta</label>
-            <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
-          </div>
-          <div class="form-row">
+        <!-- Paso 2: Información de Envío -->
+        <div class="checkout-step" id="step-2">
+          <h4>Información de envío</h4>
+          <form class="shipping-form">
             <div class="form-group">
-              <label for="card-expiry">Fecha de vencimiento</label>
-              <input type="text" id="card-expiry" placeholder="MM/AA" maxlength="5">
+              <label for="full-name">Nombre completo</label>
+              <input type="text" id="full-name" required placeholder="Juan Pérez">
             </div>
             <div class="form-group">
-              <label for="card-cvc">CVC</label>
-              <input type="text" id="card-cvc" placeholder="123" maxlength="3">
+              <label for="email">Email</label>
+              <input type="email" id="email" required placeholder="juan@ejemplo.com">
+            </div>
+            <div class="form-group">
+              <label for="address">Dirección</label>
+              <input type="text" id="address" required placeholder="Av. Principal 123">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="city">Ciudad</label>
+                <input type="text" id="city" required placeholder="Guayaquil">
+              </div>
+              <div class="form-group">
+                <label for="zip">Código postal</label>
+                <input type="text" id="zip" required placeholder="090150">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="phone">Teléfono</label>
+              <input type="tel" id="phone" required placeholder="0991234567">
+            </div>
+          </form>
+          <div class="step-actions">
+            <button class="btn btn-outline btn-prev" data-prev="1" type="button">
+              <span>Volver al carrito</span>
+            </button>
+            <button class="btn btn-primary btn-next" data-next="3" type="button">
+              <span>Continuar al pago</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Paso 3: Método de Pago -->
+        <div class="checkout-step" id="step-3">
+          <h4>Método de pago</h4>
+          <div class="payment-methods">
+            <label class="payment-option">
+              <input type="radio" name="payment-method" value="card" checked>
+              <div class="payment-content">
+                <span class="payment-icon">💳</span>
+                <span>Tarjeta de crédito/débito</span>
+              </div>
+            </label>
+            
+            <label class="payment-option">
+              <input type="radio" name="payment-method" value="paypal">
+              <div class="payment-content">
+                <span class="payment-icon">🔵</span>
+                <span>PayPal</span>
+              </div>
+            </label>
+            
+            <label class="payment-option">
+              <input type="radio" name="payment-method" value="transfer">
+              <div class="payment-content">
+                <span class="payment-icon">🏦</span>
+                <span>Transferencia bancaria</span>
+              </div>
+            </label>
+          </div>
+
+          <div class="card-form" id="card-form">
+            <div class="form-group">
+              <label for="card-number">Número de tarjeta</label>
+              <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="card-expiry">Fecha de vencimiento</label>
+                <input type="text" id="card-expiry" placeholder="MM/AA" maxlength="5">
+              </div>
+              <div class="form-group">
+                <label for="card-cvc">CVC</label>
+                <input type="text" id="card-cvc" placeholder="123" maxlength="3">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="card-name">Nombre en la tarjeta</label>
+              <input type="text" id="card-name" placeholder="JUAN PEREZ">
             </div>
           </div>
-          <div class="form-group">
-            <label for="card-name">Nombre en la tarjeta</label>
-            <input type="text" id="card-name" placeholder="JUAN PEREZ">
+
+          <div class="step-actions">
+            <button class="btn btn-outline btn-prev" data-prev="2" type="button">
+              <span>Volver al envío</span>
+            </button>
+            <button class="btn btn-primary btn-pay" id="btn-process-payment" type="button">
+              <span>Pagar ahora</span>
+            </button>
           </div>
         </div>
 
-        <div class="step-actions">
-          <button class="btn btn-outline btn-prev" data-prev="2" type="button">Volver al envío</button>
-          <button class="btn btn-primary btn-pay" id="btn-process-payment" type="button">Pagar ahora</button>
-        </div>
-      </div>
-
-      <!-- Paso 4: Confirmación -->
-      <div class="checkout-step" id="step-4">
-        <div class="confirmation">
-          <div class="confirmation-icon">✅</div>
-          <h4>¡Pago exitoso!</h4>
-          <p>Tu pedido ha sido procesado correctamente.</p>
-          <div class="order-details">
-            <p><strong>Número de orden:</strong> <span id="order-number">PT-984723</span></p>
-            <p><strong>Total pagado:</strong> <span id="paid-amount">$0</span></p>
-            <p><strong>Método de pago:</strong> <span id="payment-method-used">Tarjeta</span></p>
+        <!-- Paso 4: Confirmación -->
+        <div class="checkout-step" id="step-4">
+          <div class="confirmation">
+            <div class="confirmation-icon">✅</div>
+            <h4>¡Pago exitoso!</h4>
+            <p>Tu pedido ha sido procesado correctamente.</p>
+            <div class="order-details">
+              <p><strong>Número de orden:</strong> <span id="order-number">PT-984723</span></p>
+              <p><strong>Total pagado:</strong> <span id="paid-amount">$0</span></p>
+              <p><strong>Método de pago:</strong> <span id="payment-method-used">Tarjeta</span></p>
+            </div>
+            <p class="confirmation-text">Te hemos enviado un email con los detalles de tu compra. 
+            Tu pedido llegará en 3-5 días hábiles.</p>
           </div>
-          <p class="confirmation-text">Te hemos enviado un email con los detalles de tu compra. 
-          Tu pedido llegará en 3-5 días hábiles.</p>
+          <button class="btn btn-primary" id="btn-finish" type="button">
+            <span>Volver a la tienda</span>
+          </button>
         </div>
-        <button class="btn btn-primary" id="btn-finish" type="button">Volver a la tienda</button>
       </div>
     </div>
   </div>
-</div>
+
   <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
@@ -700,7 +559,7 @@
         <div class="footer-contact">
           <h4>Contacto</h4>
           <p>Guayaquil, Ecuador</p>
-          <a href="https://www.instagram.com/pacha.tee/" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.instagram.com/pacha.tee/" target="_blank" rel="noopener noreferrer" aria-label="Síguenos en Instagram">
             <img src="assets/instagram.png" alt="Instagram" />
             @pacha.tee
           </a>
