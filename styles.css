@@ -2217,3 +2217,136 @@ body.modal-open {
     background: #10B981;
     color: white;
 }
+/* Estilos específicos para escritorio */
+@media (min-width: 768px) {
+    /* Submenús desktop */
+    .submenu {
+        position: relative;
+    }
+    
+    .dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        min-width: 200px;
+        z-index: 1000;
+        border: 1px solid #e5e7eb;
+    }
+    
+    .dropdown-link {
+        display: block;
+        padding: 12px 16px;
+        color: #333;
+        text-decoration: none;
+        border-bottom: 1px solid #f0f0f0;
+        transition: background-color 0.2s;
+    }
+    
+    .dropdown-link:hover {
+        background: #f8f8f8;
+        color: #10B981;
+    }
+    
+    .dropdown-link:last-child {
+        border-bottom: none;
+    }
+    
+    /* Botones del menú desktop */
+    .nav-link {
+        position: relative;
+        cursor: pointer;
+    }
+    
+    .nav-link:hover {
+        color: #10B981;
+    }
+    
+    /* Menú móvil oculto en desktop */
+    .mobile-menu {
+        display: none;
+    }
+    
+    .hamburger {
+        display: none;
+    }
+}
+
+/* Estilos para móvil */
+@media (max-width: 767px) {
+    .submenu .dropdown {
+        display: none;
+    }
+    
+    .nav-links {
+        display: none;
+    }
+    
+    .hamburger {
+        display: block;
+    }
+}
+
+/* Animación hamburguesa */
+.hamburger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: currentColor;
+    margin: 3px 0;
+    transition: 0.3s;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Notificaciones */
+.cart-notification {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    background: #10B981;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    z-index: 1000;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Estados activos */
+.filtro-btn.active,
+.qs-filtro-btn.active {
+    background: #10B981;
+    color: white;
+}
+
+/* Checkout */
+.checkout-step {
+    display: none;
+}
+
+.checkout-step.active {
+    display: block;
+}
