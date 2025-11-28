@@ -823,3 +823,92 @@ document.addEventListener('DOMContentLoaded', () => {
   const allCards = document.querySelectorAll('.card, .item, .step.card, .product-card');
   allCards.forEach((card) => observer.observe(card));
 });
+
+/* Agregar al final de tu CSS existente */
+
+/* ESTADOS DE BOTONES */
+.btn.added {
+  background: var(--verde-claro) !important;
+  transform: scale(0.95);
+}
+
+/* NOTIFICACIONES MEJORADAS */
+.notification {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--verde);
+  color: var(--crema);
+  padding: 16px 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(45, 59, 36, 0.3);
+  z-index: 1003;
+  transform: translateX(100px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  max-width: 320px;
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+}
+
+.notification.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.notification.error {
+  background: #e74c3c;
+}
+
+.notification-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* CARRITO VACÍO */
+.empty-cart {
+  text-align: center;
+  padding: 60px 20px;
+  color: rgba(45, 59, 36, 0.6);
+}
+
+.empty-cart svg {
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+.empty-cart p {
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+/* ERROR EN FORMULARIOS */
+.form-group input.error {
+  border-color: #e74c3c !important;
+  box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.1) !important;
+}
+
+/* PASOS COMPLETADOS EN CHECKOUT */
+.checkout-steps .step.completed {
+  color: var(--verde);
+}
+
+.checkout-steps .step.completed::after {
+  background: var(--verde);
+}
+
+/* RESPONSIVE MEJORADO */
+@media (max-width: 768px) {
+  .notification {
+    bottom: 16px;
+    right: 16px;
+    left: 16px;
+    max-width: none;
+    transform: translateY(100px);
+  }
+  
+  .notification.show {
+    transform: translateY(0);
+  }
+}
