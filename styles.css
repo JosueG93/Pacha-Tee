@@ -1895,3 +1895,172 @@ body.modal-open {
   line-height: 1.7;
   color: rgba(45, 59, 36, 0.8);
 }
+
+/* MEJORAS PARA EL CHECKOUT */
+.payment-options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.payment-option-card {
+  border: 2px solid var(--borde);
+  border-radius: 12px;
+  padding: 0;
+  overflow: hidden;
+  transition: var(--transicion);
+  cursor: pointer;
+}
+
+.payment-option-card.active {
+  border-color: var(--verde);
+  box-shadow: 0 4px 15px rgba(45, 59, 36, 0.1);
+}
+
+.payment-option-header {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(45, 59, 36, 0.02);
+  border-bottom: 1px solid var(--borde);
+}
+
+.payment-option-header input[type="radio"] {
+  margin: 0;
+}
+
+.payment-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--verde);
+  flex-grow: 1;
+}
+
+.payment-icon {
+  font-size: 1.5rem;
+}
+
+.payment-title {
+  font-size: 1.1rem;
+}
+
+.payment-option-content {
+  padding: 20px;
+  display: none;
+}
+
+.payment-option-card.active .payment-option-content {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+.transfer-details {
+  background: rgba(45, 59, 36, 0.05);
+  padding: 15px;
+  border-radius: 8px;
+  margin: 15px 0;
+  font-size: 0.9rem;
+}
+
+.transfer-details p {
+  margin: 8px 0;
+  color: var(--verde);
+}
+
+.transfer-steps {
+  background: rgba(45, 59, 36, 0.03);
+  padding: 15px;
+  border-radius: 8px;
+  margin: 15px 0;
+  font-size: 0.9rem;
+}
+
+.transfer-steps ol {
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
+.transfer-steps li {
+  margin: 8px 0;
+  color: var(--verde);
+}
+
+.whatsapp-btn {
+  background: #25D366;
+  color: white;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: var(--transicion);
+  border: none;
+  cursor: pointer;
+}
+
+.whatsapp-btn:hover {
+  background: #128C7E;
+  transform: translateY(-2px);
+  color: white;
+}
+
+.paypal-security {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.btn-success {
+  background: #28a745;
+  color: white;
+}
+
+.btn-success:hover {
+  background: #218838;
+  color: white;
+}
+
+.status-pending {
+  color: #e67e22;
+  font-weight: 600;
+}
+
+.transfer-instructions {
+  background: rgba(45, 59, 36, 0.05);
+  padding: 20px;
+  border-radius: 12px;
+  margin: 20px 0;
+}
+
+.transfer-instructions h5 {
+  color: var(--verde);
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+}
+
+.bank-details {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid var(--verde);
+}
+
+.bank-details p {
+  margin: 8px 0;
+  color: var(--verde);
+  font-size: 0.95rem;
+}
+
+/* Estilos para campos con error */
+.form-group input.error {
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.1);
+}
