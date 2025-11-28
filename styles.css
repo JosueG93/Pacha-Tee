@@ -1050,4 +1050,227 @@ html {
   opacity: 1;
   transform: translateY(0);
 }
+  /* CORRECCIÓN COMPLETA - SECCIÓN NOSOTROS FULLPAGE */
+.nosotros-fullpage {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.nosotros-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  pointer-events: none;
+}
+
+.nosotros-page.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+/* Fondos diferentes para cada página */
+#mision-page .page-background {
+  background: linear-gradient(135deg, rgba(59, 75, 48, 0.03) 0%, rgba(251, 252, 244, 0.9) 100%);
+}
+
+#vision-page .page-background {
+  background: linear-gradient(135deg, rgba(59, 75, 48, 0.05) 0%, rgba(251, 252, 244, 0.85) 100%);
+}
+
+#objetivos-page .page-background {
+  background: linear-gradient(135deg, rgba(59, 75, 48, 0.07) 0%, rgba(251, 252, 244, 0.8) 100%);
+}
+
+.page-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(10px);
+}
+
+.page-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><defs><pattern id="pattern" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%233b4b30" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23pattern)"/></svg>');
+  pointer-events: none;
+}
+
+.page-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+.page-title {
+  font-size: 3.5rem;
+  color: var(--verde);
+  margin-bottom: 30px;
+  font-weight: 700;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
+
+.page-text {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease 0.2s;
+  margin-bottom: 40px;
+}
+
+.page-text p {
+  font-size: 1.3rem;
+  line-height: 1.7;
+  color: rgba(59, 75, 36, 0.9);
+  font-weight: 400;
+}
+
+.page-indicator {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease 0.4s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: var(--verde);
+  font-size: 0.9rem;
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+/* Cuando la página está activa */
+.nosotros-page.active .page-title,
+.nosotros-page.active .page-text,
+.nosotros-page.active .page-indicator {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Puntos de navegación */
+.page-navigation {
+  position: fixed;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.5s ease;
+}
+
+.page-navigation.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.page-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--crema);
+  border: 2px solid var(--verde);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-dot.active {
+  background: var(--verde);
+  transform: scale(1.3);
+}
+
+.page-dot::after {
+  content: attr(data-title);
+  position: absolute;
+  right: 25px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--verde);
+  color: var(--crema);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  font-weight: 500;
+}
+
+.page-dot:hover::after {
+  opacity: 1;
+}
+
+/* CORRECCIÓN - PRODUCTOS VISIBLES */
+.categoria-productos {
+  display: none;
+  animation: fadeUp 0.6s ease;
+}
+
+.categoria-productos.active {
+  display: block;
+}
+
+/* Asegurar que los productos se vean */
+.product-grid {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Loading para productos */
+.product-image {
+  background: var(--crema);
+  position: relative;
+}
+
+.product-image img {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Responsive para navegación */
+@media (max-width: 768px) {
+  .page-navigation {
+    right: 20px;
+  }
+  
+  .page-dot::after {
+    display: none;
+  }
+  
+  .page-title {
+    font-size: 2.5rem;
+  }
+  
+  .page-text p {
+    font-size: 1.1rem;
+  }
+}
 }
