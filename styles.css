@@ -1356,4 +1356,113 @@ body {
     opacity: 1 !important;
     visibility: visible !important;
   }
+
+  /* AGREGAR ESTO AL FINAL DE TU CSS ACTUAL */
+
+/* CATALOGO MEJORADO - MÁS PRODUCTOS Y TARJETAS MÁS COMPACTAS */
+.product-grid {
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 24px !important;
+}
+
+/* TARJETAS DE PRODUCTO MÁS COMPACTAS */
+.product-card {
+  height: auto;
+  min-height: 380px;
+}
+
+.product-image {
+  height: 200px !important;
+}
+
+.product-info {
+  padding: 16px !important;
+  gap: 12px !important;
+}
+
+.product-info h4 {
+  font-size: 1.1rem !important;
+  margin-bottom: 6px !important;
+}
+
+.product-description {
+  font-size: 0.85rem !important;
+  margin-bottom: 12px !important;
+  line-height: 1.4 !important;
+}
+
+.product-actions {
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.product-price {
+  font-size: 1.1rem !important;
+  text-align: center;
+}
+
+.product-actions .btn {
+  width: 100%;
+  padding: 10px 16px !important;
+  font-size: 14px !important;
+}
+
+/* FEATURED PRODUCTS MÁS COMPACTOS */
+.featured-list .product-card {
+  min-height: 420px;
+}
+
+.featured-list .product-image {
+  height: 240px !important;
+}
+
+/* CATEGORÍA TITULO MÁS PEQUEÑO */
+.categoria-titulo {
+  font-size: 1.6rem !important;
+  margin-bottom: 30px !important;
+}
+
+/* RESPONSIVE PARA MÁS COLUMNAS */
+@media (max-width: 1200px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .product-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ESPECIAL PARA FEATURED EN MOBILE */
+@media (max-width: 768px) {
+  .featured-list {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .featured-list .product-card {
+    min-height: 380px;
+  }
+  
+  .featured-list .product-image {
+    height: 200px !important;
+  }
+}
+
+/* MEJORAR ESPACIADO ENTRE CATEGORÍAS */
+.categoria-productos {
+  margin-bottom: 80px !important;
+}
+
+.categoria-productos:last-child {
+  margin-bottom: 40px !important;
+}
 }
