@@ -325,11 +325,12 @@ body {
 }
 
 .hero-cta {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  flex-wrap: wrap;
-  animation: fadeUp 1.2s ease;
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 2rem;
 }
 
 .hero-scroll {
@@ -347,23 +348,23 @@ body {
   animation: bounce 2s infinite;
 }
 
-/* BOTONES ELEGANTES */
+/* Botones unificados */
 .btn {
-  padding: 14px 32px;
-  border-radius: 12px;
-  font-weight: 600;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: var(--transicion);
-  border: none;
-  font-family: inherit;
-  font-size: 15px;
-  letter-spacing: -0.01em;
-  position: relative;
-  overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border: 2px solid;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    min-width: 140px;
+    position: relative;
+    overflow: hidden;
 }
 
 .btn span {
