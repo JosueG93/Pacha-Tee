@@ -6,21 +6,21 @@ let ventas = [];
 
 // Inventario inicial
 const INVENTARIO_INICIAL = {
-  'Camiseta Ecológica AR': { categoria: 'Camisetas', precio: 13, stock: 50, vendidos: 0 },
-  'Camiseta Océano AR': { categoria: 'Camisetas', precio: 13, stock: 50, vendidos: 0 },
-  'Camiseta Selva AR': { categoria: 'Camisetas', precio: 13, stock: 50, vendidos: 0 },
-  'Camiseta Montaña AR': { categoria: 'Camisetas', precio: 13, stock: 50, vendidos: 0 },
-  'Camiseta Ciudad AR': { categoria: 'Camisetas', precio: 13, stock: 50, vendidos: 0 },
-  'Camiseta Universo AR': { categoria: 'Camisetas', precio: 13, stock: 50, vendidos: 0 },
-  'Camiseta Animales AR': { categoria: 'Camisetas', precio: 13, stock: 50, vendidos: 0 },
-  'Camiseta Abstracta AR': { categoria: 'Camisetas', precio: 13, stock: 50, vendidos: 0 },
-  'Tote Bag Natural': { categoria: 'Tote Bags', precio: 5, stock: 100, vendidos: 0 },
-  'Tote Bag Ecológico': { categoria: 'Tote Bags', precio: 5, stock: 100, vendidos: 0 },
-  'Tote Bag Océano': { categoria: 'Tote Bags', precio: 5, stock: 100, vendidos: 0 },
-  'Tote Bag Selva': { categoria: 'Tote Bags', precio: 5, stock: 100, vendidos: 0 },
-  'Tote Bag Urbano': { categoria: 'Tote Bags', precio: 5, stock: 100, vendidos: 0 },
-  'Tote Bag Geométrico': { categoria: 'Tote Bags', precio: 5, stock: 100, vendidos: 0 },
-  'Tote Bag Minimal': { categoria: 'Tote Bags', precio: 5, stock: 100, vendidos: 0 }
+  'Camiseta Lirio': { categoria: 'Camisetas', precio: 13, stock: 12, vendidos: 0 },
+  'Camiseta Mujer': { categoria: 'Camisetas', precio: 13, stock: 12, vendidos: 0 },
+  'Camiseta Condor': { categoria: 'Camisetas', precio: 13, stock: 12, vendidos: 0 },
+  'Camiseta Medusa': { categoria: 'Camisetas', precio: 13, stock: 12, vendidos: 0 },
+  'Camiseta Floripondio': { categoria: 'Camisetas', precio: 13, stock: 12, vendidos: 0 },
+  'Camiseta Heliconia': { categoria: 'Camisetas', precio: 13, stock: 12, vendidos: 0 },
+  'Camiseta Rana': { categoria: 'Camisetas', precio: 13, stock: 12, vendidos: 0 },
+  'Camiseta Passiflora': { categoria: 'Camisetas', precio: 13, stock: 12, vendidos: 0 },
+  'Tote Bag Natural': { categoria: 'Tote Bags', precio: 5, stock: 8, vendidos: 0 },
+  'Tote Bag Ecológico': { categoria: 'Tote Bags', precio: 5, stock: 8, vendidos: 0 },
+  'Tote Bag Océano': { categoria: 'Tote Bags', precio: 5, stock: 8, vendidos: 0 },
+  'Tote Bag Selva': { categoria: 'Tote Bags', precio: 5, stock: 8, vendidos: 0 },
+  'Tote Bag Urbano': { categoria: 'Tote Bags', precio: 5, stock: 8, vendidos: 0 },
+  'Tote Bag Geométrico': { categoria: 'Tote Bags', precio: 5, stock: 8, vendidos: 0 },
+  'Tote Bag Minimal': { categoria: 'Tote Bags', precio: 5, stock: 8, vendidos: 0 }
 };
 
 // ===== INICIALIZACIÃ"N =====
