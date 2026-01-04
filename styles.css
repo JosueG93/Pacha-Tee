@@ -784,7 +784,7 @@ a {
 }
 
 .btn-secondary {
-  background: white;
+  background: rgba(0, 255, 157, 0.858);
   color: var(--verde);
   border: 2px solid var(--verde);
 }
@@ -2397,4 +2397,226 @@ a {
   section {
     scroll-snap-align: start;
   }
+
+/* Estilos adicionales para el admin panel */
+.btn-icon-small {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+}
+
+.btn-danger {
+  background: #dc2626;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #b91c1c;
+}
+
+/* Modal grande para admin */
+.modal-large {
+  max-width: 1200px;
+  max-height: 90vh;
+}
+
+/* Tabs del admin */
+.admin-tabs {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 2px solid var(--gris-claro);
+  background: var(--crema-oscuro);
+  overflow-x: auto;
+}
+
+.admin-tab-btn {
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius)
+}
+
+/* ===== CORRECCIONES PARA PANEL ADMIN - TEXTOS VERDE OSCURO ===== */
+
+/* Fondo blanco para todas las celdas de las tablas */
+.admin-table tbody tr td {
+  background-color: white !important;
+  color: var(--verde-oscuro) !important;
+  border-bottom: 1px solid var(--crema-oscuro);
+}
+
+/* Encabezados de tabla con fondo verde oscuro y texto blanco */
+.admin-table thead tr th {
+  background-color: var(--verde-oscuro) !important;
+  color: white !important;
+  border: none;
+}
+
+/* Hover en filas con color crema */
+.admin-table tbody tr:hover {
+  background-color: var(--crema-oscuro) !important;
+}
+
+/* Texto específico en las tablas */
+.admin-table tbody tr td strong {
+  color: var(--verde) !important;
+  font-weight: 700;
+}
+
+/* Badges de estado - mantener colores originales pero con texto oscuro */
+.stock-indicator {
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+}
+
+.stock-alto {
+  background-color: #d1fae5 !important;
+  color: #065f46 !important; /* Verde oscuro */
+}
+
+.stock-medio {
+  background-color: #fef3c7 !important;
+  color: #92400e !important; /* Ámbar oscuro */
+}
+
+.stock-bajo {
+  background-color: #fee2e2 !important;
+  color: #991b1b !important; /* Rojo oscuro */
+}
+
+/* Badges de estado de ventas */
+.status-badge {
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+}
+
+.status-pendiente {
+  background-color: #fef3c7 !important;
+  color: #92400e !important;
+}
+
+.status-completado {
+  background-color: #d1fae5 !important;
+  color: #065f46 !important;
+}
+
+.status-cancelado {
+  background-color: #fee2e2 !important;
+  color: #991b1b !important;
+}
+
+/* Botones de acción */
+.action-btns .btn {
+  color: rgb(246, 248, 246) !important;
+  margin: 0 2px;
+}
+
+/* Texto pequeño en las tablas */
+.admin-table tbody tr td small {
+  color: var(--gris) !important;
+  font-size: 0.75rem;
+}
+
+/* Asegurar que los textos en los filtros sean visibles */
+.inventory-filters .filter-btn-small {
+  color: var(--verde) !important;
+  background-color: rgb(251, 251, 251) !important;
+  border: 2px solid var(--gris-claro);
+}
+
+.inventory-filters .filter-btn-small:hover,
+.inventory-filters .filter-btn-small.active {
+  background-color: var(--verde) !important;
+  color: rgb(2, 97, 0) !important;
+  border-color: var(--verde);
+}
+
+/* Tab buttons del admin */
+.admin-tab-btn {
+  color: var(--gris) !important;
+  background: transparent !important;
+}
+
+.admin-tab-btn:hover {
+  color: var(--verde) !important;
+  background: rgba(238, 145, 6, 0.997) !important;
+}
+
+.admin-tab-btn.active {
+  color: var(--verde) !important;
+  background: rgb(6, 150, 32) !important;
+  box-shadow: 0 -2px 0 var(--verde) inset;
+}
+
+/* Texto en widgets de estadísticas */
+.top-item-name {
+  color: var(--verde-oscuro) !important;
+  font-weight: 600;
+}
+
+.top-item-details {
+  color: var(--gris) !important;
+  font-size: 0.75rem;
+}
+
+.top-item-value {
+  color: var(--verde) !important;
+  font-weight: 700;
+}
+
+/* Chart labels */
+.chart-bar-label {
+  color: var(--verde-oscuro) !important;
+  font-weight: 500;
+}
+
+.chart-bar-value {
+  color: var(--verde) !important;
+  font-weight: 700;
+}
+
+/* Alertas */
+.alert-text {
+  color: #991b1b !important;
+}
+
+.alert-text strong {
+  color: #991b1b !important;
+}
+
+/* Estilos específicos para el panel admin */
+#admin-panel-modal .modal-content {
+  color: var(--verde-oscuro) !important;
+}
+
+#admin-panel-modal .admin-body {
+  color: var(--verde-oscuro) !important;
+}
+
+#admin-panel-modal h4,
+#admin-panel-modal h5 {
+  color: var(--verde-oscuro) !important;
+}
+
+/* Tabla específica para asegurar los colores */
+#tabla-inventario td,
+#tabla-ventas td {
+  color: var(--verde-oscuro) !important;
+}
+
+/* Headers dentro del modal */
+.modal-header h3 {
+  color: var(--verde-oscuro) !important;
+}
+
 }
